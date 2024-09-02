@@ -2,9 +2,12 @@
 
 import React from 'react';
 import Link from 'next/link';
+import SocketClient from '../../features/socket_testing/testsocket';
 
 const HomePage: React.FC = () => {
   return (
+    <>
+    <title>{"Sync()"}</title>
     <div className="flex flex-col items-center justify-center min-h-screen bg-black text-white px-4">
       <h1 className="text-5xl md:text-6xl font-bold text-green-500 mb-6">Sync</h1>
       <p className="text-lg md:text-xl text-gray-300 mb-8 text-center max-w-2xl">
@@ -16,6 +19,7 @@ const HomePage: React.FC = () => {
         </button>
       </Link>
     </div>
+    </>
   );
 };
 

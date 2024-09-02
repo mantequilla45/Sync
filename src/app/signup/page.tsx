@@ -1,19 +1,22 @@
-// my-next-app/src/app/signup/page.tsx
-
 "use client"; // Ensure this is present for client-side components
 
 import React, { useState } from 'react';
 import { signUpWithEmailAndPassword } from '../../../features/auth';
-
+import SocketClient from '../../../features/socket_testing/testsocket';
 
 const SignupPage: React.FC = () => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [error, setError] = useState<string>('');
+  const [connectionStatus, setConnectionStatus] = useState<string>('');
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
     await signUpWithEmailAndPassword(email, password, setError);
+  };
+
+  const handleConnectionStatusChange = (status: string) => {
+    setConnectionStatus(status);
   };
 
   return (
@@ -43,6 +46,8 @@ const SignupPage: React.FC = () => {
         >
           Sign Up
         </button>
+        <SocketClient onConnectionStatusChange={handleConnectionStatusChange} />
+        <p>Status: {connectionStatus}</p>
       </form>
     </div>
   );
