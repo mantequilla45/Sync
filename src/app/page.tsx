@@ -42,7 +42,7 @@ const HomePage: React.FC = () => {
                 />
               </div>
               
-              <Link href="/login" legacyBehavior>
+              <Link href="/home" legacyBehavior>
                 <button className="w-[80%] px-6 py-3 rounded-3xl bg-[#7731E3] text-white text-lg font-semibold hover:bg-[#5d1abf] transition duration-300">
                   Login
                 </button>
