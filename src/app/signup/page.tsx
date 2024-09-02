@@ -3,24 +3,17 @@
 "use client"; // Ensure this is present for client-side components
 
 import React, { useState } from 'react';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../../firebase';
+import { signUpWithEmailAndPassword } from '../../../features/auth';
 
 
 const SignupPage: React.FC = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [error, setError] = useState<string>('');
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    try {
-      await createUserWithEmailAndPassword(auth, email, password);
-      alert('User registered successfully!');
-    } catch (err) {
-      setError((err as Error).message);
-    }
+    await signUpWithEmailAndPassword(email, password, setError);
   };
 
   return (
