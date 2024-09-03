@@ -3,6 +3,8 @@
 import React, { useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { IoMdSearch } from "react-icons/io";
+import HamburgerMenu from '../hamburger-menu/hamburger-menu';
+import { CgProfile } from "react-icons/cg";
 
 const Header: React.FC = () => {
   const pathname = usePathname();
@@ -12,7 +14,7 @@ const Header: React.FC = () => {
 
   const handleClick = () => {
     setIsClicked(true);
-    setTimeout(() => setIsClicked(false), 300); // Reset after animation duration
+    setTimeout(() => setIsClicked(false), 300);   // Reset after animation duration
   };
 
   return (
@@ -26,17 +28,7 @@ const Header: React.FC = () => {
           <div className="flex items-center justify-between w-full mx-3">
             <div className="flex items-center w-full">
               {/* Hamburger Menu */}
-              <button className="p-2 flex items-center justify-center">
-                <svg 
-                  xmlns="http://www.w3.org/2000/svg" 
-                  className="h-6 w-6" 
-                  fill="none" 
-                  viewBox="0 0 24 24" 
-                  stroke="currentColor"
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
-              </button>
+              <HamburgerMenu /> 
 
               {/* Sync Text and Search Bar */}
               <div className="flex items-center w-full ml-6">
@@ -56,8 +48,8 @@ const Header: React.FC = () => {
               </div>
 
               {/* Profile Icon */}
-              <button className="p-4 rounded-full bg-white text-gray-800 flex items-center justify-center mr-16">
-                {/* Add your profile icon SVG or image here */}
+              <button className="p-2 rounded-full bg-white text-gray-800 flex items-center justify-center mr-16">
+              <CgProfile className="text-2xl" />
               </button>
             </div>
           </div>
