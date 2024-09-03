@@ -1,6 +1,11 @@
+// my-next-app/src/app/page.tsx
+
 import Link from 'next/link';
-import Header from '../header/header';
-import DynamicCards from './dynamic-cards'; // Adjust the path as needed
+import Header from '../../../components/protected/header';
+import DynamicCards from '../../../components/protected/dynamic-cards';
+import HamburgerMenu from '../../../components/protected/hamburger-menu';
+
+
 
 export default function Home() {
   return (

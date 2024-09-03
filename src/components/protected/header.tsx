@@ -3,11 +3,7 @@
 import React, { useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { IoMdSearch } from "react-icons/io";
-<<<<<<<< HEAD:component/protected/header.tsx
-import HamburgerMenu from './sidebar';
-========
-import HamburgerMenu from './hamburger-menu';
->>>>>>>> 932a76c3a5d6e528f33d17ea377cc1ca7d22ca16:components/(protected)/header.tsx
+import HamburgerMenu from './hamburger-menu'; // Use the correct path based on your directory structure
 import { CgProfile } from "react-icons/cg";
 
 const Header: React.FC = () => {
@@ -32,14 +28,14 @@ const Header: React.FC = () => {
           <div className="flex items-center justify-between w-full mx-3">
             <div className="flex items-center w-full">
               {/* Hamburger Menu */}
-              <HamburgerMenu /> 
+              <HamburgerMenu />
 
               {/* Sync Text and Search Bar */}
               <div className="flex items-center w-full ml-6">
                 <h1 className="text-2xl font-bold font-poppins">Sync</h1>
-                
+
                 <div className="relative w-full max-w-xs ml-4">
-                  {/* Correcting the IoMdSearch Icon Usage */}
+                  {/* Search Icon */}
                   <div className={`absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 cursor-pointer transition-transform duration-300 ${isClicked ? 'translate-x-4' : ''}`}>
                     <IoMdSearch />
                   </div>
@@ -54,7 +50,6 @@ const Header: React.FC = () => {
 
               {/* Profile Icon */}
               <button className="p-2 rounded-full bg-white text-gray-800 flex items-center justify-center mr-16">
-                {/* Correcting the CgProfile Icon Usage */}
                 <CgProfile className="text-2xl" />
               </button>
             </div>

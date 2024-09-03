@@ -1,7 +1,6 @@
 import React from 'react';
 import { FaProjectDiagram } from "react-icons/fa";
 
-
 interface DynamicCardsProps {
   cardCount: number;
 }
@@ -20,7 +19,7 @@ const DynamicCards: React.FC<DynamicCardsProps> = ({ cardCount }) => {
   const cards = Array.from({ length: cardCount }, (_, i) => i + 1); // Generate card numbers
 
   return (
-    <div className={`grid grid-rows-${rows} gap-10`}>
+    <div className="grid gap-10" style={{ gridTemplateRows: `repeat(${rows}, minmax(0, 1fr))` }}>
       {Array.from({ length: rows }).map((_, rowIndex) => (
         <div key={rowIndex} className="grid grid-cols-4 gap-10">
           {cards.slice(rowIndex * 4, rowIndex * 4 + 4).map((card) => (
@@ -36,11 +35,8 @@ const DynamicCards: React.FC<DynamicCardsProps> = ({ cardCount }) => {
               </div>
               
               {/* Icon and Project Title below the card */}
-              <div className="mt-4 px-4 w-full flex items-center text-center">
-                {/* Replace with your icon */}
+              <div className="mt-4 px-4 w-full flex items-center justify-center">
                 <FaProjectDiagram className="text-gray-500 text-xl" />
-
-
                 <p className="text-black pl-2">Project {card}</p>
               </div>
             </div>
