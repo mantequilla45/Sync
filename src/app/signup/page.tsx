@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { signUpWithEmailAndPassword } from '../../../features/auth';
 import SocketClient from '../../../features/socket_testing/testsocket';
-import Header from '../header/header';
+import Header from '../../../components/(protected)/header';
 
 const SignupPage: React.FC = () => {
   const [email, setEmail] = useState<string>('');
@@ -51,7 +51,7 @@ const SignupPage: React.FC = () => {
         >
           Sign Up
         </button>
-        <SocketClient onConnectionStatusChange={handleConnectionStatusChange} />
+        <SocketClient/>
         <p>Status: {connectionStatus}</p>
       </form>
         </div>

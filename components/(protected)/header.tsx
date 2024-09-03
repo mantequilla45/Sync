@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { IoMdSearch } from "react-icons/io";
-import HamburgerMenu from '../hamburger-menu/hamburger-menu';
+import HamburgerMenu from './hamburger-menu';
 import { CgProfile } from "react-icons/cg";
 
 const Header: React.FC = () => {

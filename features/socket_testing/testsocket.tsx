@@ -1,67 +1,48 @@
-import { useEffect, useState, useCallback } from 'react';
-import { io, Socket } from 'socket.io-client';
+import { useState, useEffect } from 'react';
+import { io } from 'socket.io-client';
 
-const SocketClient: React.FC<{ onConnectionStatusChange: (status: string) => void }> = ({ onConnectionStatusChange }) => {
-  const [socket, setSocket] = useState<Socket | null>(null);
-  const [messages, setMessages] = useState<string[]>([]);
+const SocketClient: React.FC = () => {
   const [isConnected, setIsConnected] = useState<boolean>(false);
+  const [counter, setCounter] = useState<number | null>(null);
+  const [socket, setSocket] = useState<ReturnType<typeof io> | null>(null);
 
-  const connectSocket = useCallback(() => {
-    if (!socket) {
-      const newSocket = io('http://localhost:4000');
-      setSocket(newSocket);
+  const connectSocket = () => {
+    const newSocket = io('http://localhost:4000');
+    
+    newSocket.on('connect', () => {
+      setIsConnected(true);
+      console.log('Connected to server');
+    });
 
-      newSocket.on('connect', () => {
-        console.log('Connected to server');
-        setIsConnected(true);
-        onConnectionStatusChange('Connected');
-      });
+    newSocket.on('disconnect', () => {
+      setIsConnected(false);
+      console.log('Disconnected from server');
+    });
 
-      newSocket.on('disconnect', () => {
-        console.log('Disconnected from server');
-        setIsConnected(false);
-        onConnectionStatusChange('Disconnected');
-      });
+    // Update the counter instead of appending to an array
+    newSocket.on('message', (num: number) => {
+      setCounter(num);
+    });
 
-      newSocket.on('message', (data: string) => {
-        console.log('Received message:', data);
-        setMessages((prevMessages) => [...prevMessages, data]);
-      });
+    setSocket(newSocket);
+  };
 
-      newSocket.on('connect_error', (error) => {
-        console.log('Connection error:', error);
-        onConnectionStatusChange('Connection Error');
-      });
-    }
-  }, [socket, onConnectionStatusChange]);
-
-  const disconnectSocket = useCallback(() => {
+  const disconnectSocket = () => {
     if (socket) {
       socket.disconnect();
-      setSocket(null);
+      setIsConnected(false);
+      setCounter(null);
     }
-  }, [socket]);
-
-  useEffect(() => {
-    return () => {
-      if (socket) {
-        socket.disconnect();
-      }
-    };
-  }, [socket]);
+  };
 
   return (
     <div>
       <h2>Socket.IO Client is {isConnected ? 'Connected' : 'Disconnected'}</h2>
-      <ul>
-        {messages.map((message, index) => (
-          <li key={index}>{message}</li>
-        ))}
-      </ul>
-      <button onClick={connectSocket} disabled={isConnected}>
+      <p>{counter !== null ? `Current ${counter}` : 'Waiting for counter...'}</p>
+      <button onClick={connectSocket} disabled={isConnected} className='bg-green-500'>
         Connect to Socket
       </button>
-      <button onClick={disconnectSocket} disabled={!isConnected}>
+      <button onClick={disconnectSocket} disabled={!isConnected} className='bg-green-500'>
         Disconnect from Socket
       </button>
     </div>
