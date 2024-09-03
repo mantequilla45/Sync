@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import SocketClient from '../../features/socket_testing/testsocket';
-import Header from './header/header';
+import Header from '../../component/protected/header';
 
 
 const HomePage: React.FC = () => {

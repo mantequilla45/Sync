@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { IoMdSearch } from "react-icons/io";
-import HamburgerMenu from '../hamburger-menu/hamburger-menu';
+import HamburgerMenu from './sidebar';
 import { CgProfile } from "react-icons/cg";
 
 const Header: React.FC = () => {
@@ -35,9 +35,10 @@ const Header: React.FC = () => {
                 <h1 className="text-2xl font-bold font-poppins">Sync</h1>
                 
                 <div className="relative w-full max-w-xs ml-4">
-                  <IoMdSearch
-                    className={`absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 cursor-pointer transition-transform duration-300 ${isClicked ? 'translate-x-4' : ''}`}
-                  />
+                  {/* Correcting the IoMdSearch Icon Usage */}
+                  <div className={`absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 cursor-pointer transition-transform duration-300 ${isClicked ? 'translate-x-4' : ''}`}>
+                    <IoMdSearch />
+                  </div>
                   <input
                     type="text"
                     placeholder="Search Sync"
@@ -49,7 +50,8 @@ const Header: React.FC = () => {
 
               {/* Profile Icon */}
               <button className="p-2 rounded-full bg-white text-gray-800 flex items-center justify-center mr-16">
-              <CgProfile className="text-2xl" />
+                {/* Correcting the CgProfile Icon Usage */}
+                <CgProfile className="text-2xl" />
               </button>
             </div>
           </div>

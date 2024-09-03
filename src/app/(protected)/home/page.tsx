@@ -1,6 +1,6 @@
 import Link from 'next/link';
-import Header from '../header/header';
-import DynamicCards from './dynamic-cards'; // Adjust the path as needed
+import Header from '../../../../component/protected/header';
+import DynamicCards from '../../../../component/protected/dynamic-cards';
 
 export default function Home() {
   return (

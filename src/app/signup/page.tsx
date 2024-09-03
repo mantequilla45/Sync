@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { signUpWithEmailAndPassword } from '../../../features/auth';
 import SocketClient from '../../../features/socket_testing/testsocket';
-import Header from '../header/header';
+import Header from '../../../component/protected/header';
 
 const SignupPage: React.FC = () => {
   const [email, setEmail] = useState<string>('');
