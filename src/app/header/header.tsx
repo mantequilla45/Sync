@@ -44,13 +44,13 @@ const Header: React.FC = () => {
                 
                 <div className="relative w-full max-w-xs ml-4">
                   <IoMdSearch
-                    className={`absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-500 cursor-pointer transition-transform duration-300 ${isClicked ? 'translate-x-4' : ''}`}
-                    onClick={handleClick}
+                    className={`absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 cursor-pointer transition-transform duration-300 ${isClicked ? 'translate-x-4' : ''}`}
                   />
                   <input
                     type="text"
                     placeholder="Search Sync"
-                    className="border border-gray-300 rounded-xl px-2 py-2 text-black text-sm pl-7 w-full"
+                    className="border border-gray-300 rounded-xl px-2 py-2 text-black text-sm pl-9 w-full"
+                    onClick={handleClick}
                   />
                 </div>
               </div>
