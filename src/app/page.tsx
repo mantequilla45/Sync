@@ -10,10 +10,11 @@ const HomePage: React.FC = () => {
   return (
     <>
     <title>{"Sync()"}</title>
+    <div className="flex flex-col items-center justify-center min-h-screen bg-[linear-gradient(to_top_right,_#82245C,_#81245C,_#732783,_#561C90,_#561C90,_#37249E,_#3D55B8)] text-white">
     <Header />
-    <div className="flex flex-col items-center justify-center min-h-screen bg-[linear-gradient(to_top_right,_#652952,_#82245C,_#6C2999,_#5E24A4,_#1E249B,_#425DBC)] text-white px-10">
-     <div className="container px-20">
-      <div className="grid grid-cols-[2fr_1fr] gap-4">
+    <div className="flex-grow flex items-center justify-center w-full">
+
+      <div className="grid grid-cols-[2fr_1.5fr] gap-4">
           <div>
             <h1 className="text-5xl md:text-6xl font-bold text-white font-poppins mb-6">Sync</h1>
             <p className="text-lg md:text-xl text-gray-300 mb-8 text-left max-w-2xl font-poppins">

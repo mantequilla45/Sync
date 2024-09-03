@@ -23,8 +23,9 @@ const SignupPage: React.FC = () => {
   return (
     <>
     <title>{"Sync()"}</title>
-    <Header />
-    <div className="flex flex-col items-center justify-center min-h-screen bg-[linear-gradient(to_top_right,_#652952,_#82245C,_#6C2999,_#5E24A4,_#1E249B,_#425DBC)] text-white px-4">
+    <div className="flex flex-col items-center min-h-screen bg-[linear-gradient(to_top_right,_#652952,_#82245C,_#6C2999,_#5E24A4,_#1E249B,_#425DBC)] text-white">  
+      <Header />
+      <div className="flex flex-col justify-center flex-grow rounded-lg mx-6 p-8">
       <h1 className="text-4xl font-bold text-green-500 mb-6">Sign Up</h1>
       <form onSubmit={handleSignup} className="flex flex-col space-y-4 w-full max-w-sm">
         {error && <p className="text-red-500">{error}</p>}
@@ -53,6 +54,8 @@ const SignupPage: React.FC = () => {
         <SocketClient onConnectionStatusChange={handleConnectionStatusChange} />
         <p>Status: {connectionStatus}</p>
       </form>
+        </div>
+      
     </div>
     
     </>
