@@ -21,7 +21,7 @@ export default function Home() {
         </div>
         
         {/* Number of projects */}
-        <DynamicCards cardCount={20} />
+        <DynamicCards cardCount={1} />
       </div>
     </div>
   );
