@@ -24,22 +24,23 @@ const DynamicCards: React.FC<DynamicCardsProps> = ({ cardCount }) => {
         <div key={rowIndex} className="grid grid-cols-4 gap-10">
           {cards.slice(rowIndex * 4, rowIndex * 4 + 4).map((card) => (
             <div key={card} className="flex flex-col items-center">
-              {/* Card */}
-              <div
-                className="bg-gray-200 rounded-xl border border-gray-300 relative"
-                style={{ width: '100%', paddingBottom: '75%' }}
-              >
-                <div className="absolute inset-0 flex items-center justify-center text-black">
-                  {card}
-                </div>
-              </div>
-              
-              {/* Icon and Project Title below the card */}
-              <div className="mt-4 px-4 w-full flex items-center justify-center">
-                <FaProjectDiagram className="text-gray-500 text-xl" />
-                <p className="text-black pl-2">Project {card}</p>
+            {/* Card */}
+            <div
+              className="bg-gray-200 rounded-xl border border-gray-300 relative"
+              style={{ width: '100%', paddingBottom: '75%' }}
+            >
+              <div className="absolute inset-0 flex items-center justify-center text-black">
+                {card}
               </div>
             </div>
+            
+            {/* Icon and Project Title below the card */}
+            <div className="mt-4 px-4 w-full flex items-center justify-start">
+              <FaProjectDiagram className="text-gray-500 text-xl" />
+              <p className="text-black pl-2">Project {card}</p>
+            </div>
+          </div>
+          
           ))}
         </div>
       ))}
