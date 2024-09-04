@@ -25,7 +25,7 @@ const Header: React.FC = () => {
       <div className={`flex items-center ${isLanding || isSignUpPage ? 'justify-center' : 'justify-between'} w-full`}>
 
         {!isLanding && !isSignUpPage && (
-          <div className="flex items-center justify-between w-full mx-3">
+          <div className="flex flex-col items-center justify-between w-full mx-3">
             <div className="flex items-center w-full">
               {/* Hamburger Menu */}
               <HamburgerMenu />
@@ -53,6 +53,17 @@ const Header: React.FC = () => {
                 <CgProfile className="text-2xl" />
               </button>
             </div>
+            <div className="relative w-full mx-3">
+              <div className="flex justify-end w-full">
+              <div className="absolute rounded-lg p-4 bg-gradient-to-tr from-[#82245C] to-[#3D50B5] w-[20%] h-16 mt-4 top-0 right-0 z-10">
+                <a href="/profile">
+                  <h1 className="text-lg font-regular text-white font-poppins">Profile</h1>
+                </a>
+
+              </div>
+              </div>
+            </div>
+
           </div>
         )}
 
