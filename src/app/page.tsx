@@ -5,7 +5,7 @@ import Link from 'next/link';
 import SocketClient from '../../features/socket_testing/testsocket';
 import Header from '../components/protected/header';
 import DynamicCards from '../components/protected/dynamic-cards'; 
-import HamburgerMenu from '../components/protected/hamburger-menu'; 
+import HamburgerMenu from '../components/protected/side-bar'; 
 
 
 const HomePage: React.FC = () => {
