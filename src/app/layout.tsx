@@ -5,7 +5,7 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Sync( )",
+  title: "Sync",
   description: "Synchronize your collaboration.",
 };
 
