@@ -69,8 +69,19 @@ const Header: React.FC = () => {
                 <HamburgerMenu />
 
                 {/* Sync icon and Search bar */}
+
+                
                 <div className="flex items-center w-full ml-6">
-                  <h1 className="text-2xl font-bold">Sync</h1>
+                  <a href="/home" className="flex items-center">
+                    <img 
+                    src="https://cdn.builder.io/api/v1/image/assets/TEMP/e206a20408ef8878dcb5118bce850f8f290c84cbd09da22c62f468d88dfbdc15?placeholderIfAbsent=true&apiKey=0cd5b3eb85e74a83a268d41d07a9c27f" 
+                    alt="Description of the image"
+                    className="w-[25px] h-[25px]"
+                  />
+
+                    <h1 className="text-2xl font-bold ml-[7px]">Sync</h1>
+                  </a>
+                
                   <div className="relative w-full max-w-xs ml-4">
                     {/* Search Icon */}
                     <div
@@ -181,7 +192,14 @@ const Header: React.FC = () => {
             </div>
           )}
           {(isLanding || isSignUpPage) && (
-            <h1 className="text-2xl font-bold">{isSignUpPage ? 'Sync' : 'Sync'}</h1>
+            <>
+            <img 
+            src="https://cdn.builder.io/api/v1/image/assets/TEMP/e206a20408ef8878dcb5118bce850f8f290c84cbd09da22c62f468d88dfbdc15?placeholderIfAbsent=true&apiKey=0cd5b3eb85e74a83a268d41d07a9c27f" 
+            alt="Description of the image"
+            className="w-[25px] h-[25px]"
+          />
+            <h1 className="text-2xl font-bold ml-[7px]">{isSignUpPage ? 'Sync' : 'Sync'}</h1>
+            </>
           )}
         </div>
       </div>

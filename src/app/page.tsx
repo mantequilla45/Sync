@@ -2,16 +2,13 @@
 
 import React from 'react';
 import Link from 'next/link';
-import SocketClient from '../../features/socket_testing/testsocket';
 import Header from '../components/protected/header';
-import DynamicCards from '../components/protected/dynamic-cards'; 
-import HamburgerMenu from '../components/protected/side-bar'; 
 
 
 const HomePage: React.FC = () => {
   return (
     <>
-    <title>{"Sync()"}</title>
+    <title>{"Sync"}</title>
     <div className="flex flex-col items-center justify-center min-h-screen bg-[linear-gradient(to_top_right,_#82245C,_#81245C,_#732783,_#561C90,_#561C90,_#37249E,_#3D55B8)] text-white">
     <Header />
     <div className="flex-grow flex items-center justify-center w-full">
