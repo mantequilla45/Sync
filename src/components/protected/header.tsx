@@ -8,6 +8,7 @@ import { CgProfile } from 'react-icons/cg';
 import { IoSettingsSharp, IoArrowBack } from 'react-icons/io5';
 import { FaMoon } from 'react-icons/fa';
 import { IoIosCloseCircle } from "react-icons/io";
+import SearchInput from './search-bar';
 
 const Header: React.FC = () => {
   const pathname = usePathname();
@@ -49,7 +50,7 @@ const Header: React.FC = () => {
     setInputValue(e.target.value);
   };
 
-  const clearInput = () => {
+  const handleClearInput = () => {
     setInputValue('');
     setIsClicked(false);
   };
@@ -82,38 +83,13 @@ const Header: React.FC = () => {
                     <h1 className="text-2xl font-bold ml-[7px]">Sync</h1>
                   </a>
                 
-                  <div className="relative w-full max-w-xs ml-4">
-                    {/* Search Icon */}
-                    <div
-                      className={`absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 cursor-pointer transition-transform transition-opacity duration-300 ease-in-out ${
-                        isClicked ? 'translate-x-[-100%] opacity-0' : 'translate-x-0 opacity-100'
-                      }`}
-                      style={{ transition: 'transform 0.3s ease-in-out, opacity 0.3s ease-in-out' }}
-                    >
-                      <IoMdSearch />
-                    </div>
-
-                    {/* Search Input */}
-                    <input
-                      type="text"
-                      placeholder="Search Sync"
-                      value={inputValue}
-                      onChange={handleInputChange}
-                      className={`border border-gray-300 rounded-xl px-2 py-2 text-black text-sm pl-9 w-full transition-all duration-300 ${
-                        isClicked ? 'pl-[10px]' : 'pl-9'
-                      }`}
-                      onFocus={() => setIsClicked(true)}
-                      onBlur={() => setIsClicked(false)}
-                    />
-
-                    {/* Conditionally Render Close Icon */}
-                    {inputValue && (
-                      <IoIosCloseCircle
-                        className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 cursor-pointer"
-                        onClick={clearInput}
-                      />
-                    )}
-                  </div>
+                  <SearchInput
+                    value={inputValue}
+                    onChange={handleInputChange}
+                    onClear={handleClearInput}
+                    placeholder="Search Sync"
+                    className="ml-4 max-w-xs "
+                  />
                 </div>
 
                 {/* Profile Button */}
@@ -127,12 +103,13 @@ const Header: React.FC = () => {
 
               {/* Profile Card */}
               {activeCard && (
-                <div ref={cardRef} className="relative w-full mx-3">
+                <div ref={cardRef} className="relative w-full mx-3 mr-[180px]">
                   <div className="flex justify-end w-full">
                     <div
-                      className={`absolute rounded-xl w-[13%] flex-col space-y-1 py-2 px-2 bg-gradient-to-tr from-[#3D50B5] to-[#82245C] mt-2 top-0 right-0 z-10 mr-20 border border-[#4F1869] transition-all duration-300 ease-in-out ${
+                      className={`absolute rounded-xl w-[13%] flex-col space-y-1 py-2 px-2 bg-gradient-to-tr from-[#3D50B5] to-[#82245C] mt-2 top-0 right-0 z-50 border border-[#4F1869] transition-all duration-300 ease-in-out ${
                         activeCard === 'profile' ? 'h-[234px]' : 'h-[120px]'
                       }`}
+                      style={{ boxShadow: '0 4px 8px rgba(0, 0, 0, 0.3)' }} // Added shadow for better visibility
                     >
                       {activeCard === 'profile' && (
                         <>
@@ -187,6 +164,8 @@ const Header: React.FC = () => {
                     </div>
                   </div>
                 </div>
+
+
               )}
 
             </div>
