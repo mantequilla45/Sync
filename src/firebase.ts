@@ -1,7 +1,9 @@
 // src/firebase.ts
 
 import { initializeApp } from 'firebase/app';
-import { getAuth } from 'firebase/auth';
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, fetchSignInMethodsForEmail } from 'firebase/auth';
+import { getFirestore } from 'firebase/firestore';
+import { getStorage } from 'firebase/storage';
 
 const firebaseConfig = {
     apiKey: "AIzaSyDFmW2UPN4Ml3183LvVCDewPsNCroQvhoQ",
@@ -15,5 +17,12 @@ const firebaseConfig = {
   
   // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-export const auth = getAuth(app);
+const auth = getAuth(app);
+const googleProvider = new GoogleAuthProvider();
+const db = getFirestore(app);
+const storage = getStorage(app);
+
+export {auth, googleProvider, db, storage, createUserWithEmailAndPassword, signInWithEmailAndPassword};
+
+//export const auth = getAuth(app);
 export default app;
