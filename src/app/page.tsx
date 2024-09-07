@@ -1,15 +1,12 @@
-// my-next-app/src/app/page.tsx
-"use client";
-
-import React, { useState, useEffect  } from 'react';
+'use client';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import Header from '../components/protected/header';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '@/firebase';
-import { FaFacebook } from "react-icons/fa";
+import { FaFacebook, FaInstagram, FaGithub } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
-import { FaInstagram } from "react-icons/fa";
-import { FaGithub } from "react-icons/fa";
+import Background from '../components/protected/background';
 
 const HomePage: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -22,118 +19,20 @@ const HomePage: React.FC = () => {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       console.log('Login success:', userCredential.user);
       window.location.href = '/home';
-    }
-    catch (e) {
+    } catch (e) {
       setError('Failed to login. Check your email or password.');
       console.error('Error logging in: ', e);
-
     }
   }
-  const [opacity, setOpacity] = useState<number>(0.1); // Define opacity as a number
-
-  useEffect(() => {
-    const savedOpacity = localStorage.getItem('opacity');
-    if (savedOpacity) {
-      setOpacity(parseFloat(savedOpacity));
-    }
-  }, []);
 
   return (
-    <div className="overflow-hidden">
+    <div className="relative min-h-screen">
       <title>{"Sync"}</title>
-      <div className="flex flex-col items-center justify-center min-h-screen bg-[linear-gradient(to_top_right,_#82245C,_#81245C,_#732783,_#561C90,_#561C90,_#37249E,_#3D55B8)] text-white">
-      {/* Donut 1 */}
-  <div
-    style={{
-      position: 'absolute',
-      top: '-25vh',
-      left: '-2vw',
-      width: 'clamp(50vw, 50vw, 1200px)', // Limits size
-      height: 'clamp(50vw, 50vw, 1200px)',
-      background: 'transparent',
-      borderRadius: '50%',
-      border: `clamp(2vw, 6vw, 100px) solid ${'#D964AA' + Math.floor(opacity * 255).toString(16).padStart(2, '0')}`,
-      zIndex: 1,
-    }}
-  />
+      <Background />
 
-  {/* Donut 2 */}
-  <div
-    style={{
-      position: 'absolute',
-      bottom: '0vh',
-      left: '0vw',
-      width: 'clamp(25vw, 25vw, 400px)',
-      height: 'clamp(25vw, 25vw, 400px)',
-      background: 'transparent',
-      borderRadius: '50%',
-      border: `clamp(1vw, 3vw, 60px) solid ${'#E552BC' + Math.floor(opacity * 255).toString(16).padStart(2, '0')}`,
-      zIndex: 1,
-    }}
-  />
-
-  {/* Donut 3 */}
-  <div
-    style={{
-      position: 'absolute',
-      bottom: '-15vh',
-      right: '-3vw',
-      width: 'clamp(45vw, 45vw, 1200px)',
-      height: 'clamp(45vw, 45vw, 1200px)',
-      background: 'transparent',
-      borderRadius: '50%',
-      border: `clamp(2vw, 6vw, 100px) solid ${'#9952E1' + Math.floor(opacity * 255).toString(16).padStart(2, '0')}`,
-      zIndex: 1,
-    }}
-  />
-
-  {/* Donut 4 */}
-  <div
-    style={{
-      position: 'absolute',
-      top: '-10vh',
-      right: '0vw',
-      width: 'clamp(15vw, 30vw, 600px)',
-      height: 'clamp(15vw, 30vw, 600px)',
-      background: 'transparent',
-      borderRadius: '50%',
-      border: `clamp(1.5vw, 3vw, 60px) solid ${'#B06CF3' + Math.floor(opacity * 255).toString(16).padStart(2, '0')}`,
-      zIndex: 1,
-    }}
-  />
-
-  {/* Donut 5 */}
-  <div
-    style={{
-      position: 'absolute',
-      top: '5vh',
-      left: '45vw',
-      width: 'clamp(10vw, 20vw, 400px)',
-      height: 'clamp(10vw, 20vw, 400px)',
-      background: 'transparent',
-      borderRadius: '50%',
-      border: `clamp(1vw, 2.5vw, 50px) solid ${'#A150F2' + Math.floor(opacity * 255).toString(16).padStart(2, '0')}`,
-      zIndex: 1,
-    }}
-  />
-
-  {/* Donut 6 */}
-  <div
-    style={{
-      position: 'absolute',
-      bottom: '-30vh',
-      left: '30vw',
-      width: 'clamp(10vw, 25vw, 500px)',
-      height: 'clamp(10vw, 25vw, 500px)',
-      background: 'transparent',
-      borderRadius: '50%',
-      border: `clamp(1vw, 3vw, 60px) solid ${'#CC7FC9' + Math.floor(opacity * 255).toString(16).padStart(2, '0')}`,
-      zIndex: 1,
-    }}
-  />  
-      
+      <div className="relative z-10 min-h-screen flex flex-col">
         <Header />
-        <div className="flex-grow flex items-center justify-center w-full z-10">
+        <div className="flex-grow flex items-center justify-center w-full">
           <div className="flex flex-row gap-10 w-[70%]">
             <div className="w-[80%] pt-5">
               <h1 className="text-5xl md:text-6xl font-bold text-white font-poppins mb-6">Sync</h1>
@@ -179,7 +78,7 @@ const HomePage: React.FC = () => {
                       Forgot Password?
                     </a>
                   </div>
-                  
+
                   <Link href="/signup" legacyBehavior>
                     <button className="w-full px-6 py-3 rounded-3xl bg-[#EF893C] text-white font-semibold hover:bg-[#CD7A4A] transition duration-300 mt-4">
                       Create an Account
@@ -190,29 +89,23 @@ const HomePage: React.FC = () => {
             </div>
           </div>
         </div>
-        <div className="flex mb-[20px] flex-row w-[70%] h-[100px] items-center gap-5 justify-between">
-          
+
+        <div className="flex mb-[20px] flex-row w-full h-[100px] items-center gap-5 justify-between px-[300px]">
           <div className="flex space-x-6">
-            <a href='/about' className="text-sm">
-            About
-            </a>
-            <a href='/contact-us' className="text-sm">
-            Contact us
-            </a>
-            <a href='/our-team' className="text-sm">
-            Our Team
-            </a>
+            <a href='/about' className="text-sm">About</a>
+            <a href='/contact-us' className="text-sm">Contact us</a>
+            <a href='/our-team' className="text-sm">Our Team</a>
           </div>
           <div className="flex flex-row gap-6">
-            <FaXTwitter className="w-[30px] h-[30px]"/>
-            <FaInstagram  className="w-[30px] h-[30px]"/>
-            <FaFacebook className="w-[30px] h-[30px]"/>
-            <FaGithub  className="w-[30px] h-[30px]"/>
+            <FaXTwitter className="w-[30px] h-[30px]" />
+            <FaInstagram className="w-[30px] h-[30px]" />
+            <FaFacebook className="w-[30px] h-[30px]" />
+            <FaGithub className="w-[30px] h-[30px]" />
           </div>
         </div>
       </div>
     </div>
-  );  
+  );
 };
 
 export default HomePage;

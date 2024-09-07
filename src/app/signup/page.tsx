@@ -4,11 +4,9 @@ import React, { useState } from 'react';
 import { signUpWithEmailAndPassword } from '../../../features/auth';
 import SocketClient from '../../../features/socket_testing/testsocket';
 import Header from '../../components/protected/header';
-
-import { FaFacebook } from "react-icons/fa";
+import { FaFacebook, FaInstagram, FaGithub } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
-import { FaInstagram } from "react-icons/fa";
-import { FaGithub } from "react-icons/fa";
+import Background from '../../components/protected/background';
 
 const SignupPage: React.FC = () => {
   const [email, setEmail] = useState<string>('');
@@ -26,9 +24,10 @@ const SignupPage: React.FC = () => {
   };
   
   return (
-    <>
+    <div className="relative min-h-screen">
       <title>{"Sync()"}</title>
-      <div className="flex flex-col items-center min-h-screen bg-[linear-gradient(to_top_right,_#652952,_#82245C,_#6C2999,_#5E24A4,_#1E249B,_#425DBC)] text-white">  
+      <Background className="absolute inset-0" />
+      <div className="relative z-10 flex flex-col items-center min-h-screen text-white">  
         <Header />
         <div className="flex flex-col justify-center flex-grow items-center rounded-lg mx-6 p-8">
           <h1 className="text-4xl font-bold text-white mb-10">Create your account!</h1>
@@ -58,36 +57,26 @@ const SignupPage: React.FC = () => {
               Sign Up
             </button>
             <div className="hidden">
-            <SocketClient/>
-            <p>Status: {connectionStatus}</p>
-
+              <SocketClient />
+              <p>Status: {connectionStatus}</p>
             </div>
           </form>
-       
         </div>
         <div className="flex mb-[40px] flex-col w-[70%] h-auto gap-6 items-center justify-between">
-        <div className="flex flex-row gap-6">
-            <FaXTwitter className="w-[30px] h-[30px]"/>
-            <FaInstagram  className="w-[30px] h-[30px]"/>
-            <FaFacebook className="w-[30px] h-[30px]"/>
-            <FaGithub  className="w-[30px] h-[30px]"/>
+          <div className="flex flex-row gap-6">
+            <FaXTwitter className="w-[30px] h-[30px]" />
+            <FaInstagram className="w-[30px] h-[30px]" />
+            <FaFacebook className="w-[30px] h-[30px]" />
+            <FaGithub className="w-[30px] h-[30px]" />
           </div>
           <div className="flex space-x-6">
-            <a href='/about' className="text-sm">
-            About
-            </a>
-            <a href='/contact-us' className="text-sm">
-            Contact us
-            </a>
-            <a href='/our-team' className="text-sm">
-            Our Team
-            </a>
+            <a href='/about' className="text-sm">About</a>
+            <a href='/contact-us' className="text-sm">Contact us</a>
+            <a href='/our-team' className="text-sm">Our Team</a>
           </div>
-         
         </div>
       </div>
-
-    </>
+    </div>
   );
 };
 
