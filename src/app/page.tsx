@@ -39,10 +39,7 @@ const HomePage: React.FC = () => {
               <p className="text-lg w-full text-gray-300 text-left">
                 Seamlessly collaborate in real-time with Sync. Experience a streamlined workflow with advanced features tailored for teams and projects of all sizes.
               </p>
-              <div className="flex justify-center">
-                <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/07ab8ffda4b61de49e738a79ccf7f9f7375700cdf399b68f4285e6d9b306f50d?placeholderIfAbsent=true&apiKey=0cd5b3eb85e74a83a268d41d07a9c27f"
-                className="w-[60%] "/>
-              </div>
+              
               
             </div>
             <div className="bg-[linear-gradient(to_top_right,_#9B2B77,_#CF4E7D,_#D78E61)] text-white shadow-lg rounded-2xl px-12 py-12 w-[35%] h-auto mx-auto flex flex-col items-center">
