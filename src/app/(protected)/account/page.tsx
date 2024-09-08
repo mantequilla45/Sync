@@ -6,15 +6,35 @@ import { MdAccountCircle } from "react-icons/md";
 import { IoIosNotifications } from "react-icons/io";
 import { MdOutlineSecurity } from "react-icons/md";
 import { MdDelete } from "react-icons/md";
+<<<<<<< HEAD
 import { FaUserLarge } from "react-icons/fa6";
 import { MdAlternateEmail } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
 import { MdEdit } from "react-icons/md";
+=======
+import verifySession from '@/app/lib/middleware/verifySession';
+import { cookies } from 'next/headers'; // This helps you access cookies in Next.js 14
+import { redirect } from 'next/navigation';
+>>>>>>> 6f2508929668f2222a70bc01060b7caf58a11e22
 
 const ProfilePage = () => {
-  const [, setIsClicked] = useState(false);
+
+  //Some of this migrate to components
+  const [, setIsClicked] = useState(false); 
   const [activeCard, setActiveCard] = useState<string | null>(null);
   const cardRef = useRef<HTMLDivElement>(null);
+
+  //Please use components for client side actions (text editing) for in order to use API routes and not `use client` the page
+  /*const cookieStore = cookies();
+  const authToken = cookieStore.get('authToken')?.value;
+
+  // Verify session using your middleware
+  const sessionResult = await verifySession(authToken);
+
+  // If the session is invalid, redirect to the login page
+  if (!sessionResult.success) {
+    redirect('/'); // Or any other route
+  }*/
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
