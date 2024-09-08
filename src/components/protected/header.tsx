@@ -60,12 +60,12 @@ const Header: React.FC = () => {
 
   return (
     <>
-      <Head>
-        <link
+      <header>
+      <link
           href="https://fonts.googleapis.com/css?family=Poppins&display=optional"
           rel="stylesheet"
         />
-      </Head>
+      </header>
       <div>
         <div
           className={`top-0 left-0 right-0 w-full ${isLanding ? 'bg-transparent text-white' : 'bg-transparent text-white'} py-4`}
@@ -138,11 +138,9 @@ const Header: React.FC = () => {
                               </div>
                               <h1 className="text-sm font-regular text-white ml-3">Settings</h1>
                             </a>
-                            <a className="flex flex-row w-full px-2 hover:bg-opacity-10 hover:bg-white transition-all duration-300 rounded-lg items-center py-2 justify-between"
-                              onClick={logoutAndRedirect}>
-                              <div className="flex flex-row items-center">
-                                <IoSettingsSharp className="text-2xl" />
-                                <h1 className="text-sm font-regular text-white ml-3">Logout</h1>
+                            <a href="/settings" className="flex flex-row w-full px-2 hover:bg-opacity-10 hover:bg-white transition-all duration-300 rounded-lg items-center py-2">
+                              <div>
+                                <IoSettingsSharp className="w-[21px] h-[21px]" />
                               </div>
                               <h1 className="text-sm font-regular text-white ml-3">Settings</h1>
                             </a>
@@ -156,7 +154,9 @@ const Header: React.FC = () => {
                               </div>
                               <IoIosArrowForward />
                             </a>
-                            <a href="/" className="flex flex-row w-full px-2 hover:bg-opacity-10 hover:bg-white transition-all duration-300 rounded-lg items-center py-2">
+                            <a className="flex flex-row w-full px-2 hover:bg-opacity-10 cursor-pointer hover:bg-white transition-all duration-300 rounded-lg items-center py-2"
+                              onClick={logoutAndRedirect}
+                            >
                               <div>
                                 <TbLogout2 className="w-[21px] h-[21px]" />
                               </div>
