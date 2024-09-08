@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { signInWithEmailAndPassword } from 'firebase/auth'; 
 import { auth } from '../../firebase'; 
+import Link from 'next/link';
 
 const LoginForm: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -15,7 +16,7 @@ const LoginForm: React.FC = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4 w-full flex flex-col items-center">
+    <form onSubmit={handleSubmit} className="space-y-8 w-full flex flex-col items-center">
       <div className="w-full">
         <input
           id="email"
@@ -41,13 +42,21 @@ const LoginForm: React.FC = () => {
       </div>
 
       {error && <p className="text-red-500">{error}</p>}
+      <div className="flex flex-col space-y-2 w-full items-center">
+        <button type="submit" className="w-full px-6 py-3 rounded-3xl bg-[#FFC700] text-white font-semibold hover:bg-[#D8A620] transition duration-300">
+          Login
+        </button>
 
-      <button
-        type="submit"
-        className="w-[80%] px-6 py-3 rounded-3xl bg-[#7731E3] text-white font-semibold hover:bg-[#5d1abf] transition duration-300"
-      >
-        Login
-      </button>
+        <a href="/forgot-password" className="text-white text-sm mt-4 hover:underline">
+          Forgot Password?
+        </a>
+      </div>
+
+      <Link href="/signup" legacyBehavior>
+        <button className="w-full px-6 py-3 rounded-3xl bg-[#EF893C] text-white font-semibold hover:bg-[#CD7A4A] transition duration-300 mt-4">
+          Create an Account
+        </button>
+      </Link>
     </form>
   );
 };
