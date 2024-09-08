@@ -1,36 +1,13 @@
 // my-next-app/src/app/page.tsx
-"use client";
-
-import React, { useState } from 'react';
-import Link from 'next/link';
 import Header from '../components/protected/header';
-import { signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '@/firebase';
 import { FaFacebook, FaInstagram, FaGithub } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import Background from '../components/protected/background';
 import LoginForm from '@/components/landing/LoginForm';
 
+//Please use React useState and inputs in components, not in pages. Thank you. 
 
 const HomePage: React.FC = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-
-  const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
-    try {
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      console.log('Login success:', userCredential.user);
-      window.location.href = '/home';
-    }
-    catch (e) {
-      setError('Failed to login. Check your email or password.');
-      console.error('Error logging in: ', e);
-
-    }
-  }
-
   return (
     <div className="relative min-h-screen">
     <title>{"Sync"}</title>
