@@ -2,20 +2,15 @@
 import Header from '../../../components/protected/header';
 import SearchInput from '../../../components/protected/search-bar';
 import React, { useState, useEffect, useRef } from 'react';
-import { MdAccountCircle } from "react-icons/md";
+import { MdAccountCircle, MdAlternateEmail, MdEdit } from "react-icons/md";
 import { IoIosNotifications } from "react-icons/io";
 import { MdOutlineSecurity } from "react-icons/md";
 import { MdDelete } from "react-icons/md";
-<<<<<<< HEAD
-import { FaUserLarge } from "react-icons/fa6";
-import { MdAlternateEmail } from "react-icons/md";
-import { FaEdit } from "react-icons/fa";
-import { MdEdit } from "react-icons/md";
-=======
 import verifySession from '@/app/lib/middleware/verifySession';
 import { cookies } from 'next/headers'; // This helps you access cookies in Next.js 14
 import { redirect } from 'next/navigation';
->>>>>>> 6f2508929668f2222a70bc01060b7caf58a11e22
+import { FaUserLarge } from 'react-icons/fa6';
+import { FaEdit } from 'react-icons/fa';
 
 const ProfilePage = () => {
 
