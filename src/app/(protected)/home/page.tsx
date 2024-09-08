@@ -2,10 +2,24 @@
 
 import Header from '../../../components/protected/header';
 import DynamicCards from '../../../components/protected/dynamic-cards';
+import { cookies } from 'next/headers'; // This helps you access cookies in Next.js 14
+import { redirect } from 'next/navigation';
+import verifySession from '@/app/lib/middleware/verifySession';
 
 
+export default async function Home() {
 
-export default function Home() {
+  const cookieStore = cookies();
+  const authToken = cookieStore.get('authToken')?.value;
+
+  // Verify session using your middleware
+  const sessionResult = await verifySession(authToken);
+
+  // If the session is invalid, redirect to the login page
+  if (!sessionResult.success) {
+    redirect('/'); // Or any other route
+  }
+
   return (
     <div className="flex flex-col min-h-screen bg-[linear-gradient(45deg,_#82245C,_#81245C,_#732783,_#561C90,_#561C90,_#37249E,_#3D55B8)] text-white">
 

@@ -129,10 +129,11 @@ const Header: React.FC = () => {
                               <h1 className="text-sm font-regular text-white ml-3">Settings</h1>
                             </div>
                           </a>
-                          <a href="/settings" className="flex flex-row w-full px-2 hover:bg-opacity-10 hover:bg-white transition-all duration-300 rounded-lg items-center py-2 justify-between">
+                          <a className="flex flex-row w-full px-2 hover:bg-opacity-10 hover:bg-white transition-all duration-300 rounded-lg items-center py-2 justify-between"
+                            onClick={logoutAndRedirect}>
                             <div className="flex flex-row items-center">
                               <IoSettingsSharp className="text-2xl" />
-                              <h1 className="text-sm font-regular text-white ml-3">Settings</h1>
+                              <h1 className="text-sm font-regular text-white ml-3">Logout</h1>
                             </div>
                           </a>
                           <a onClick={() => toggleCard('display')} className="flex flex-row w-full px-2 cursor-pointer hover:bg-opacity-10 hover:bg-white transition-all duration-300 rounded-lg items-center py-2 justify-between">
@@ -185,5 +186,21 @@ const Header: React.FC = () => {
     </div>
   );
 };
+
+export async function logoutAndRedirect() {
+  try {
+    // Send a POST request to the logout API route
+    await fetch('/api/logout', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    window.location.href = '/';
+  } catch (error) {
+    console.error('Logout failed', error);
+  }
+}
+
 
 export default Header;
