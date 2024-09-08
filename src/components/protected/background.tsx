@@ -1,3 +1,5 @@
+"use client"
+
 import React, { useState, useEffect } from 'react';
 
 const Background: React.FC<{ defaultOpacity?: number; className?: string }> = ({ defaultOpacity = 0.1, className = '', ...props }) => {
