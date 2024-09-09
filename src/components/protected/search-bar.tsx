@@ -1,3 +1,5 @@
+'use client';
+
 // components/SearchInput.tsx
 import { useState } from 'react';
 import { IoMdSearch, IoIosCloseCircle } from 'react-icons/io';
@@ -45,7 +47,7 @@ const SearchInput: React.FC<SearchInputProps> = ({
         placeholder={placeholder}
         value={value}
         onChange={handleInputChange}
-        className={`border border-gray-300 rounded-xl px-2 py-2 text-black text-sm pl-9 w-full transition-all duration-300 ${
+        className={`border border-gray-300 rounded-xl px-2 py-2 shadow-[0_4px_8px_rgba(0,0,0,0.3)] text-black text-sm pl-9 w-full transition-all duration-300 ${
           isClicked ? 'pl-[10px]' : 'pl-9'
         }`}
         onFocus={() => setIsClicked(true)}
