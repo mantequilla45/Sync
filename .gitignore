@@ -38,3 +38,4 @@ next-env.d.ts
 .env
 
 /lib/*.json
+/src/app/lib/*.json
