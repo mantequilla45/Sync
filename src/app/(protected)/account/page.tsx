@@ -6,9 +6,6 @@ import { MdAccountCircle, MdAlternateEmail, MdEdit } from "react-icons/md";
 import { IoIosNotifications } from "react-icons/io";
 import { MdOutlineSecurity } from "react-icons/md";
 import { MdDelete } from "react-icons/md";
-import verifySession from '@/app/lib/middleware/verifySession';
-import { cookies } from 'next/headers'; // This helps you access cookies in Next.js 14
-import { redirect } from 'next/navigation';
 import { FaUserLarge } from 'react-icons/fa6';
 import { FaEdit } from 'react-icons/fa';
 
