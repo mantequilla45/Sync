@@ -1,6 +1,6 @@
 
 import * as admin from 'firebase-admin';
-import serviceAccount from '../../../lib/hostingtest-aadc2-firebase-adminsdk-s9rmc-a75b9b5849.json';
+import serviceAccount from './hostingtest-aadc2-firebase-adminsdk-s9rmc-a75b9b5849.json';
 
 if (!admin.apps.length) {
   admin.initializeApp({
@@ -17,3 +17,4 @@ export const verifyIdToken = async (token: string) => {
   };
 
 export default admin;
+export const auth = admin.auth();
