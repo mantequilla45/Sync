@@ -2,10 +2,10 @@
     "name": "sync",
     "version": "1.0.0",
     "scripts": {
-      "frontend": "cd web && npm run dev",
-      "backend": "cd server && nodemon",
+      "next": "cd web && npm run dev",
+      "server": "cd server && nodemon",
       "start": "npm run frontend & npm run backend",
-      "rs": "cd web && rs"
+      "rs": "cd server && rs"
     }
   }
   
