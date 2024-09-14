@@ -5,6 +5,7 @@ import {
   redirectToHome,
   redirectToLogin
 } from 'next-firebase-auth-edge';
+import { serialize } from 'cookie';
 
 const PUBLIC_PATHS = ['/register', '/login', '/reset-password', '/'];
 
@@ -32,6 +33,8 @@ export async function middleware(request: NextRequest) {
       });
     },
     handleInvalidToken: async (_reason) => {
+      console.log("1 " + _reason);
+
       return redirectToLogin(request, {
         path: '/',
         publicPaths: PUBLIC_PATHS
@@ -39,7 +42,7 @@ export async function middleware(request: NextRequest) {
     },
     handleError: async (error) => {
       console.error('Unhandled authentication error', {error});
-
+      console.log("2 " + error);
       return redirectToLogin(request, {
         path: '/',
         publicPaths: PUBLIC_PATHS
