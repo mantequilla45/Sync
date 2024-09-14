@@ -4,13 +4,17 @@ import React, { useState } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase";
 import { FaArrowRightLong, FaArrowLeftLong } from "react-icons/fa6";
+import { LuMail } from "react-icons/lu";
+import { MdLockOutline } from "react-icons/md";
+
+
 
 const LoginForm: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [isLogin, setIsLogin] = useState(true); // Toggle between login and signup
-  const [isFadingOut, setIsFadingOut] = useState(false); // Manage visibility for fade effect
+  const [isTransitioning, setIsTransitioning] = useState(false); // Manage the transition effect
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -24,14 +28,14 @@ const LoginForm: React.FC = () => {
   const toggleForm = () => {
     setError(""); // Clear any previous errors
 
-    // Trigger the slide and fade out transition
-    setIsFadingOut(true);
+    // Trigger the transition
+    setIsTransitioning(true);
 
-    // Wait for both the slide and fade-out to finish
+    // Wait for the transition to finish
     setTimeout(() => {
       setIsLogin(!isLogin); // Toggle between login and signup
-      setIsFadingOut(false); // Start fade-in
-    }, 300); // 300ms for the slide and fade transition
+      setIsTransitioning(false); // Reset transition state
+    }, 300); // 300ms for the transition
   };
 
   return (
@@ -53,7 +57,7 @@ const LoginForm: React.FC = () => {
       </div>
 
       {/* Title container */}
-      <div className="relative w-full h-[40px] overflow-hidden ml-5">
+      <div className="relative w-full h-[50px] overflow-hidden ml-5">
         <div
           className="absolute flex w-[200%] transition-all duration-300 ease-in-out"
           style={{
@@ -61,7 +65,7 @@ const LoginForm: React.FC = () => {
           }}  
         >
           <h2 className="w-1/2 text-2xl font-regular">Welcome back!</h2>
-          <h2 className="w-1/2 text-2xl font-regular mt-[10px]">Create your Account!</h2>
+          <h2 className="w-1/2 text-2xl font-regular mt-[15px]">Create your Account!</h2>
         </div>
       </div>
 
@@ -74,13 +78,9 @@ const LoginForm: React.FC = () => {
             }}
           >
             {/* Login Form */}
-            
             <div
-              className={`w-1/2 z-10 transition-transform duration-300 ease-in-out transform ${
-                isFadingOut
-                  ? "-translate-x-full opacity-0"
-                  : "translate-x-0 opacity-100"
-              }`}
+              className={`w-1/2 z-10 transition-opacity duration-300 ease-in-out ${isTransitioning ? "opacity-0" : "opacity-100"}`}
+              style={{ transform: isLogin ? "translateX(0%)" : "translateX(-100%)" }}
             >
               <form
                 onSubmit={handleSubmit}
@@ -141,16 +141,11 @@ const LoginForm: React.FC = () => {
 
             {/* Signup Form */}
             <div
-              className={`w-1/2 mt-[20px] transition-transform duration-300 ease-in-out transform ${
-                isFadingOut
-                  ? "translate-x-full opacity-0"
-                  : "translate-x-0 opacity-100"
-              }`}
+              className={`w-1/2 transition-opacity duration-300 ease-in-out ${isTransitioning ? "opacity-0" : "opacity-100"}`}
+              style={{ transform: isLogin ? "translateX(100%)" : "translateX(0%)" }}
             >
-              <div className="text-white text-sm ml-[10px]">
-                Create an account to view and manage your projects.
-              </div>
-              <form className="space-y-8 w-full flex flex-col items-center">
+              
+              <form className="space-y-7 w-full flex flex-col items-center">
                 {/* Back to Login button positioned above the title */}
                 <div
                   className={`absolute top-4 left-4 transition-transform duration-300 ease-in-out ${
@@ -168,21 +163,35 @@ const LoginForm: React.FC = () => {
                 </div>
 
                 {/* Signup form fields */}
-                <div className="w-full">
+                <div className="relative w-full">
+                  <LuMail className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500 text-lg" />
                   <input
                     id="signup-email"
                     type="email"
-                    className="w-full px-5 py-3 rounded-3xl bg-gray-100 text-gray-800 shadow-inner focus:outline-none focus:ring-0 focus:shadow-[inset_0_0_0_1px_#9C9C9C]"
+                    className="w-full pl-12 px-5 py-3 rounded-3xl bg-gray-100 text-gray-800 shadow-inner focus:outline-none focus:ring-0 focus:shadow-[inset_0_0_0_1px_#9C9C9C]"
                     placeholder="Email"
                   />
                 </div>
 
-                <div className="w-full">
+
+                <div className="relative w-full">
+                <MdLockOutline className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500 text-lg" />
+
                   <input
                     id="signup-password"
                     type="password"
-                    className="w-full px-5 py-3 rounded-3xl bg-gray-100 text-gray-800 shadow-inner focus:outline-none focus:ring-0 focus:shadow-[inset_0_0_0_1px_#9C9C9C]"
+                    className="w-full pl-12 px-5 py-3 rounded-3xl bg-gray-100 text-gray-800 shadow-inner focus:outline-none focus:ring-0 focus:shadow-[inset_0_0_0_1px_#9C9C9C]"
                     placeholder="Password"
+                  />
+                </div>
+                <div className="relative w-full">
+                <MdLockOutline className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500 text-lg" />
+
+                  <input
+                    id="signup-password"
+                    type="password"
+                    className="w-full pl-12 px-5 py-3 rounded-3xl bg-gray-100 text-gray-800 shadow-inner focus:outline-none focus:ring-0 focus:shadow-[inset_0_0_0_1px_#9C9C9C]"
+                    placeholder="Confirm Password"
                   />
                 </div>
 
