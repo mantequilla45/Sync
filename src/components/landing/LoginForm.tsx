@@ -72,7 +72,7 @@ const LoginForm: React.FC = () => {
       <div className="space-y-4 w-full flex flex-col items-center">
         <div className="relative h-[325px] w-full overflow-hidden">
           <div
-            className="relative flex w-[200%] transition-all duration-300 ease-in-out"
+            className="relative flex w-[200%] h-full transition-all duration-300 ease-in-out"
             style={{
               transform: isLogin ? "translateX(0%)" : "translateX(-50%)", // Toggle between login and signup forms
             }}
@@ -84,7 +84,7 @@ const LoginForm: React.FC = () => {
             >
               <form
                 onSubmit={handleSubmit}
-                className="space-y-8 w-full flex flex-col items-center"
+                className="justify-between w-full flex h-full flex-col items-center"
               >
                 <div className="w-full">
                   <input
@@ -131,7 +131,7 @@ const LoginForm: React.FC = () => {
                 <button
                   type="button"
                   onClick={toggleForm}
-                  className="flex flex-rows items-center justify-center gap-6 w-full px-6 py-3 rounded-3xl text-white font-semibold hover:text-[#D4D4D4] transition duration-300 mt-4"
+                  className="flex flex-rows items-center justify-center gap-6 w-full rounded-3xl text-white font-semibold hover:text-[#D4D4D4] transition duration-300 mt-7"
                 >
                   Create an Account
                   <FaArrowRightLong className="text-lg" />
