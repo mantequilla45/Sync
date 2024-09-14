@@ -22,19 +22,14 @@ const HomePage: React.FC = () => {
                 Seamlessly collaborate in real-time with Sync. Experience a streamlined workflow with advanced features tailored for teams and projects of all sizes.
               </p>
             </div>
-            <div className="bg-[linear-gradient(to_top_right,_#9B2B77,_#CF4E7D,_#D78E61)] text-white shadow-lg rounded-2xl px-12 py-12 w-[35%] h-auto mx-auto flex flex-col items-center">
-              <h2 className="text-2xl font-regular mb-6">Welcome back!</h2>
-              <div className="space-y-4 w-full flex flex-col items-center">
-                <LoginForm/>
-                </div>
-              </div>
+            <LoginForm/>
             </div>
           </div>
           <div className="flex mb-[20px] flex-row w-full h-[100px] items-center gap-5 justify-between px-[300px]">
             <div className="flex space-x-6">
               <a href='/about' className="text-sm">About</a>
               <a href='/contact-us' className="text-sm">Contact us</a>
-              <a href='/our-team' className="text-sm">Our Team</a>
+              <a href='/about-us' className="text-sm">Our Team</a>
             </div>
             <div className="flex flex-row gap-6">
               <FaXTwitter className="w-[30px] h-[30px]" />
