@@ -3,11 +3,12 @@ import type { NextRequest } from 'next/server';
 import {
   authMiddleware,
   redirectToHome,
-  redirectToLogin
+  redirectToLogin,
 } from 'next-firebase-auth-edge';
-import { serialize } from 'cookie';
+import { redirect } from 'next/navigation';
 
-const PUBLIC_PATHS = ['/register', '/login', '/reset-password', '/'];
+const PATH = ['/about', '/login', '/about', '/'];
+const PUBLIC_PATHS = ['/register', '/login', '/', '/about',];
 
 export async function middleware(request: NextRequest) {
   return authMiddleware(request, {
@@ -21,11 +22,6 @@ export async function middleware(request: NextRequest) {
     cookieSignatureKeys: authConfig.cookieSignatureKeys,
     serviceAccount: authConfig.serviceAccount,
     handleValidToken: async ({token, decodedToken, customToken}, headers) => {
-
-      if (PUBLIC_PATHS.includes(request.nextUrl.pathname)) {
-        return redirectToHome(request);
-      }
-
       return NextResponse.next({
         request: {
           headers

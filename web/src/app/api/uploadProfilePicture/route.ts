@@ -6,7 +6,7 @@ import admin from '@/lib/FirebaseAdmin';
 
 export async function POST(req: Request) {
   try {
-    // Extract the file from the request
+    
     const formData = await req.formData();
     const file = formData.get('file') as File;
 
