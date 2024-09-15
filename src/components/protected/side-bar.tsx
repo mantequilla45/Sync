@@ -3,6 +3,10 @@
 import React, { useState } from 'react';
 import { RxHamburgerMenu } from "react-icons/rx";
 import { IoHomeOutline } from "react-icons/io5";
+import { LuInfo } from "react-icons/lu";
+import { LuMail } from "react-icons/lu";
+import { FaUsers } from "react-icons/fa";
+
 
 const HamburgerMenu: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -39,37 +43,52 @@ const HamburgerMenu: React.FC = () => {
           <h1 onClick={toggleMenu} className="text-2xl font-bold mx-2 cursor-pointer">Sync</h1>
           <div className="w-[100%] bg-transparent h-[38px] flex items-center justify-center"></div>
         </div>
-        <div className="p-4">
+        <div className="p-4 flex flex-col justify-between h-[879px]">
           {/* Add your menu items here */}
           <div className="space-y-1">
-            <div className="p-2 flex rounded-lg hover:bg-opacity-10 hover:bg-white transition-all duration-300">
+            <a href="/home" className="p-2 flex rounded-lg hover:bg-opacity-10 hover:bg-white transition-all duration-300">
                 <IoHomeOutline className="text-2xl" />
-                <a href="/home" className="block mx-4 ">Home</a>
-            </div>
-            <div className="p-2 flex rounded-lg hover:bg-opacity-10 hover:bg-white transition-all duration-300">
+                <div className="block mx-4 ">Home</div>
+            </a>
+            <a href="/home" className="p-2 flex rounded-lg hover:bg-opacity-10 hover:bg-white transition-all duration-300">
                 <IoHomeOutline className="text-2xl" />
-                <a href="/home" className="block mx-4">Home</a>
-            </div>
-            <div className="p-2 flex rounded-lg hover:bg-opacity-10 hover:bg-white transition-all duration-300">
+                <div className="block mx-4">Home</div>
+            </a>
+            <a href="/home" className="p-2 flex rounded-lg hover:bg-opacity-10 hover:bg-white transition-all duration-300">
                 <IoHomeOutline className="text-2xl" />
-                <a href="/home" className="block mx-4">Home</a>
-            </div>
-            <div className="p-2 flex rounded-lg hover:bg-opacity-10 hover:bg-white transition-all duration-300">
+                <div className="block mx-4">Home</div>
+            </a>
+            <a href="/home" className="p-2 flex rounded-lg hover:bg-opacity-10 hover:bg-white transition-all duration-300">
                 <IoHomeOutline className="text-2xl" />
-                <a href="/home" className="block mx-4 ">Home</a>
-            </div>
-            <div className="p-2 flex rounded-lg hover:bg-opacity-10 hover:bg-white transition-all duration-300">
+                <div className="block mx-4">Home</div>
+            </a>
+            <a href="/home" className="p-2 flex rounded-lg hover:bg-opacity-10 hover:bg-white transition-all duration-300">
                 <IoHomeOutline className="text-2xl" />
-                <a href="/home" className="block mx-4">Home</a>
-            </div>
-            <div className="p-2 flex rounded-lg hover:bg-opacity-10 hover:bg-white transition-all duration-300">
+                <div className="block mx-4">Home</div>
+            </a>
+            <a href="/home" className="p-2 flex rounded-lg hover:bg-opacity-10 hover:bg-white transition-all duration-300">
                 <IoHomeOutline className="text-2xl" />
-                <a href="/home" className="block mx-4">Home</a>
-            </div>
+                <div  className="block mx-4">Home</div>
+            </a>
             <div className="p-2 flex rounded-lg hover:bg-opacity-10 hover:bg-white transition-all duration-300">
                 <IoHomeOutline className="text-2xl" />
                 <a href="/home" className="block mx-4">Your Projects</a>
             </div>
+          </div>
+
+          <div className="space-y-1 text-sm">
+            <a href="/about" className="p-2 flex rounded-lg hover:bg-opacity-10 hover:bg-white transition-all duration-300 ">
+              <LuInfo className="text-xl" />
+              <div className="block mx-4">About</div>
+            </a>
+            <a href="/contact-us" className="p-2 flex rounded-lg hover:bg-opacity-10 hover:bg-white transition-all duration-300">
+              <LuMail className="text-xl" />
+              <div className="block mx-4">Contact Us</div>
+            </a>
+            <a href="/about-us" className="p-2 flex rounded-lg hover:bg-opacity-10 hover:bg-white transition-all duration-300">
+              <FaUsers className="text-xl" />
+              <div className="block mx-4">Our Team</div>
+            </a>
           </div>
         </div>
       </div>

@@ -133,34 +133,34 @@ const ProfilePage = () => {
 
                     </div>
                     <div className="flex flex-col ml-10 h-[200px] justify-center">
-                      <h2 className="text-3xl text-[#8543C6] font-extrabold">Profile Photo</h2>
+                      <h2 className="text-3xl text-[#69369B] font-extrabold">Profile Photo</h2>
                       <h2 className="text-sm text-[#888787]">This will be displayed on your profile</h2>
                     </div>
                   </div>
                 </div>
                 <div className="w-full flex flex-row mt-6 gap-[25px] px-7">
                   <div className="flex w-[50%] flex-col">
-                    <h2 className="text-xl text-[#8543C6] font-bold mb-3 ml-[10px]">Name</h2>
+                    <h2 className="text-xl text-[#69369B] font-bold mb-3 ml-[10px]">Name</h2>
                     <div className="flex items-center">
                       <div className="relative w-full">
                         <FaUserLarge className="absolute left-4 top-1/2 transform -translate-y-1/2 text-2xl text-black rounded-full" />
                         <input
                           type="text"
                           placeholder="Enter your name"
-                          className="w-full pl-2 pl-[50px] pr-[25px] py-4 bg-[#F4F4F4] text-[#626262] border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-[#8543C6]"
+                          className="w-full pl-2 pl-[50px] pr-[25px] py-4 bg-[#F4F4F4] text-[#626262] border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-[#69369B]"
                         />
                       </div>
                     </div>
                   </div>
                   <div className="flex w-[50%] flex-col">
-                    <h2 className="text-xl text-[#8543C6] font-bold mb-3 ml-[10px]">Email</h2>
+                    <h2 className="text-xl text-[#69369B] font-bold mb-3 ml-[10px]">Email</h2>
                     <div className="flex items-center">
                       <div className="relative w-full">
                         <MdAlternateEmail className="absolute left-4 top-1/2 transform -translate-y-1/2 text-2xl text-black rounded-full" />
                         <input
                           type="email"
                           placeholder="Enter your email"
-                          className="w-full pl-2 pl-[50px] pr-[25px] py-4 bg-[#F4F4F4] text-[#626262] border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-[#8543C6]"
+                          className="w-full pl-2 pl-[50px] pr-[25px] py-4 bg-[#F4F4F4] text-[#626262] border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-[#69369B]"
                         />
                       </div>
                     </div>
@@ -177,19 +177,19 @@ const ProfilePage = () => {
 
               {/* Notifications */}
               <div className="flex-1 bg-white rounded-xl shadow-md p-5">
-                <h2 className="text-2xl text-[#8543C6] font-semibold mb-4">Notification</h2>
+                <h2 className="text-2xl text-[#69369B] font-semibold mb-4">Notification</h2>
                 <p className="text-gray-700">This is some content inside the second card.</p>
               </div>
 
               {/* Password and Security */}
               <div className="flex-1 bg-white rounded-xl shadow-md p-5">
-                <h2 className="text-2xl text-[#8543C6] font-semibold mb-4">Password and Security</h2>
+                <h2 className="text-2xl text-[#69369B] font-semibold mb-4">Password and Security</h2>
                 <p className="text-gray-700">This is some content inside the second card.</p>
               </div>
 
               {/* Account Deletion */}
               <div className="flex-1 bg-white rounded-xl shadow-md p-5">
-                <h2 className="text-2xl text-[#8543C6] font-semibold mb-4">Delete Account</h2>
+                <h2 className="text-2xl text-[#69369B] font-semibold mb-4">Delete Account</h2>
                 <p className="text-gray-700">This is some content inside the second card.</p>
               </div>
             </div>
