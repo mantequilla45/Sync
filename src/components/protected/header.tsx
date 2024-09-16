@@ -62,7 +62,7 @@ const Header: React.FC = () => {
     <>
       <header>
       <link
-          href="https://fonts.googleapis.com/css?family=Poppins&display=optional"
+          href="https://fonts.googleapis.com/css?family=Poppins:wght@400;700;900&display=optional"
           rel="stylesheet"
         />
       </header>
