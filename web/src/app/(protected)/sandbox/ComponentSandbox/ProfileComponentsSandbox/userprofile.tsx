@@ -2,14 +2,12 @@
 
 import { useAuth } from "@/auth/AuthContext";
 import React, { useEffect, useState } from 'react';
-import { useUserStore } from "../../ZustandSandbox/authStore";
-import { storage } from "@/firebase"; // Import Firebase storage configuration
+import { storage, auth } from "@/firebase"; // Import Firebase storage configuration
 import { ref, getDownloadURL } from "firebase/storage"; // Import necessary Firebase Storage methods
 import Image from 'next/image';
 
 const ProfilePage: React.FC = () => {
   const { user } = useAuth(); // Get user from auth context
-  const { updateProfilePicture } = useUserStore(); // Use Zustand store for profile update
   const [imageUrl, setImageUrl] = useState<string | null>(null); // Local state to manage the image URL
 
   const handleProfilePictureChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -49,9 +47,10 @@ const fetchImageUrl = async (photoURL: string | null, storage: any): Promise<str
     const storageRef = ref(storage, photoURL); 
     const url = await getDownloadURL(storageRef); 
     if (url) {
-      updateProfilePicture(url); 
       setImageUrl(url);
+      await auth.currentUser?.getIdToken(true);   
     }
+    console.log(url)
     return url;
     
   } catch (err) {
@@ -68,7 +67,7 @@ useEffect(() => {
   };
 
   getImageUrl();
-}, [user?.photoURL, updateProfilePicture]);
+}, [user?.photoURL]);
 
   return (
     <div>

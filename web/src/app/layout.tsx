@@ -50,7 +50,6 @@ export default async function RootLayout({
 
   const tokens = await getTokens(cookies(), authConfig);
   const user = tokens ? toUser(tokens) : null;
-
   return (
     <html lang="en">
       <body className={inter.className}>

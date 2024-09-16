@@ -38,7 +38,7 @@ const LoginForm: React.FC = () => {
     }, 300); // 300ms for the transition
   };
 
-  if(user === null){
+  if(user.user !== null){
     return;
   }
 
