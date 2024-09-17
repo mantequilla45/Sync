@@ -1,4 +1,3 @@
-
 import ProfilePage from './ComponentSandbox/ProfileComponentsSandbox/userprofile';
 
 const Sandbox: React.FC = () => {

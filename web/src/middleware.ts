@@ -4,8 +4,7 @@ import {
   authMiddleware,
   redirectToLogin,
 } from 'next-firebase-auth-edge';
-  const PATH = ['/about', '/login', '/about', '/'];
-  const PUBLIC_PATHS = ['/register', '/login', '/', '/about',];
+  const PUBLIC_PATHS = ['/register', '/login', '/', '/about-us', '/contact-us'];
 
   export async function middleware(request: NextRequest) {
     return authMiddleware(request, {

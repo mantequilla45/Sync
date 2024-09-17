@@ -8,8 +8,7 @@ import Image from 'next/image';
 
 const ProfilePage: React.FC = () => {
   const { user } = useAuth(); // Get user from auth context
-  const [imageUrl, setImageUrl] = useState<string | null>(null); // Local state to manage the image URL
-
+  const [imageUrl, setImageUrl] = useState<string | null>(null);
   const handleProfilePictureChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file && user) {
@@ -75,13 +74,13 @@ useEffect(() => {
       <div>
         {/* Render the user's profile picture or a placeholder */}
         <Image 
-          src={imageUrl || '/default-profile.png'} 
+          src={imageUrl ?? '/default-profile.png'} 
           alt="Profile" 
           width={150} 
           height={150} 
           priority // to optimize the image loading
         />
-        <h2>{user?.email || 'Guest User'}</h2> {/* Display user's email or fallback */}
+        <h2>{user?.email ?? 'Guest User'}</h2> {/* Display user's email or fallback */}
       </div>
       <input type="file" accept="image/*" onChange={handleProfilePictureChange} /> {/* Upload input */}
     </div>
