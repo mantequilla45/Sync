@@ -17,14 +17,24 @@ import {
       cookieSerializeOptions: authConfig.cookieSerializeOptions,
       cookieSignatureKeys: authConfig.cookieSignatureKeys,
       serviceAccount: authConfig.serviceAccount,
-      handleValidToken: async ({token, decodedToken, customToken}, headers) => {
+      handleValidToken: async ({ token, decodedToken, customToken }, headers) => {
+        const { nextUrl } = request;
+        
 
+        if (nextUrl.pathname === "/") {
+          const absoluteUrl = `${nextUrl.protocol}//${nextUrl.host}/home`;
+          return NextResponse.redirect(absoluteUrl);
+        }
+      
+        // Proceed with the request and pass the headers
         return NextResponse.next({
           request: {
-            headers
-          }
+            headers,
+          },
         });
       },
+      
+      
       
       handleInvalidToken: async (_reason) => {
         console.log("1 " + _reason);

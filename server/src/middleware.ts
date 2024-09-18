@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { verifyIdToken } from './lib/FirebaseAdmin';
+import { verifyIdToken } from './actions/_index';
 
 export const authenticateFirebaseToken = async (req: Request, res: Response, next: NextFunction) => {
     const idToken = req.headers.authorization?.split('Bearer ')[1];

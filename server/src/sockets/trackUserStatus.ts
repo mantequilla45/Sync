@@ -1,5 +1,5 @@
 import { Socket } from 'socket.io';
-import { updateUserStatus } from '../lib/FirebaseAdmin';
+import { updateUserStatus } from '../actions/StatusUpdate';
 import { UserStatus } from '../../../_shared/enums';
 
 // Function to handle user status when they connect

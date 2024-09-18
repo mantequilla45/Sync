@@ -5,7 +5,7 @@ import { Server } from 'socket.io';
 import { TestRoute } from './routes/TestRoute';
 import { corsConfig, socketCORSConfig } from './config/corsConfig';
 import { authenticateFirebaseToken } from './middleware';
-import { updateUserStatus } from './lib/FirebaseAdmin';
+import { updateUserStatus } from './actions/StatusUpdate';
 import { trackUserStatus } from './sockets/trackUserStatus';
 import { UserStatus } from '../../_shared/enums';
 
