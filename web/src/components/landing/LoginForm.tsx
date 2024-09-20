@@ -1,8 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../firebase";
+import { login, register } from "./FormFunctions";
 import { FaArrowRightLong, FaArrowLeftLong } from "react-icons/fa6";
 import { LuMail } from "react-icons/lu";
 import { MdLockOutline } from "react-icons/md";
@@ -21,7 +20,8 @@ const LoginForm: React.FC = () => {
     if (isLogin) {
       login(email, password, setError);
     } else {
-      console.log("Signup functionality goes here");
+      e.preventDefault();
+      register(email, password, password, setError);
     }
   };
 
@@ -149,7 +149,8 @@ const LoginForm: React.FC = () => {
               style={{ transform: isLogin ? "translateX(100%)" : "translateX(0%)" }}
             >
               
-              <form className="space-y-7 w-full flex flex-col items-center">
+              <form className="space-y-7 w-full flex flex-col items-center"
+                onSubmit={handleSubmit}>
                 {/* Back to Login button positioned above the title */}
                 <div
                   className={`absolute top-4 left-4 transition-transform duration-300 ease-in-out ${
@@ -174,6 +175,9 @@ const LoginForm: React.FC = () => {
                     type="email"
                     className="w-full pl-12 px-5 py-3 rounded-3xl bg-gray-100 text-gray-800 shadow-inner focus:outline-none focus:ring-0 focus:shadow-[inset_0_0_0_1px_#9C9C9C]"
                     placeholder="Email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
                   />
                 </div>
 
@@ -186,6 +190,9 @@ const LoginForm: React.FC = () => {
                     type="password"
                     className="w-full pl-12 px-5 py-3 rounded-3xl bg-gray-100 text-gray-800 shadow-inner focus:outline-none focus:ring-0 focus:shadow-[inset_0_0_0_1px_#9C9C9C]"
                     placeholder="Password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
                   />
                 </div>
                 <div className="relative w-full">
@@ -218,38 +225,3 @@ const LoginForm: React.FC = () => {
 
 export default LoginForm;
 
-// Login function (unchanged)
-export const login = async (
-  email: string,
-  password: string,
-  setError: (message: string) => void
-) => {
-  setError(""); // Clear previous errors
-
-  try {
-    const userCredential = await signInWithEmailAndPassword(auth, email, password);
-    const idToken = await userCredential.user.getIdToken();
-
-    const response = await fetch("/api/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${idToken}`,
-      },
-      body: JSON.stringify({}),
-    });
-
-    const data = await response.json();
-
-    if (response.ok) {
-      console.log("Login success:", data);
-      window.location.href = "/home";
-    } else {
-      setError(data.error || "Failed to login.");
-      console.error("Error:", data.error);
-    }
-  } catch (e) {
-    setError("Failed to login. Check your email or password.");
-    console.error("Error logging in:", e);
-  }
-};

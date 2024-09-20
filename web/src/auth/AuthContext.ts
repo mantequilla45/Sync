@@ -1,9 +1,8 @@
 import {createContext, useContext} from 'react';
 import { Claims } from 'next-firebase-auth-edge/lib/auth/claims';
 import { UserInfo as FirebaseUserInfo } from 'firebase/auth';  
-import { User as AppUser } from '../../../_shared/interface';
  
-export interface User extends AppUser, FirebaseUserInfo {
+export interface User extends FirebaseUserInfo {
   emailVerified: boolean;
   customClaims: Claims;
 }
