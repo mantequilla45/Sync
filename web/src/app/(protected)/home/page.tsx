@@ -2,10 +2,6 @@
 
 import Header from '../../../components/protected/header';
 import DynamicCards from '../../../components/protected/dynamic-cards';
-import { cookies } from 'next/headers'; // This helps you access cookies in Next.js 14
-import { redirect } from 'next/navigation';
-import verifySession from '@/app/lib/middleware/verifySession';
-
 
 export default async function Home() {
 

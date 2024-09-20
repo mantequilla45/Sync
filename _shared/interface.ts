@@ -2,9 +2,9 @@ import { UserStatus, TaskPriority, TaskStatus } from "./enums";
 
 export interface User {
     readonly uid: string;
-    workplaces?: Workplace[];
+    workplaces?: string[]; //workplace uid
     status?: UserStatus;
-    lastActive?: number; // Unix timestamp in milliseconds
+    lastActive?: number; 
 }
 
 export interface Workplace {
@@ -20,11 +20,11 @@ export interface Task {
     UID: string;
     description: string;
     assignees: string[];
-    dueDate: number; // Unix timestamp in milliseconds
+    dueDate: number; 
     priority: TaskPriority;
     status: TaskStatus;
     createdBy: string;
-    createdAt: number; // Unix timestamp in milliseconds
+    createdAt: number; 
 }
 
 export interface WorkplaceRole {
@@ -40,7 +40,7 @@ export interface Document {
     UID: string;
     title: string;
     filePath: string;
-    lastModifiedAt: number; // Unix timestamp in milliseconds
+    lastModifiedAt: number; 
     lastEditedBy?: string;
     collaborators?: string[];
     activeUsers?: string[];
@@ -59,12 +59,12 @@ export interface Comment {
     UID: string;
     text: string;
     createdBy: string;
-    createdAt: number; // Unix timestamp in milliseconds
+    createdAt: number; 
     resolved: boolean;
 }
 
 export interface DocumentVersion {
-    timestamp: number; // Unix timestamp in milliseconds
+    timestamp: number; 
     user: string;
     content: string;
     changeSummary?: string;
@@ -76,5 +76,5 @@ export interface Notification {
     message: string;
     relatedDocumentUID?: string;
     relatedTaskUID?: string;
-    createdAt: number; // Unix timestamp in milliseconds
+    createdAt: number; 
 }
