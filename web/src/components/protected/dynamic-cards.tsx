@@ -19,28 +19,27 @@ const DynamicCards: React.FC<DynamicCardsProps> = ({ cardCount }) => {
   const cards = Array.from({ length: cardCount }, (_, i) => i + 1); // Generate card numbers
 
   return (
-    <div className="grid gap-10" style={{ gridTemplateRows: `repeat(${rows}, minmax(0, 1fr))` }}>
+    <div className="grid gap-7" style={{ gridTemplateRows: `repeat(${rows}, minmax(0, 1fr))` }}>
       {Array.from({ length: rows }).map((_, rowIndex) => (
-        <div key={rowIndex} className="grid grid-cols-4 gap-10">
+        <div key={rowIndex} className="grid grid-cols-4 gap-6">
           {cards.slice(rowIndex * 4, rowIndex * 4 + 4).map((card) => (
             <div key={card} className="flex flex-col items-center">
-            {/* Card */}
-            <div
-              className="bg-gray-200 rounded-xl border border-gray-300 relative"
-              style={{ width: '100%', paddingBottom: '75%' }}
-            >
-              <div className="absolute inset-0 flex items-center justify-center text-black">
-                {card}
+              {/* Card */}
+              <div
+                className="bg-gray-200 rounded-xl border border-gray-300 relative"
+                style={{ width: '90%', paddingBottom: '67.5%' }} // Reduced by 10%
+              >
+                <div className="absolute inset-0 flex items-center justify-center text-black">
+                  {card}
+                </div>
+              </div>
+              
+              {/* Icon and Project Title below the card */}
+              <div className="mt-4 px-4 w-full flex items-center justify-start">
+                <FaProjectDiagram className="text-gray-500 text-xl" />
+                <p className="text-black pl-2">Project {card}</p>
               </div>
             </div>
-            
-            {/* Icon and Project Title below the card */}
-            <div className="mt-4 px-4 w-full flex items-center justify-start">
-              <FaProjectDiagram className="text-gray-500 text-xl" />
-              <p className="text-black pl-2">Project {card}</p>
-            </div>
-          </div>
-          
           ))}
         </div>
       ))}

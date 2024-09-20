@@ -69,7 +69,7 @@ const ContactUs = () => {
                 <div 
                     className={`fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50 transition-opacity duration-200 ease-in-out ${isModalOpen ? 'opacity-100' : 'opacity-0'}`}
                 >
-                    <div className={`bg-white rounded-lg p-8 max-w-lg w-full transform transition-transform duration-300 ease-in-out ${isModalOpen ? 'scale-100' : 'scale-95'}`}>
+                    <div className={`bg-white rounded-lg p-10 max-w-lg w-full transform transition-transform duration-300 ease-in-out ${isModalOpen ? 'scale-100' : 'scale-95'}`}>
                         <div className="flex justify-between items-start">
                             <h2 className="text-2xl font-semibold mb-4 text-[#69369B]">Get in Touch</h2>
                             <button onClick={closeModal} className="text-gray-500 hover:text-gray-700 transition">
