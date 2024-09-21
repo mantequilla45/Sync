@@ -2,12 +2,11 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import { createServer } from 'http';
 import { Server } from 'socket.io';
-import { TestRoute } from './routes/TestRoute';
 import { corsConfig, socketCORSConfig } from './config/corsConfig';
 import { authenticateFirebaseToken } from './middleware';
-import { updateUserStatus } from './actions/StatusUpdate';
 import { trackUserStatus } from './sockets/trackUserStatus';
-import { UserStatus } from '../../_shared/enums';
+import { DocumentRoute } from './routes/DocumentRoute';
+import { editDocumentTentative } from './sockets/editDocumentTentative';
 
 const app = express();
 
@@ -16,31 +15,29 @@ app.use(corsConfig);
 app.use(bodyParser.json());
 
 // API Routes
-app.use('/api', authenticateFirebaseToken, TestRoute);
+app.use('/api', authenticateFirebaseToken, DocumentRoute);
 
 // Create HTTP server
 const httpServer = createServer(app);
 
 // Setup Socket.IO with existing CORS configuration
 const io = new Server(httpServer, {
-    cors: socketCORSConfig,
+  cors: socketCORSConfig,
 });
 
 // Socket.IO connection handler
 io.on('connection', (socket) => {
-    const uid = socket.handshake.query.uid as string; // Get uid from client-side
-    console.log(uid);
-    if (!uid) {
-      socket.disconnect(); // Disconnect if no UID is provided
-      return;
-    }
+  const uid = socket.handshake.query.uid as string; // Get uid from client-side
+  console.log(uid);
+  if (!uid) {
+    socket.disconnect(); // Disconnect if no UID is provided
+    return;
+  }
 
-    // Track the user's online status when connected
-    trackUserStatus(uid, socket);
 
-    // Update Firebase when a user disconnects (e.g., browser is closed)
+  trackUserStatus(uid, socket);
+  editDocumentTentative(socket);
 
-    
 });
 
 // Export the HTTP server for starting
