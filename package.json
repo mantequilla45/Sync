@@ -6,8 +6,5 @@
         "server": "cd server && nodemon",
         "start": "npm run frontend & npm run backend",
         "rs": "cd server && rs"
-    },
-    "dependencies": {
-        "react-quill": "^2.0.0"
     }
 }

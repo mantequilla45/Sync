@@ -15,4 +15,8 @@ export const trackUserStatus = (uid: string, socket: Socket) => {
   socket.on('user-inactive', () => {
     updateUserStatus(uid, UserStatus.Away); // Set to "Away" after inactivity
   });
+
+  socket.on('disconnect', () => {
+    updateUserStatus(uid, UserStatus.Offline);
+  });
 };

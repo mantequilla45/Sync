@@ -5,8 +5,10 @@ import serviceAccount from './hostingtest-aadc2-firebase-adminsdk-s9rmc-a75b9b58
 if (!admin.apps.length) {
   admin.initializeApp({
     credential: admin.credential.cert(serviceAccount as admin.ServiceAccount),
+    storageBucket: "hostingtest-aadc2.appspot.com"
   });
 }
 
 export default admin;
 export const auth = admin.auth();
+export const bucket = admin.storage().bucket();
