@@ -2,10 +2,12 @@
     "name": "sync",
     "version": "1.0.0",
     "scripts": {
-      "next": "cd web && npm run dev",
-      "server": "cd server && nodemon",
-      "start": "npm run frontend & npm run backend",
-      "rs": "cd server && rs"
+        "next": "cd web && npm run dev",
+        "server": "cd server && nodemon",
+        "start": "npm run frontend & npm run backend",
+        "rs": "cd server && rs"
+    },
+    "dependencies": {
+        "react-quill": "^2.0.0"
     }
-  }
-  
+}

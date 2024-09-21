@@ -135,7 +135,12 @@ const closeModal = () => {
                 >
                   Cancel
                 </button>
-                <button className="bg-[#69369B] rounded-full px-8 py-2">Create Project</button>
+                <button
+                  className="bg-[#69369B] rounded-full px-8 py-2"
+                  onClick={() => window.location.href = '/document'}
+                >
+                  Create Project
+                </button>
               </div>
             </div>
           </div>
