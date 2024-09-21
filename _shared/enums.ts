@@ -18,7 +18,7 @@ export enum TaskStatus {
 }
 
 export enum DocumentChangeType {
-    Insert = 'Insert',
+    Create = 'Create',
     Update = 'Update',
     Delete = 'Delete'
 }

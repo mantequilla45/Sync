@@ -39,9 +39,8 @@ io.on('connection', (socket) => {
     trackUserStatus(uid, socket);
 
     // Update Firebase when a user disconnects (e.g., browser is closed)
-    socket.on('disconnect', () => {
-      updateUserStatus(uid, UserStatus.Offline);
-    });
+
+    
 });
 
 // Export the HTTP server for starting
