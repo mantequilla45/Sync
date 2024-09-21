@@ -6,7 +6,7 @@ export const editDocumentTentative = (socket: Socket) => {
   // Listen for content updates from clients
   socket.on('sendContent', delta => {
     console.log(delta);
-    socket.broadcast.emit("recieveContent", delta);
+    socket.broadcast.emit("receiveContent", delta);
   })
 
   // Handle disconnection

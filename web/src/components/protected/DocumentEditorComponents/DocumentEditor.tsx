@@ -61,7 +61,7 @@ const DocumentEditor = () => {
       console.log('Connected to socket server');
     };
 
-    const handleReceiveContent = (newContent: string) => {
+    const handleReceiveContent = (newContent: any) => {
       console.log("Received content update:", newContent);
       if (newContent !== content) {
         setContent(newContent);
