@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 // import { signUpWithEmailAndPassword } from '../../../features/auth';
-import SocketClient from '../../../features/socket_testing/testsocket';
+//import SocketClient from '../../../features/socket_testing/testsocket';
 import Header from '../../components/protected/header';
 import { doc, setDoc } from 'firebase/firestore';
 import { auth, db } from '@/firebase';
@@ -103,7 +103,7 @@ const SignupPage: React.FC = () => {
               Sign Up
             </button>
             <div className="hidden">
-              <SocketClient />
+              {/*<SocketClient />*/}
               <p>Status: {connectionStatus}</p>
             </div>
           </form>
