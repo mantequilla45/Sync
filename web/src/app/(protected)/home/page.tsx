@@ -69,7 +69,7 @@ const closeModal = () => {
                 <input 
                   type="text" 
                   className={`w-full bg-[#EDEDED] rounded-full p-2 pl-5 
-                              border border-transparent focus:border-gray-300 focus:outline-none focus:ring-0`} 
+                              border border-[#DCD6D6] focus:border-gray-300 focus:outline-none focus:ring-0`} 
                   placeholder="Enter project name" 
                   style={{ color: '#242424' }} 
                   onFocus={() => setIsFocused(true)}
@@ -82,7 +82,7 @@ const closeModal = () => {
                 <label className="block text-gray-700">Project Description</label>
                 <textarea 
                   className={`w-full bg-[#EDEDED] text rounded-2xl p-4 pl-5 
-                              border border-transparent focus:border-gray-300 focus:outline-none focus:ring-0`} 
+                              border border-[#DCD6D6] focus:border-gray-300 focus:outline-none focus:ring-0`} 
                   rows={4} 
                   placeholder="Enter project description" 
                   style={{ color: '#242424' }}
@@ -95,7 +95,7 @@ const closeModal = () => {
                 <input 
                   type="text" 
                   className={`w-full mt-2 bg-[#EDEDED] text rounded-full p-2 pl-5 
-                              border border-transparent focus:border-gray-300 focus:outline-none focus:ring-0`} 
+                              border border-[#DCD6D6] focus:border-gray-300 focus:outline-none focus:ring-0`} 
                   placeholder="Enter email or username" 
                   style={{ color: '#242424' }}
                 />
