@@ -10,7 +10,7 @@ const BlankPage = () => {
         <div className="px-[90px] mb-2">
           <h1 className="text-sm text-white font-light">Home / About Us</h1>
         </div>
-        <div className="flex-grow space-y-[100px] bg-white rounded-2xl shadow-lg mx-16 px-[150px] py-[100px] mb-16">
+        <div className="flex-grow space-y-[100px] bg-white rounded-2xl shadow-lg mx-16 px-[200px] py-[100px] mb-16">
           <div className="flex flex-row space-x-2">
             <div className="flex-1 mt-10">
               <div className="relative inline-block">
