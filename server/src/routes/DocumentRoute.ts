@@ -3,6 +3,7 @@ import { saveDocument } from "../controllers/DocumentControllers/saveDocumentTen
 
 const router = Router();
 
+console.log("reached");
 router.post('/saveDocument', saveDocument);
 
 export const DocumentRoute = router;

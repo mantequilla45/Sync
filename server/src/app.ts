@@ -15,7 +15,7 @@ app.use(corsConfig);
 app.use(bodyParser.json());
 
 // API Routes
-app.use('/api', authenticateFirebaseToken, DocumentRoute);
+app.use('/api', DocumentRoute);
 
 // Create HTTP server
 const httpServer = createServer(app);
@@ -27,15 +27,15 @@ const io = new Server(httpServer, {
 
 // Socket.IO connection handler
 io.on('connection', (socket) => {
-  const uid = socket.handshake.query.uid as string; // Get uid from client-side
+  /*const uid = socket.handshake.query.uid as string; // Get uid from client-side
   console.log(uid);
   if (!uid) {
-    socket.disconnect(); // Disconnect if no UID is provided
+    //socket.disconnect(); // Disconnect if no UID is provided
     return;
-  }
+  }*/
 
 
-  trackUserStatus(uid, socket);
+  trackUserStatus("a", socket);
   editDocumentTentative(socket);
 
 });
