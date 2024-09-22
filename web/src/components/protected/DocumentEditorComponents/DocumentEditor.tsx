@@ -30,7 +30,7 @@ const DocumentEditor = () => {
   const handleContentChange = (newContent: string) => {
     console.log('Content Change Detected:', newContent);
     setContent(newContent);
-    socket.emit('sendContent', newContent); // Emit content updates to the server
+    socket.emit('updateContent', newContent); // Emit content updates to the server
   };
 
   // Function to handle saving the document
@@ -57,45 +57,52 @@ const DocumentEditor = () => {
 
   // Listen for content updates from other clients via Socket.IO
   useEffect(() => {
-    const handleConnect = () => {
-      console.log('Connected to socket server');
+    const handleLoadDocument = (initialContent: string) => {
+      console.log('Loaded initial content:', initialContent);
+      setContent(initialContent); // Set the initial content when loaded
     };
-
-    const handleReceiveContent = (newContent: any) => {
-      console.log("Received content update:", newContent);
+  
+    const handleUpdateContent = (newContent: string) => {
+      console.log('Received content update:', newContent);
       if (newContent !== content) {
         setContent(newContent);
       }
     };
-
-    socket.on('connect', handleConnect);
-    socket.on('receiveContent', handleReceiveContent);
-
-    // Cleanup socket listeners on component unmount
+  
+    // Emit initial content request when connected
+    socket.on('connect', () => {
+      console.log('Socket connected:', socket.id);
+      socket.emit('loadDocument'); // Request initial document content from server
+    });
+  
+    socket.on('loadDocument', handleLoadDocument);
+    socket.on('updateContent', handleUpdateContent);
+  
     return () => {
-      socket.off('connect', handleConnect);
-      socket.off('receiveContent', handleReceiveContent);
+      socket.off('loadDocument', handleLoadDocument);
+      socket.off('updateContent', handleUpdateContent);
     };
-  }, [content]); // Add content as a dependency to avoid stale closures
+  }, [content]);
+  
 
   return (
     <div className="w-full bg-white p-5 rounded-2xl shadow">
-    <ReactQuill
-      value={content}
-      onChange={handleContentChange}
-      placeholder="Start writing here..."
-      theme="snow"
-      className="mb-4 w-full"
-      modules={modules} // Pass the custom modules
-      style={{ height: '500px', color: '#1E1E1E' }} // Set height and default text color
-    />
-    <button
-      className="bg-[#69369B] text-white rounded-full px-8 py-2 mt-10"
-      onClick={handleSave}
-    >
-      Save Document
-    </button>
-  </div>
+      <ReactQuill
+        value={content}
+        onChange={handleContentChange}
+        placeholder="Start writing here..."
+        theme="snow"
+        className="mb-4 w-full"
+        modules={modules} // Pass the custom modules
+        style={{ height: '500px', color: '#1E1E1E' }} // Set height and default text color
+      />
+      <button
+        className="bg-[#69369B] text-white rounded-full px-8 py-2 mt-10"
+        onClick={handleSave}
+      >
+        Save Document
+      </button>
+    </div>
   );
 };
 
