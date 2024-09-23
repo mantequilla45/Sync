@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { bucket } from '../../lib/FirebaseAdmin';
+import { bucket } from '../../lib/Firebase/_index';
 
 export const saveDocument = async (req: Request, res: Response): Promise<void> => {
     const { content } = req.body;
@@ -15,3 +15,5 @@ export const saveDocument = async (req: Request, res: Response): Promise<void> =
       res.status(500).send('Error saving document.');
     }
 };
+
+//deprecated i guess
