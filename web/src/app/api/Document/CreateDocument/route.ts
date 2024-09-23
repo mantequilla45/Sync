@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { Document } from '../../../../../../_shared/interface';
-import { db } from '@/lib/Firebase/_index';
+import { db, bucket } from '@/lib/Firebase/_index';
 import { FieldValue } from 'firebase-admin/firestore';
 
 export async function POST(req: Request) {
@@ -11,12 +11,11 @@ export async function POST(req: Request) {
     }
 
     const formData = await req.formData();
-
     const projectId = formData.get('projectId');
     const documentTitle = formData.get('title');
-    const filePath = formData.get('filePath');
 
-    if (!projectId || !documentTitle || !filePath) {
+    console.log(projectId)
+    if (!projectId || !documentTitle) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
     }
 
@@ -26,11 +25,10 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'Project not found' }, { status: 404 });
     }
 
-
     const newDocument: Document = {
       UID: '',
       title: documentTitle as string,
-      filePath: filePath as string,
+      filePath: '',  // Will be updated with the Firebase Storage file path
       createdBy: userId,
       lastEditedBy: userId,
       createdAt: Date.now(),
@@ -38,7 +36,6 @@ export async function POST(req: Request) {
       collaboratorUIDs: [],
       activeUserUIDs: [],
       versionHistoryUIDs: [],
-      permissionUIDs: [],
       commentUIDs: [],
       taskUIDs: []
     };
@@ -46,6 +43,22 @@ export async function POST(req: Request) {
     const documentRef = db.collection('documents').doc();
     newDocument.UID = documentRef.id;
 
+    const fileName = `documents/${newDocument.UID}.json`;
+    
+    const emptyDelta = {
+      ops: []  // Empty Quill delta structure
+    };
+
+    const file = bucket.file(fileName);
+
+    await file.save(JSON.stringify(emptyDelta), {
+      metadata: {
+        contentType: 'application/json'
+      }
+    });
+
+    const filePath = `gs://${bucket.name}/${fileName}`;
+    newDocument.filePath = filePath;
 
     await documentRef.set(newDocument, { merge: true });
 
@@ -53,9 +66,9 @@ export async function POST(req: Request) {
       documentUIDs: FieldValue.arrayUnion(newDocument.UID)
     });
 
-    return NextResponse.json({ status: 200, documentId: newDocument.UID });
+    return NextResponse.json({ status: 200, documentId: newDocument.UID, filePath: fileName });
   } catch (error) {
-    console.error('Error creating document:', error);
-    return NextResponse.json({ error: 'Failed to create document' }, { status: 500 });
+    console.error('Error creating document and JSON delta file:', error);
+    return NextResponse.json({ error: 'Failed to create document and JSON delta file' }, { status: 500 });
   }
 }

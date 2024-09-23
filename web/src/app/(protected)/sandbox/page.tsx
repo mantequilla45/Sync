@@ -3,6 +3,7 @@
 
 import { useState } from 'react';
 import { createProject } from '@/services/_index';
+import CreateDocumentForm from './ProjectDocSandbox/CreateDoc';
 
 function CreateProjectPage() {
   const [error, setError] = useState<string | null>(null);
@@ -22,6 +23,7 @@ function CreateProjectPage() {
       <div className="container mx-auto">
         <h1 className="text-2xl font-bold text-center mb-6">Create a New Project</h1>
         <ProjectForm onSubmit={handleSubmit} setError={setError} />
+        <CreateDocumentForm></CreateDocumentForm>
         {error && <p className="text-red-600 text-center mt-4">{error}</p>}
       </div>
     </div>

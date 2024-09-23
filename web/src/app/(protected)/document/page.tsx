@@ -1,13 +1,9 @@
 
 
-import React, { useState } from 'react';
-import dynamic from 'next/dynamic';
+import React from 'react';
 import Header from '../../../components/protected/header'
 import 'react-quill/dist/quill.snow.css'; // Import styles for Quill
 import DocumentEditor from '@/components/protected/DocumentEditorComponents/DocumentEditor';
-
-// Dynamically import ReactQuill
-const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
 const DocumentPage = () => {
 

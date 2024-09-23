@@ -1,10 +1,10 @@
 export const createDocument = async (formData: FormData, setError: (error: string) => void): Promise<void> => {
     try {
-      const response = await fetch('/api/Project/createDocument', { // Ensure this is the correct endpoint
+      const response = await fetch('/api/Document/CreateDocument', { // Ensure this is the correct endpoint
         method: 'POST',
         body: formData,
       });
-  
+      
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.error || 'Failed to create project');
