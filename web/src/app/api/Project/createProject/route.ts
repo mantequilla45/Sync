@@ -1,5 +1,4 @@
 import { NextResponse } from 'next/server';
-import { Project, ProjectRole } from '../../../../../../_shared/interface';
 import { db } from '@/lib/Firebase/_index';
 import { FieldValue } from 'firebase-admin/firestore';
 
@@ -24,22 +23,22 @@ export async function POST(req: Request) {
     const userRef = db.collection("users").doc(userId);
 
     // Creating a new project object
-    const newProject: Project = {
+    const newProject = {
       UID: projectRef.id,
       title: projectName as string,
       description: projectDescription as string,
-      owner: userId,
+      owner: userRef,
       createdAt: Date.now(),
       updatedAt: Date.now(),
-      userRoleUIDs: [projectRoleRef.id],
+      userRoleUIDs: [projectRoleRef],
       documentUIDs: [],
       taskUIDs: []
     };
 
-    const newProjectRole: ProjectRole = {
+    const newProjectRole = {
       UID: projectRoleRef.id,
-      userId: userId,
-      projectId: projectRef.id,
+      userId: userRef,
+      projectId: projectRef,
       roleName: 'owner', 
       canCreateDocuments: true,
       canEditDocuments: true,
@@ -52,7 +51,7 @@ export async function POST(req: Request) {
     batch.set(projectRoleRef, newProjectRole);
 
     batch.update(userRef, {
-      projectRoleUIDs: FieldValue.arrayUnion(projectRoleRef.id)
+      projectRoleUIDs: FieldValue.arrayUnion(projectRoleRef)
     });
 
     await batch.commit();

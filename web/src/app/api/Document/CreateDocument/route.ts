@@ -1,5 +1,4 @@
 import { NextResponse } from 'next/server';
-import { Document } from '../../../../../../_shared/interface';
 import { db, bucket } from '@/lib/Firebase/_index';
 import { FieldValue } from 'firebase-admin/firestore';
 
@@ -14,30 +13,30 @@ export async function POST(req: Request) {
     const projectId = formData.get('projectId');
     const documentTitle = formData.get('title');
 
-    console.log(projectId)
     if (!projectId || !documentTitle) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
     }
 
+    const userRef = db.collection("users").doc(userId);
     const projectRef = db.collection('projects').doc(projectId as string);
     const projectSnapshot = await projectRef.get();
     if (!projectSnapshot.exists) {
       return NextResponse.json({ error: 'Project not found' }, { status: 404 });
     }
 
-    const newDocument: Document = {
+    const newDocument = {
       UID: '',
       title: documentTitle as string,
       filePath: '',  // Will be updated with the Firebase Storage file path
-      createdBy: userId,
-      lastEditedBy: userId,
+      createdBy: userRef,
+      lastEditedBy: userRef,
       createdAt: Date.now(),
       updatedAt: Date.now(),
-      collaboratorUIDs: [],
-      activeUserUIDs: [],
-      versionHistoryUIDs: [],
-      commentUIDs: [],
-      taskUIDs: []
+      collaboratorUIDs: [],  // This will be a list of DocumentReferences
+      activeUserUIDs: [],     // This will be a list of DocumentReferences
+      versionHistoryUIDs: [],  // This will be a list of DocumentReferences
+      commentUIDs: [],        // This will be a list of DocumentReferences
+      taskUIDs: []           // This will be a list of DocumentReferences
     };
 
     const documentRef = db.collection('documents').doc();
@@ -62,8 +61,9 @@ export async function POST(req: Request) {
 
     await documentRef.set(newDocument, { merge: true });
 
+    // Update the project to include a reference to the current document
     await projectRef.update({
-      documentUIDs: FieldValue.arrayUnion(newDocument.UID)
+      documentUIDs: FieldValue.arrayUnion(documentRef) // Use DocumentReference directly
     });
 
     return NextResponse.json({ status: 200, documentId: newDocument.UID, filePath: fileName });
