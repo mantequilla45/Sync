@@ -1,4 +1,5 @@
 import { createProject } from "./project/createProject";
 import { createDocument } from "./document/createDocument";
+import { getUserDocuments } from "./document/getDocuments";
 
-export { createProject, createDocument }; // Re-export the createProject function
+export { createProject, createDocument, getUserDocuments };
