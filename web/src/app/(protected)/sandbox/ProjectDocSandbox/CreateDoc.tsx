@@ -4,7 +4,7 @@ import { createDocument } from '@/services/_index';
 import { useState } from 'react';
 
 export default function CreateDocumentForm() {
-  //const [projectId, setProjectId] = useState('');
+
   const [documentTitle, setDocumentTitle] = useState('');
   const [responseMessage, setResponseMessage] = useState('');
   const [error, setError] = useState('');
