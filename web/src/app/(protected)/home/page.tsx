@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useState } from 'react';
-import Header from '../../../components/protected/header';
-import DynamicCards from '../../../components/protected/dynamic-cards';
+import Header from '@/components/protected/_Layout/header';
+import DynamicCards from '../../../components/protected/Home/dynamic-cards';
 
 export default function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false);

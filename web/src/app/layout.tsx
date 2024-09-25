@@ -4,8 +4,8 @@ import "./globals.css";
 import { Tokens, getTokens } from "next-firebase-auth-edge";
 import { cookies } from "next/headers";
 import { filterStandardClaims } from "next-firebase-auth-edge/lib/auth/claims";
-import { User } from "@/auth/AuthContext";
-import { AuthProvider } from "@/auth/AuthProvider";
+import { User } from "@/services/Auth/AuthContext";
+import { AuthProvider } from "@/services/Auth/AuthProvider";
 import { authConfig } from "@/middleware";
 
 const toUser = ({ decodedToken }: Tokens): User => {

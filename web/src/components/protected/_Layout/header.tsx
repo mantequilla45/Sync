@@ -2,16 +2,9 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { usePathname } from 'next/navigation';
-import { IoMdSearch, IoIosArrowForward } from 'react-icons/io';
 import HamburgerMenu from './side-bar';
-import { CgProfile } from 'react-icons/cg';
-import { IoSettingsSharp, IoArrowBack } from 'react-icons/io5';
-import { FaMoon } from 'react-icons/fa';
 import SearchInput from './search-bar';
-import { GrNotification } from "react-icons/gr";
-import { FaUser } from "react-icons/fa";
-import { TbLogout2 } from "react-icons/tb";
-import Head from 'next/head';
+import { IoIosArrowForward, GrNotification, TbLogout2, FaMoon, FaUser, CgProfile, IoArrowBack, IoSettingsSharp } from '../../_icons';
 
 const Header: React.FC = () => {
   const pathname = usePathname();
@@ -61,7 +54,7 @@ const Header: React.FC = () => {
   return (
     <>
       <header>
-      <link
+        <link
           href="https://fonts.googleapis.com/css?family=Poppins:wght@300;400;500;600;700;800;900&display=optional"
           rel="stylesheet"
         />
@@ -81,14 +74,14 @@ const Header: React.FC = () => {
                   {/* Sync icon and Search bar */}
                   <div className="flex items-center w-full ml-6">
                     <a href="/home" className="flex items-center">
-                      <img 
-                        src="https://cdn.builder.io/api/v1/image/assets/TEMP/e206a20408ef8878dcb5118bce850f8f290c84cbd09da22c62f468d88dfbdc15?placeholderIfAbsent=true&apiKey=0cd5b3eb85e74a83a268d41d07a9c27f" 
+                      <img
+                        src="https://cdn.builder.io/api/v1/image/assets/TEMP/e206a20408ef8878dcb5118bce850f8f290c84cbd09da22c62f468d88dfbdc15?placeholderIfAbsent=true&apiKey=0cd5b3eb85e74a83a268d41d07a9c27f"
                         alt="Description of the image"
                         className="w-[25px] h-[25px] "
                       />
                       <h1 className="text-2xl font-bold ml-[7px]">Sync</h1>
                     </a>
-                    
+
                     <SearchInput
                       value={inputValue}
                       onChange={handleInputChange}
@@ -118,9 +111,8 @@ const Header: React.FC = () => {
                   <div ref={cardRef} className="relative w-full mx-4 mr-[180px]">
                     <div className="flex justify-end w-full">
                       <div
-                        className={`absolute rounded-xl w-[13%] flex-col space-y-1 py-2 px-2 bg-gradient-to-tr from-[#3D50B5] to-[#82245C] mt-2 top-0 right-0 z-50 border border-[#4F1869] transition-all duration-300 ease-in-out ${
-                          activeCard === 'profile' ? 'h-[217px]' : 'h-[120px]'
-                        }`}
+                        className={`absolute rounded-xl w-[13%] flex-col space-y-1 py-2 px-2 bg-gradient-to-tr from-[#3D50B5] to-[#82245C] mt-2 top-0 right-0 z-50 border border-[#4F1869] transition-all duration-300 ease-in-out ${activeCard === 'profile' ? 'h-[217px]' : 'h-[120px]'
+                          }`}
                         style={{ boxShadow: '0 4px 8px rgba(0, 0, 0, 0.3)' }} // Added shadow for better visibility
                       >
                         {activeCard === 'profile' && (
@@ -144,7 +136,7 @@ const Header: React.FC = () => {
                               </div>
                               <h1 className="text-sm font-regular text-white ml-3">Settings</h1>
                             </a>
-                            
+
                             <a onClick={() => toggleCard('display')} className="flex flex-row w-full px-2 cursor-pointer hover:bg-opacity-10 hover:bg-white transition-all duration-300 rounded-lg items-center py-2 justify-between">
                               <div className="flex flex-row items-center">
                                 <div>
@@ -189,8 +181,8 @@ const Header: React.FC = () => {
             )}
             {(isLanding || isSignUpPage) && (
               <>
-                <img 
-                  src="https://cdn.builder.io/api/v1/image/assets/TEMP/e206a20408ef8878dcb5118bce850f8f290c84cbd09da22c62f468d88dfbdc15?placeholderIfAbsent=true&apiKey=0cd5b3eb85e74a83a268d41d07a9c27f" 
+                <img
+                  src="https://cdn.builder.io/api/v1/image/assets/TEMP/e206a20408ef8878dcb5118bce850f8f290c84cbd09da22c62f468d88dfbdc15?placeholderIfAbsent=true&apiKey=0cd5b3eb85e74a83a268d41d07a9c27f"
                   alt="Description of the image"
                   className="w-[25px] h-[25px]"
                 />

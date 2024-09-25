@@ -5,7 +5,7 @@ import { login, register } from "./FormFunctions";
 import { FaArrowRightLong, FaArrowLeftLong } from "react-icons/fa6";
 import { LuMail } from "react-icons/lu";
 import { MdLockOutline } from "react-icons/md";
-import { useAuth } from "../../auth/AuthContext";
+import { useAuth } from "../../services/Auth/AuthContext";
 
 
 const LoginForm: React.FC = () => {

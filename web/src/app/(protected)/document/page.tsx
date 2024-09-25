@@ -1,9 +1,9 @@
 
 
 import React from 'react';
-import Header from '../../../components/protected/header'
+import { Header } from '@/components/_index';
 import 'react-quill/dist/quill.snow.css'; // Import styles for Quill
-import DocumentEditor from '@/components/protected/DocumentEditorComponents/DocumentEditor';
+import DocumentEditor from '@/components/protected/DocumentEditor/DocumentEditor';
 
 const DocumentPage = () => {
 

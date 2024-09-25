@@ -2,9 +2,9 @@ import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
 } from "firebase/auth";
-import { loginWithCredentials } from "@/auth/loginWithCredentials";
-import { setUpAccountInFireStore } from "@/auth/setUpAccountInFireStore";
-import { auth } from "../../firebase";
+import { loginWithCredentials } from "@/services/Auth/loginWithCredentials";
+import { setUpAccountInFireStore } from "@/services/Auth/setUpAccountInFireStore";
+import { auth } from "../../lib/Firebase/FirebaseClient";
 
 export const login = async (
   email: string,

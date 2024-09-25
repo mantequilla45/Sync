@@ -1,6 +1,6 @@
 'use client';
-import Header from '../../../components/protected/header';
-import SearchInput from '../../../components/protected/search-bar';
+import Header from '@/components/protected/_Layout/header';
+import SearchInput from '../../../components/protected/_Layout/search-bar';
 import React, { useState, useEffect, useRef } from 'react';
 import { MdAccountCircle, MdAlternateEmail, MdEdit, MdOutlineSecurity, MdDelete } from 'react-icons/md';
 import { IoIosNotifications } from 'react-icons/io';

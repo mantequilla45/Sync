@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import Header from '../../components/protected/header';
+import { Header } from '@/components/_index';
 import Image from 'next/image';
 import { IoIosAttach } from "react-icons/io";
 
