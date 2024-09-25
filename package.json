@@ -4,7 +4,10 @@
     "scripts": {
         "next": "cd web && npm run dev",
         "server": "cd server && nodemon",
-        "start": "npm run frontend & npm run backend",
+        "start": "concurrently \"npm run next\" \"npm run server\"",
         "rs": "cd server && rs"
+    },
+    "devDependencies": {
+        "concurrently": "^9.0.1"
     }
 }
