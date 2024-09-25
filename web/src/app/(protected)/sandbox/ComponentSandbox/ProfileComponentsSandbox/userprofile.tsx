@@ -1,6 +1,6 @@
 'use client'
 
-import { useAuth } from "@/auth/AuthContext";
+import { useAuth } from "@/services/Auth/AuthContext";
 import React, { useEffect, useState } from 'react';
 import { storage, auth } from "@/firebase"; // Import Firebase storage configuration
 import { ref, getDownloadURL } from "firebase/storage"; // Import necessary Firebase Storage methods

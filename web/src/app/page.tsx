@@ -1,8 +1,7 @@
 // my-next-app/src/app/page.tsx
-import Header from '../components/protected/header';
 import { FaFacebook, FaInstagram, FaGithub } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
-import Background from '../components/protected/background';
+import Background from '../components/landing/background';
 import LoginForm from '@/components/landing/LoginForm';
 
 //Please use React useState and inputs in components, not in pages. Thank you. 
@@ -13,7 +12,6 @@ const HomePage: React.FC = () => {
       <title>{"Sync"}</title>
       <Background />
       <div className="relative z-10 min-h-screen flex flex-col">
-        <Header />
         <div className="flex-grow flex items-center justify-center w-full">
           <div className="flex flex-row gap-10 w-[70%]">
             <div className="w-[80%] pt-5 flex flex-col">

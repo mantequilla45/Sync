@@ -1,5 +1,5 @@
 
-import Header from '../../components/protected/header';
+import { Header } from '@/components/_index';
 import Image from 'next/image';
 
 const BlankPage = () => {
