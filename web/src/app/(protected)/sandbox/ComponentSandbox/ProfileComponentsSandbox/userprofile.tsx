@@ -17,11 +17,8 @@ const ProfilePage: React.FC = () => {
       formData.append('file', file);
   
       try {
-        const response = await fetch('/api/uploadProfilePicture', {
+        const response = await fetch('/api/Profile/uploadProfilePicture', {
           method: 'POST',
-          headers: {
-            'x-user-id': user.uid, // Pass user ID as header
-          },
           body: formData,
         });
   

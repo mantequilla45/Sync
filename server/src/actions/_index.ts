@@ -1,2 +1,2 @@
-export * from './StatusUpdate';
-export * from './FirebaseAuth';
+export * from './UserActions/StatusUpdate';
+export * from './UserActions/FirebaseAuth';

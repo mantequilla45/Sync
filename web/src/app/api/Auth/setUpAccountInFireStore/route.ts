@@ -1,8 +1,6 @@
 import { NextResponse } from "next/server";
 import { getAuth } from "firebase-admin/auth";
-import admin from "@/lib/FirebaseAdmin"; // Assuming Firebase Admin SDK is initialized here
-
-const db = admin.firestore();
+import { db } from "@/lib/Firebase/_index";
 
 export async function POST(req: Request) {
   const authHeader = req.headers.get("Authorization");
@@ -25,7 +23,6 @@ export async function POST(req: Request) {
     // Create or update the user document in Firestore
     const userRef = db.collection("users").doc(uid);
     await userRef.set({
-      workplaces: [],
       state: null,
       lastActive: Date.now(),
     }, { merge: true }); // Merge in case document exists

@@ -47,7 +47,7 @@ export interface Document {
     collaboratorUIDs: string[];  // User IDs of collaborators
     activeUserUIDs: string[];  // User IDs of currently editing users
     versionHistoryUIDs: string[];  // List of DocumentVersion UIDs
-    permissionUIDs: string[];  // List of DocumentPermission UIDs
+    //permissionUIDs: string[];  // List of DocumentPermission UIDs
     commentUIDs?: string[];  // Optional List of Comment UIDs
     taskUIDs?: string[];  // Optional List of Task UIDs related to the document
 }
@@ -55,7 +55,7 @@ export interface Document {
 // DocumentPermission schema references project role by its UID
 export interface DocumentPermission {
     UID: string;
-    roleUID: string;  // Project Role ID
+    role: string;  // Project Role ID
     canView: boolean;
     canEdit: boolean;
 }

@@ -3,7 +3,7 @@ export const setUpAccountInFireStore = async (
   setError: (error: string) => void
 ) => {
   try {
-    const response = await fetch("/api/setUpAccountInFireStore", {
+    const response = await fetch("/api/Auth/setUpAccountInFireStore", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

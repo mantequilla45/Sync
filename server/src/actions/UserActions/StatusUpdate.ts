@@ -1,7 +1,5 @@
-import admin from "../lib/FirebaseAdmin";
-import { UserStatus } from "../../../_shared/enums";
-
-const db = admin.firestore()
+import { db } from "../../lib/Firebase/_index";
+import { UserStatus } from "../../../../_shared/enums";
 
 export const updateUserStatus = async (uid: string, status: UserStatus) => {
     const userStatusRef = db.doc(`users/${uid}`);
