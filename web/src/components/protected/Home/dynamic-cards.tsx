@@ -19,7 +19,7 @@ const DynamicCards: React.FC = async () => {
   const documents = await getUserDocuments(headersObject);
 
   // If there are no documents or documents?.length is 0, display a message
-  if (documents?.length === 0) {
+  if (documents?.length === 0 || documents === null) {
     return (
       <div className="flex items-center justify-center h-full">
         <p className="text-gray-500">No projects for now.</p>
