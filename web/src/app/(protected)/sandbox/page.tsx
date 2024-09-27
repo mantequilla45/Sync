@@ -2,7 +2,7 @@
 "use client"
 
 import { useState } from 'react';
-import { createProject, getUserDocuments} from '@/services/_index';
+import { createProject } from '@/services/_index';
 import CreateDocumentForm from './ProjectDocSandbox/CreateDoc';
 
 function CreateProjectPage() {
@@ -25,7 +25,7 @@ function CreateProjectPage() {
         <ProjectForm onSubmit={handleSubmit} setError={setError} />
         <CreateDocumentForm></CreateDocumentForm>
 
-        <button className="px-4 py-2 bg-blue-600 text-white rounded-md shadow" onClick={getUserDocuments}>Get Docs</button>
+
         {error && <p className="text-red-600 text-center mt-4">{error}</p>}
       </div>
     </div>
