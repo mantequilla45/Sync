@@ -1,6 +1,6 @@
 import { Suspense } from 'react';
 import Header from '@/components/protected/_Layout/header';
-import DynamicCards from '../../../components/protected/Home/dynamic-cards';
+import DynamicCards from '../../../components/protected/Home/DynamicCards/dynamic-cards';
 import ModalTrigger from '@/components/protected/Home/modalTrigger'; // Import the ModalTrigger
 
 export default function Home() {

@@ -36,7 +36,8 @@ export async function POST(req: Request) {
       activeUserUIDs: [],     // This will be a list of DocumentReferences
       versionHistoryUIDs: [],  // This will be a list of DocumentReferences
       commentUIDs: [],        // This will be a list of DocumentReferences
-      taskUIDs: []           // This will be a list of DocumentReferences
+      taskUIDs: [],
+      projectUID: projectRef           // This will be a list of DocumentReferences
     };
 
     const documentRef = db.collection('documents').doc();

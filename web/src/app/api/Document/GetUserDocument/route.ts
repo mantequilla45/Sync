@@ -30,6 +30,7 @@ async function fetchDocumentsForRoles(roleRefs: DocumentReference[]): Promise<an
   const documents: DocumentData[] = [];
 
   for (const roleRef of roleRefs) {
+    console.log(roleRef.id)
     const roleSnapshot = await fetchDocument(roleRef.path);
     if (!roleSnapshot) continue;
 
@@ -56,7 +57,7 @@ async function fetchProjectData(projectPath: string) {
 }
 
 async function fetchDocumentsFromProject(documentRefs: DocumentReference[]): Promise<DocumentData[]> {
-  const documents: any[] = [];
+  const documents: DocumentData[] = [];
   for (const docRefPath of documentRefs) {
     const docSnapshot = await fetchDocument(docRefPath.path);
     if (docSnapshot) {
