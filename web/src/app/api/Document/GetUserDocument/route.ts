@@ -11,7 +11,6 @@ export async function GET(req: Request) {
 
     const projectRoleRefs: DocumentReference[] = userData?.projectRoleUIDs || [];
     if (projectRoleRefs.length === 0) return new Response(JSON.stringify({ error: 'No project roles found' }), { status: 404 });
-
     const documents = await fetchDocumentsForRoles(projectRoleRefs);
     return new Response(JSON.stringify(documents), { status: 200 });
   } catch (error) {

@@ -19,55 +19,58 @@ export async function POST(req: Request) {
 
     const userRef = db.collection("users").doc(userId);
     const projectRef = db.collection('projects').doc(projectId as string);
-    const projectSnapshot = await projectRef.get();
-    if (!projectSnapshot.exists) {
-      return NextResponse.json({ error: 'Project not found' }, { status: 404 });
-    }
-
-    const newDocument = {
-      UID: '',
-      title: documentTitle as string,
-      filePath: '',  // Will be updated with the Firebase Storage file path
-      createdBy: userRef,
-      lastEditedBy: userRef,
-      createdAt: Date.now(),
-      updatedAt: Date.now(),
-      collaboratorUIDs: [],  // This will be a list of DocumentReferences
-      activeUserUIDs: [],     // This will be a list of DocumentReferences
-      versionHistoryUIDs: [],  // This will be a list of DocumentReferences
-      commentUIDs: [],        // This will be a list of DocumentReferences
-      taskUIDs: [],
-      projectUID: projectRef           // This will be a list of DocumentReferences
-    };
-
     const documentRef = db.collection('documents').doc();
-    newDocument.UID = documentRef.id;
 
-    const fileName = `documents/${newDocument.UID}.json`;
+    const fileName = `documents/${documentRef.id}.json`;
     
     const emptyDelta = {
       ops: []  // Empty Quill delta structure
     };
 
-    const file = bucket.file(fileName);
+    // Transaction block
+    await db.runTransaction(async (transaction) => {
+      const projectSnapshot = await transaction.get(projectRef);
 
-    await file.save(JSON.stringify(emptyDelta), {
-      metadata: {
-        contentType: 'application/json'
+      if (!projectSnapshot.exists) {
+        throw new Error('Project not found');
       }
+
+      // Create the new document object
+      const newDocument = {
+        UID: documentRef.id,
+        title: documentTitle as string,
+        filePath: '',
+        createdBy: userRef,
+        lastEditedBy: userRef,
+        createdAt: Date.now(),
+        updatedAt: Date.now(),
+        collaboratorUIDs: [],
+        activeUserUIDs: [],
+        versionHistoryUIDs: [],
+        commentUIDs: [],
+        taskUIDs: [],
+        projectUID: projectRef
+      };
+
+      // Save the empty delta file to Firebase Storage
+      const file = bucket.file(fileName);
+      await file.save(JSON.stringify(emptyDelta), {
+        metadata: {
+          contentType: 'application/json'
+        }
+      });
+
+      const filePath = `gs://${bucket.name}/${fileName}`;
+      newDocument.filePath = filePath;
+
+      // Save the new document to Firestore and update the project document
+      transaction.set(documentRef, newDocument, { merge: true });
+      transaction.update(projectRef, {
+        documentUIDs: FieldValue.arrayUnion(documentRef)
+      });
     });
 
-    const filePath = `gs://${bucket.name}/${fileName}`;
-    newDocument.filePath = filePath;
-
-    await documentRef.set(newDocument, { merge: true });
-
-    // Update the project to include a reference to the current document
-    await projectRef.update({
-      documentUIDs: FieldValue.arrayUnion(documentRef) // Use DocumentReference directly
-    });
-
-    return NextResponse.json({ status: 200, documentId: newDocument.UID, filePath: fileName });
+    return NextResponse.json({ status: 200, documentId: documentRef.id, filePath: fileName });
   } catch (error) {
     console.error('Error creating document and JSON delta file:', error);
     return NextResponse.json({ error: 'Failed to create document and JSON delta file' }, { status: 500 });

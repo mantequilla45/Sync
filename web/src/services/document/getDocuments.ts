@@ -13,8 +13,7 @@ export async function getUserDocuments(headersObject: Record<string, string>) {
       throw new Error(`Failed to fetch documents: ${response.statusText}`);
     }
 
-    const documents = await response.json();
-    return documents;
+    return await response.json();
   } catch (error) {
     console.error('Error fetching user documents:', error);
     return null;
