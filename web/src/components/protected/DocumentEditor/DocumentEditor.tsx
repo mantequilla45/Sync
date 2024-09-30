@@ -12,9 +12,8 @@ const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 const socket = io('http://localhost:4000');
 
 const DocumentEditor = () => {
-  const [content, setContent] = useState(''); // State to store editor content
-
-  // Toolbar options for Quill editor
+  const [content, setContent] = useState('');
+  
   const modules = {
     toolbar: [
       [{ header: [1, 2, false] }],
