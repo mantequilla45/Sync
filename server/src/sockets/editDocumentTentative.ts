@@ -15,7 +15,11 @@ export const editDocumentTentative = (socket: Socket) => {
     socket.broadcast.emit('updateContent', newContent); // Broadcast to all other clients
   });
 
-  // Handle disconnection
+  socket.on('saveDocument', () => {
+
+    console.log("Save the document")
+  });
+
   socket.on('disconnect', () => {
     console.log('A user disconnected:', socket.id);
   });
