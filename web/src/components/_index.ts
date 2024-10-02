@@ -10,6 +10,6 @@ import Background from "./landing/background";
 import DocumentEditor from "./protected/DocumentEditor/DocumentEditor";
 
 //Home Components
-import DynamicCardsLayout from "./protected/Home/DynamicCards/dynamic-cards";
 
-export { Header, LoginForm, Background, DocumentEditor, DynamicCardsLayout as DynamicCards }
+
+export { Header, LoginForm, Background, DocumentEditor}

@@ -1,6 +1,6 @@
 import { Suspense } from 'react';
 import Header from '@/components/protected/_Layout/header';
-import DynamicCards from '../../../components/protected/Home/DynamicCards/dynamic-cards';
+import DynamicCardsLayout from '@/components/protected/Home/DynamicCards/dynamic-cards';
 import ModalTrigger from '@/components/protected/Home/modalTrigger'; // Import the ModalTrigger
 
 export default function Home() {
@@ -24,7 +24,7 @@ export default function Home() {
 
         {/* Dynamic Cards */}
         <Suspense fallback={<p>Loading projects...</p>}>
-          <DynamicCards />
+          <DynamicCardsLayout />
         </Suspense>
       </div>
     </div>
