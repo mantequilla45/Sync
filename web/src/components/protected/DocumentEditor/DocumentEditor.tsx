@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useLayoutEffect  } from 'react';
 import dynamic from 'next/dynamic';
 import io from 'socket.io-client'; // Import Socket.IO client
 import 'react-quill/dist/quill.snow.css'; // Import styles for Quill
@@ -55,7 +55,7 @@ const DocumentEditor = () => {
   };
 
   // Listen for content updates from other clients via Socket.IO
-  useEffect(() => {
+  useLayoutEffect (() => {
     const handleLoadDocument = (initialContent: string) => {
       console.log('Loaded initial content:', initialContent);
       setContent(initialContent); // Set the initial content when loaded
