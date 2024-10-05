@@ -10,7 +10,6 @@ class DocumentSocketManager extends BaseSocketManager {
     this.configureSocketEvents();
   }
 
-  // Configure the socket event handlers
   private configureSocketEvents(): void {
     this.io.on('connection', (socket: Socket) => {
       this.handleEvents(socket);
@@ -20,17 +19,14 @@ class DocumentSocketManager extends BaseSocketManager {
   public handleEvents(socket: Socket): void {
     
     socket.emit('loadDocument', documentContent); 
-    // Listen for content updates from clients
     socket.on('updateContent', (newContent: string) => {
       console.log('Content updated:', newContent);
       documentContent = newContent; 
-      socket.broadcast.emit('updateContent', newContent); // Broadcast to all other clients
+      socket.broadcast.emit('updateContent', newContent);
     });
 
-    // Listen for save events
     socket.on('saveDocument', () => {
       console.log('Save the document');
-      // Implement saving logic here (e.g., persist documentContent to a database)
     });
   }
 }

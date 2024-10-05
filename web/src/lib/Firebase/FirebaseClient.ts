@@ -1,25 +1,21 @@
-// src/firebase.ts
-
 import { initializeApp } from 'firebase/app';
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
-
-const firebaseConfig = {
-    apiKey: "AIzaSyDFmW2UPN4Ml3183LvVCDewPsNCroQvhoQ",
-    authDomain: "hostingtest-aadc2.firebaseapp.com",
-    projectId: "hostingtest-aadc2",
-    storageBucket: "hostingtest-aadc2.appspot.com",
-    messagingSenderId: "269529898742",
-    appId: "1:269529898742:web:4cdf9af94698c7b6ce56d7",
-    measurementId: "G-11F1RQQW08"
-  };
   
-  // Initialize Firebase
+const firebaseConfig = {
+    apiKey: process.env.FIREBASE_API_KEY ?? '',
+    authDomain: process.env.FIREBASE_AUTH_DOMAIN ?? '',
+    projectId: process.env.FIREBASE_PROJECT_ID ?? '',
+    storageBucket: process.env.FIREBASE_STORAGE_BUCKET ?? '',
+    messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID ?? '',
+    appId: process.env.FIREBASE_APP_ID ?? '',
+    measurementId: process.env.FIREBASE_MEASUREMENT_ID ?? ''
+};
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const googleProvider = new GoogleAuthProvider();
 const db = getFirestore(app);
 const storage = getStorage(app);
 
-export {app, auth, googleProvider, db, storage, createUserWithEmailAndPassword, signInWithEmailAndPassword};
+export { app, auth, googleProvider, db, storage, createUserWithEmailAndPassword, signInWithEmailAndPassword };
