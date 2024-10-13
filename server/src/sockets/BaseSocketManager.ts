@@ -1,23 +1,22 @@
-import { Server, Socket } from 'socket.io';
+import { Namespace, Socket } from 'socket.io';
 
 abstract class BaseSocketManager {
-  protected io: Server;
+  protected io: Namespace;
 
-  constructor(io: Server) {
+  constructor(io: Namespace) {
     this.io = io;
+    this.configureSocketEvents();
   }
 
   public abstract handleEvents(socket: Socket): void;
-    //Later use
-  /*protected joinRoom(socket: Socket, roomId: string): void {
-    socket.join(roomId);
-    console.log(`Socket ${socket.id} joined room ${roomId}`);
-  }
 
-  protected leaveRoom(socket: Socket, roomId: string): void {
-    socket.leave(roomId);
-    console.log(`Socket ${socket.id} left room ${roomId}`);
-  }*/
+  // Set up connection event handling
+  protected configureSocketEvents(): void {
+    this.io.on('connection', (socket: Socket) => {
+      console.log(`Connected socket: ${socket.id}`);
+      this.handleEvents(socket);
+    });
+  }
 }
 
 export default BaseSocketManager;

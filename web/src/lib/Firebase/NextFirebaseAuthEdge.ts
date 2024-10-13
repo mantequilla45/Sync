@@ -1,8 +1,3 @@
-import * as dotenv from 'dotenv';
-import { resolve } from 'path';
-
-dotenv.config({ path: resolve(process.cwd(), '../.env') });
-
 export const serverConfig = {
   useSecureCookies: false,
   firebaseApiKey: process.env.FIREBASE_API_KEY ?? '',

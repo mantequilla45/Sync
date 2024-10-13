@@ -1,19 +1,16 @@
 "use client";
 
-import React, { useState, useLayoutEffect  } from 'react';
+import React, { useState, useLayoutEffect } from 'react';
 import dynamic from 'next/dynamic';
-import io from 'socket.io-client'; // Import Socket.IO client
-import 'react-quill/dist/quill.snow.css'; // Import styles for Quill
-
-// Dynamically import ReactQuill
+import io from 'socket.io-client';
+import 'react-quill/dist/quill.snow.css';
+import { getToken } from '@/services/Auth/getToken';
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
-// Establish the Socket.IO connection
-const socket = io('http://localhost:4000');
-
-const DocumentEditor = () => {
+const DocumentEditor = ({ projectID, documentID }: { projectID: string, documentID: string }) => {
   const [content, setContent] = useState('');
-  
+  const [socket, setSocket] = useState<any>(null);
+
   const modules = {
     toolbar: [
       [{ header: [1, 2, false] }],
@@ -25,64 +22,45 @@ const DocumentEditor = () => {
     ],
   };
 
-  // Handle content changes and emit updates via Socket.IO
   const handleContentChange = (newContent: string) => {
-    console.log('Content Change Detected:', newContent);
     setContent(newContent);
-    socket.emit('updateContent', newContent); // Emit content updates to the server
-  };
-
-  // Function to handle saving the document
-  const handleSave = async () => {
-    console.log('Document Saved:', content);
-    try {
-      const response = await fetch('http://localhost:4000/api/saveDocument', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ content }), // Send the content to the server
-      });
-
-      if (response.ok) {
-        console.log('Document saved successfully.');
-      } else {
-        console.error('Failed to save document.');
-      }
-    } catch (error) {
-      console.error('Error saving document:', error);
+    if (socket) {
+      socket.emit('updateContent', { roomId: `${projectID}-${documentID}`, newContent });
     }
   };
 
-  // Listen for content updates from other clients via Socket.IO
-  useLayoutEffect (() => {
-    const handleLoadDocument = (initialContent: string) => {
-      console.log('Loaded initial content:', initialContent);
-      setContent(initialContent); // Set the initial content when loaded
+  useLayoutEffect(() => {
+    const setupSocket = async () => {
+      const token = await getToken()
+      const newSocket = io('http://localhost:4000', {
+        auth: { token },
+      });
+
+      newSocket.on('connect', () => {
+        console.log('Connected to server');
+        newSocket.emit('joinRoom', `${projectID}-${documentID}`);
+        newSocket.emit('loadDocument', { roomId: `${projectID}-${documentID}` });
+      });
+
+      newSocket.on('loadDocument', (initialContent: string) => {
+        setContent(initialContent);
+      });
+
+      newSocket.on('updateContent', (newContent: string) => {
+        if (newContent !== content) {
+          setContent(newContent);
+        }
+      });
+
+      setSocket(newSocket);
+
+      return () => {
+        newSocket.disconnect(); // Cleanup socket on unmount
+      };
     };
-  
-    const handleUpdateContent = (newContent: string) => {
-      console.log('Received content update:', newContent);
-      if (newContent !== content) {
-        setContent(newContent);
-      }
-    };
-  
-    // Emit initial content request when connected
-    socket.on('connect', () => {
-      console.log('Socket connected:', socket.id);
-      socket.emit('loadDocument'); // Request initial document content from server
-    });
-  
-    socket.on('loadDocument', handleLoadDocument);
-    socket.on('updateContent', handleUpdateContent);
-  
-    return () => {
-      socket.off('loadDocument', handleLoadDocument);
-      socket.off('updateContent', handleUpdateContent);
-    };
-  }, [content]);
-  
+
+    setupSocket();
+  }, [projectID, documentID]);
 
   return (
     <div className="w-full bg-white p-5 rounded-2xl shadow">
@@ -97,7 +75,6 @@ const DocumentEditor = () => {
       />
       <button
         className="bg-[#69369B] text-white rounded-full px-8 py-2 mt-10"
-        onClick={handleSave}
       >
         Save Document
       </button>

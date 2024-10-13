@@ -1,30 +1,35 @@
-import { Socket } from 'socket.io';
+import { Namespace, Socket } from 'socket.io';
 import BaseSocketManager from './BaseSocketManager';
 import { updateUserStatus } from '../actions/_index';
 import { UserStatus } from '../../../_shared/enums';
 
 class UserStatusSocketManager extends BaseSocketManager {
+  constructor(io: Namespace) {
+    super(io);
+  }
 
   public handleEvents(socket: Socket): void {
+    const uid = (socket as any).user.uid;
 
-    socket.on('userStatus', (uid: string) => {
-      this.trackUserStatus(uid, socket);
+    this.trackUserStatus(uid, socket);
+
+    socket.on('userStatus', () => {
+      console.log(`User ${uid} updated status`);
     });
   }
 
   private trackUserStatus(uid: string, socket: Socket): void {
-    // When the user connects, set them to "Online"
     updateUserStatus(uid, UserStatus.Online);
 
     socket.on('user-active', () => {
-      updateUserStatus(uid, UserStatus.Online); // Set back to "Online" if they interact
+      console.log(`User ${uid} is active`);
+      updateUserStatus(uid, UserStatus.Online);
     });
 
     socket.on('user-inactive', () => {
-      updateUserStatus(uid, UserStatus.Away); // Set to "Away" after inactivity
+      updateUserStatus(uid, UserStatus.Away);
     });
 
-    // When the user disconnects, set them to "Offline"
     socket.on('disconnect', () => {
       updateUserStatus(uid, UserStatus.Offline);
     });
