@@ -1,4 +1,3 @@
-// src/stores/useStore.ts
 import { create } from 'zustand'
 
 type Store = {

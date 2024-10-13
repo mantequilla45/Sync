@@ -9,12 +9,10 @@ export interface User extends FirebaseUserInfo {
 
 export interface AuthContextValue {
   user: User | null;
-  isOnline: boolean;
 }
  
 export const AuthContext = createContext<AuthContextValue>({
-  user: null,
-  isOnline: false,
+  user: null
 });
  
 export const useAuth = () => useContext(AuthContext);

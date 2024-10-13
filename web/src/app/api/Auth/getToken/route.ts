@@ -2,7 +2,7 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { getTokens } from 'next-firebase-auth-edge';
-import { authConfig } from '../../../../middleware';
+import { authConfig } from '@/lib/Firebase/NextFirebaseAuthEdge';
 
 export async function GET(req: NextRequest) {
   try {

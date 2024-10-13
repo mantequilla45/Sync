@@ -1,7 +1,7 @@
 import AppServer from './AppServer';
 import SocketManager from './SocketManager';
 
-const port = process.env.PORT || 4000;
+const port = process.env.PORT ?? 4000;
 
 // Initialize AppServer (Express + HTTP server)
 const appServer = new AppServer();

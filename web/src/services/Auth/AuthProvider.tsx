@@ -1,51 +1,46 @@
 'use client';
- 
+
 import * as React from 'react';
-import { useMemo, useState, useEffect } from 'react';
-import { io, Socket } from 'socket.io-client';
-import {AuthContext, AuthContextValue, User} from './AuthContext';
- 
+import { useMemo, useLayoutEffect } from 'react';
+import { AuthContext, AuthContextValue, User } from './AuthContext';
+import { getToken } from './getToken';
+import { useSocketStore } from '@/stores/SocketStore';
+
 export interface AuthProviderProps {
   user: User | null;
-  
   children: React.ReactNode;
 }
 
-
 export const AuthProvider: React.FunctionComponent<AuthProviderProps> = ({ user, children }) => {
-  const [isOnline, setIsOnline] = useState<boolean>(false);
-  const [socket, setSocket] = useState<Socket | null>(null);
+  const { connectUserStatus, disconnect } = useSocketStore();
 
-  useEffect(() => {
-    if (user) {
-      const newSocket = io('http://localhost:4000', {
-        query: { uid: user.uid }, // Adjust as necessary
-      });
+  useLayoutEffect(() => {
+    const initializeSocket = async () => {
+      if (user) {
+        const token = await getToken();
+        console.log('User Token:', token?.token);
 
-      setSocket(newSocket);
+        connectUserStatus(token?.token);
 
-      newSocket.on('connect', () => {
-        setIsOnline(true);
-        console.log('Connected to server');
-      });
+        const socket = useSocketStore.getState().userStatusSocket;
 
-      newSocket.on('disconnect', () => {
-        setIsOnline(false);
-        console.log('Disconnected from server');
-      });
+        socket?.on('connect', () => {
+          console.log("Socket connected, emitting userStatus event");
+          socket.emit('userStatus', user.uid);
+        });
 
-      return () => {
-        newSocket.disconnect();
-      };
-    } else {
-      setIsOnline(false);
-    }
-  }, [user]);
+        return () => {
+          disconnect();
+        };
+      }
+    };
+
+    initializeSocket();
+  }, [user, connectUserStatus, disconnect]);
 
   const value = useMemo<AuthContextValue>(() => ({
     user,
-    isOnline,
-  }), [user, isOnline]);
+  }), [user]);
 
   return (
     <AuthContext.Provider value={value}>

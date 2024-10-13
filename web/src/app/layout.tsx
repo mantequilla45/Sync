@@ -6,7 +6,7 @@ import { cookies } from "next/headers";
 import { filterStandardClaims } from "next-firebase-auth-edge/lib/auth/claims";
 import { User } from "@/services/Auth/AuthContext";
 import { AuthProvider } from "@/services/Auth/AuthProvider";
-import { authConfig } from "@/middleware";
+import { authConfig } from "@/lib/Firebase/NextFirebaseAuthEdge";
 
 const toUser = ({ decodedToken }: Tokens): User => {
   const {

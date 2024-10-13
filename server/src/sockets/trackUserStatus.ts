@@ -1,4 +1,4 @@
-import { Socket } from 'socket.io';
+/*import { Socket } from 'socket.io';
 import { updateUserStatus } from '../actions/_index';
 import { UserStatus } from '../../../_shared/enums';
 
@@ -20,3 +20,4 @@ export const trackUserStatus = (uid: string, socket: Socket) => {
     updateUserStatus(uid, UserStatus.Offline);
   });
 };
+*/
