@@ -10,10 +10,8 @@ abstract class BaseSocketManager {
 
   public abstract handleEvents(socket: Socket): void;
 
-  // Set up connection event handling
   protected configureSocketEvents(): void {
     this.io.on('connection', (socket: Socket) => {
-      console.log(`Connected socket: ${socket.id}`);
       this.handleEvents(socket);
     });
   }

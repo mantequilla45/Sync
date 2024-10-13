@@ -9,12 +9,16 @@ class UserStatusSocketManager extends BaseSocketManager {
   }
 
   public handleEvents(socket: Socket): void {
+    if (!(socket as any).user) {
+      return;
+    }
+
     const uid = (socket as any).user.uid;
+    console.log(`User ID: ${uid}`);
 
     this.trackUserStatus(uid, socket);
 
     socket.on('userStatus', () => {
-      console.log(`User ${uid} updated status`);
     });
   }
 

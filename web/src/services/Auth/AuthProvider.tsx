@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { useMemo, useEffect } from 'react';
+import { useMemo, useLayoutEffect } from 'react';
 import { AuthContext, AuthContextValue, User } from './AuthContext';
 import { getToken } from './getToken';
 import { useSocketStore } from '@/stores/SocketStore';
@@ -11,22 +11,21 @@ export interface AuthProviderProps {
   children: React.ReactNode;
 }
 
-
 export const AuthProvider: React.FunctionComponent<AuthProviderProps> = ({ user, children }) => {
+  const { connectUserStatus, disconnect } = useSocketStore();
 
-  const { connect, disconnect } = useSocketStore();
-
-  useEffect(() => {
+  useLayoutEffect(() => {
     const initializeSocket = async () => {
       if (user) {
         const token = await getToken();
         console.log('User Token:', token?.token);
-  
-        connect(token?.token);
-  
-        const socket = useSocketStore.getState().socket;
-  
+
+        connectUserStatus(token?.token);
+
+        const socket = useSocketStore.getState().userStatusSocket;
+
         socket?.on('connect', () => {
+          console.log("Socket connected, emitting userStatus event");
           socket.emit('userStatus', user.uid);
         });
 
@@ -35,13 +34,12 @@ export const AuthProvider: React.FunctionComponent<AuthProviderProps> = ({ user,
         };
       }
     };
+
     initializeSocket();
-  }, [user, connect, disconnect ]);
-  
-  
+  }, [user, connectUserStatus, disconnect]);
 
   const value = useMemo<AuthContextValue>(() => ({
-    user
+    user,
   }), [user]);
 
   return (

@@ -5,8 +5,8 @@ import { corsConfig } from './config/corsConfig';
 import { DocumentRoute } from './routes/DocumentRoute';
 
 class AppServer {
-  private app: Application;
-  private httpServer: HTTPServer;
+  private readonly app: Application;
+  private readonly httpServer: HTTPServer;
 
   constructor() {
     this.app = express();
@@ -16,7 +16,6 @@ class AppServer {
   }
 
   private configureMiddleware(): void {
-    // Middleware setup
     this.app.use(corsConfig);
     this.app.use(bodyParser.json());
   }
