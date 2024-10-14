@@ -2,9 +2,10 @@ import * as admin from 'firebase-admin';
 import * as dotenv from 'dotenv';
 import { resolve } from 'path';
 
-dotenv.config({ path: resolve(process.cwd(), '../.env') });
+dotenv.config({ path: resolve(process.cwd(), './.env') });
 
 if (!admin.apps.length) {
+
   admin.initializeApp({
     credential: admin.credential.cert({
       projectId: process.env.FIREBASE_PROJECT_ID,
