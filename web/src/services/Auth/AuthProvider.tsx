@@ -12,13 +12,12 @@ export interface AuthProviderProps {
 }
 
 export const AuthProvider: React.FunctionComponent<AuthProviderProps> = ({ user, children }) => {
-  const { connectUserStatus, disconnect } = useSocketStore();
+  const { connectUserStatus, disconnectAll } = useSocketStore();
 
   useLayoutEffect(() => {
     const initializeSocket = async () => {
       if (user) {
         const token = await getToken();
-        console.log('User Token:', token?.token);
 
         connectUserStatus(token?.token);
 
@@ -30,13 +29,13 @@ export const AuthProvider: React.FunctionComponent<AuthProviderProps> = ({ user,
         });
 
         return () => {
-          disconnect();
+          disconnectAll();
         };
       }
     };
 
     initializeSocket();
-  }, [user, connectUserStatus, disconnect]);
+  }, [user, connectUserStatus, disconnectAll]);
 
   const value = useMemo<AuthContextValue>(() => ({
     user,
