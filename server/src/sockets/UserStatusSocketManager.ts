@@ -17,23 +17,12 @@ class UserStatusSocketManager extends BaseSocketManager {
     console.log(`User ID: ${uid}`);
 
     this.trackUserStatus(uid, socket);
-
-    socket.on('userStatus', () => {
-    });
   }
 
   private trackUserStatus(uid: string, socket: Socket): void {
+    
     updateUserStatus(uid, UserStatus.Online);
-
-    socket.on('user-active', () => {
-      console.log(`User ${uid} is active`);
-      updateUserStatus(uid, UserStatus.Online);
-    });
-
-    socket.on('user-inactive', () => {
-      updateUserStatus(uid, UserStatus.Away);
-    });
-
+    
     socket.on('disconnect', () => {
       updateUserStatus(uid, UserStatus.Offline);
     });
