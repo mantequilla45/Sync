@@ -12,7 +12,6 @@ class UserStatusSocketManager extends BaseSocketManager {
     if (!(socket as any).user) {
       return;
     }
-
     const uid = (socket as any).user.uid;
     console.log(`User ID: ${uid}`);
 
@@ -22,7 +21,7 @@ class UserStatusSocketManager extends BaseSocketManager {
   private trackUserStatus(uid: string, socket: Socket): void {
     
     updateUserStatus(uid, UserStatus.Online);
-    
+
     socket.on('disconnect', () => {
       updateUserStatus(uid, UserStatus.Offline);
     });
