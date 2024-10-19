@@ -25,8 +25,9 @@ const DocumentEditor = ({ projectID, documentID }: { projectID: string, document
   };
 
   const handleContentChange = (newContent: string) => {
-    useDocumentSocketStore.getState().documentSocket?.emit('updateContent', { id: documentID, newContent });
-    setContent(newContent);
+    
+    useDocumentSocketStore.getState().documentSocket?.emit('updateContent', documentID, newContent );
+    setContent(newContent)
   };
 
   useEffect(() => {
@@ -47,15 +48,24 @@ const DocumentEditor = ({ projectID, documentID }: { projectID: string, document
   useEffect(() => {
     const interval = setInterval(() => {
       if (useDocumentSocketStore.getState().documentSocket) {
+        useDocumentSocketStore.getState().documentSocket?.emit('joinRoom', (`${documentID}`));
         setStatus('connected');
         clearInterval(interval);
       } else {
-        console.log("C")
         setStatus('disconnected');
       }
     }, 500);
   
     return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    const handleContentUpdated = (newContent: string) => {
+      console.log("Pinged");
+      setContent(newContent);
+    };
+
+    useDocumentSocketStore.getState().documentSocket?.on('contentUpdated', handleContentUpdated);
   }, []);
   
 

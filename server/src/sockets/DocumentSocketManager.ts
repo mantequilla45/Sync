@@ -15,13 +15,14 @@ class DocumentSocketManager extends BaseSocketManager {
       socketId: socket.id
     });
 
-    socket.on('updateContent', () => {
-      console.log("B");
+    socket.on('updateContent', (room: string, content: string) => {
+      console.log(content);
+      socket.to(room).emit('contentUpdated', content);
     })
 
     socket.on('joinRoom', (room: string) => {
-      console.log(`Socket ${socket.id} joined room: ${room}`);
       socket.join(room);
+      console.log(`Socket ${socket.id} joined room: ${room}`);
     });
 
     socket.on('leaveRoom', (room: string) => {
