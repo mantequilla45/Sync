@@ -1,13 +1,13 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useLayoutEffect } from 'react';
 import dynamic from 'next/dynamic';
 import 'react-quill/dist/quill.snow.css';
 import { getToken } from '@/services/Auth/getToken';
 import { useDocumentSocketStore } from '@/stores/DocumentSocketStore';
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
-const DocumentEditor = ({ projectID, documentID }: { projectID: string, documentID: string }) => {
+const DocumentEditor = ({ documentID }: { projectID: string, documentID: string }) => {
   const [content, setContent] = useState('');
   const [status, setStatus] = useState<'connected' | 'disconnected'>('disconnected');
   
@@ -25,16 +25,16 @@ const DocumentEditor = ({ projectID, documentID }: { projectID: string, document
   };
 
   const handleContentChange = (newContent: string) => {
-    
     useDocumentSocketStore.getState().documentSocket?.emit('updateContent', documentID, newContent );
     setContent(newContent)
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const initializeSocket = async () => {
       const token = await getToken();
       if (token) {
         connectDocument(token.token);
+        console.log("Token Check", token.token);
       }
     };
 
