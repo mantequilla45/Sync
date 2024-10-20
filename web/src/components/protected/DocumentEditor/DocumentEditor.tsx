@@ -10,7 +10,6 @@ const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 const DocumentEditor = ({ documentID }: { projectID: string, documentID: string }) => {
   const [content, setContent] = useState('');
   const [status, setStatus] = useState<'connected' | 'disconnected'>('disconnected');
-  
   const { connectDocument, disconnectDocument } = useDocumentSocketStore();
 
   const modules = {
@@ -25,53 +24,40 @@ const DocumentEditor = ({ documentID }: { projectID: string, documentID: string 
   };
 
   const handleContentChange = (newContent: string) => {
-    useDocumentSocketStore.getState().documentSocket?.emit('updateContent', documentID, newContent );
-    setContent(newContent)
+    useDocumentSocketStore.getState().documentSocket?.emit('updateContent', documentID, newContent);
+    setContent(newContent);
   };
 
   useLayoutEffect(() => {
     const initializeSocket = async () => {
       const token = await getToken();
-      if (token) {
-        connectDocument(token.token);
-        console.log("Token Check", token.token);
-      }
+      connectDocument(token.token);
     };
-
     initializeSocket();
-
     return () => {
       disconnectDocument();
     };
-  }, [connectDocument, disconnectDocument]);
+  }, []);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      if (useDocumentSocketStore.getState().documentSocket) {
-        useDocumentSocketStore.getState().documentSocket?.emit('joinRoom', (`${documentID}`));
-        setStatus('connected');
-        clearInterval(interval);
-      } else {
-        setStatus('disconnected');
-      }
-    }, 500);
-  
-    return () => clearInterval(interval);
-  }, []);
+    useDocumentSocketStore.getState().documentSocket?.emit('joinRoom', documentID);
+    setStatus('connected');
+  }, [useDocumentSocketStore.getState().documentSocket]);
+
 
   useEffect(() => {
     const handleContentUpdated = (newContent: string) => {
-      console.log("Pinged");
+      console.log('Content updated from server');
       setContent(newContent);
     };
-
     useDocumentSocketStore.getState().documentSocket?.on('contentUpdated', handleContentUpdated);
-  }, []);
-  
+    return () => {
+      useDocumentSocketStore.getState().documentSocket?.off('contentUpdated', handleContentUpdated);
+    };
+  });
 
   return (
     <div className="w-full bg-white p-5 rounded-2xl shadow">
-      {/* Document editor */}
       <ReactQuill
         value={content}
         onChange={handleContentChange}
@@ -81,7 +67,7 @@ const DocumentEditor = ({ documentID }: { projectID: string, documentID: string 
         modules={modules}
         style={{ height: '500px', color: '#1E1E1E' }}
       />
-      
+
       <button className="bg-[#69369B] text-white rounded-full px-8 py-2 mt-10">
         Save Document
       </button>

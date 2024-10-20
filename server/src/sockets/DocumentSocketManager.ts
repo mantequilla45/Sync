@@ -7,8 +7,6 @@ class DocumentSocketManager extends BaseSocketManager {
   }
 
   public handleEvents(socket: Socket): void {
-    console.log('New socket connected:', socket.id);
-
 
     socket.emit('confirmConnect', {
       message: `Connection confirmed with socket ID: ${socket.id}`,
