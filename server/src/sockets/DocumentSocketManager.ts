@@ -14,10 +14,19 @@ class DocumentSocketManager extends BaseSocketManager {
     });
 
     socket.on('updateContent', (room: string, content: string) => {
-      console.log(content);
-      socket.to(room).emit('contentUpdated', content);
-    })
-
+      const processContent = (input: string): string => {
+        return input
+          .replace(/ /g, '&nbsp;')
+          .replace(/\t/g, '&nbsp;&nbsp;&nbsp;&nbsp;');
+      };
+      const processedContent = processContent(content);
+      console.log("Sending Content:", processedContent);
+    
+      socket.to(room).emit('contentUpdated', processedContent);
+    });
+    
+    
+  
     socket.on('joinRoom', (room: string) => {
       socket.join(room);
       console.log(`Socket ${socket.id} joined room: ${room}`);
