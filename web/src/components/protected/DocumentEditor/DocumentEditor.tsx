@@ -5,11 +5,14 @@ import dynamic from 'next/dynamic';
 import 'react-quill/dist/quill.snow.css';
 import { getToken } from '@/services/Auth/getToken';
 import { useDocumentSocketStore } from '@/stores/DocumentSocketStore';
+import { Delta } from 'quill'
+import { UnprivilegedEditor } from 'react-quill';
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
 const DocumentEditor = ({ documentID }: { projectID: string, documentID: string }) => {
-  const [content, setContent] = useState('');
+  const [content, setContent] = useState<any>(null);
   const [status, setStatus] = useState<'connected' | 'disconnected'>('disconnected');
+  const [editor, setEditor] = useState<UnprivilegedEditor | null>(null);
   const { connectDocument, disconnectDocument } = useDocumentSocketStore();
 
   const modules = {
@@ -23,7 +26,11 @@ const DocumentEditor = ({ documentID }: { projectID: string, documentID: string 
     ],
   };
 
-  const handleContentChange = (newContent: string) => {
+
+  const handleContentChange = (newContent: string, delta: Delta, source: string, quillEditor: UnprivilegedEditor) => {
+    if(!editor){
+      setEditor(quillEditor)
+    }
     useDocumentSocketStore.getState().documentSocket?.emit('updateContent', documentID, newContent);
     setContent(newContent);
   };
@@ -33,21 +40,21 @@ const DocumentEditor = ({ documentID }: { projectID: string, documentID: string 
       const token = await getToken();
       connectDocument(token.token);
     };
+
     initializeSocket();
+
     return () => {
-      disconnectDocument();
+      disconnectDocument(); 
     };
-  }, []);
+  }, [connectDocument, disconnectDocument]);
 
   useEffect(() => {
     useDocumentSocketStore.getState().documentSocket?.emit('joinRoom', documentID);
     setStatus('connected');
   }, [useDocumentSocketStore.getState().documentSocket]);
 
-
   useEffect(() => {
     const handleContentUpdated = (newContent: string) => {
-      console.log('Content updated from server');
       setContent(newContent);
     };
     useDocumentSocketStore.getState().documentSocket?.on('contentUpdated', handleContentUpdated);
@@ -60,7 +67,7 @@ const DocumentEditor = ({ documentID }: { projectID: string, documentID: string 
     <div className="w-full bg-white p-5 rounded-2xl shadow">
       <ReactQuill
         value={content}
-        onChange={handleContentChange}
+        onChange={handleContentChange} 
         placeholder="Start writing here..."
         theme="snow"
         className="mb-4 w-full"
