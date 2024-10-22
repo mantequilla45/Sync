@@ -1,16 +1,18 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useLayoutEffect } from 'react';
 import dynamic from 'next/dynamic';
 import 'react-quill/dist/quill.snow.css';
 import { getToken } from '@/services/Auth/getToken';
 import { useDocumentSocketStore } from '@/stores/DocumentSocketStore';
+import { Delta, Sources } from 'quill'
+import { UnprivilegedEditor, Range } from 'react-quill';
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
-const DocumentEditor = ({ projectID, documentID }: { projectID: string, documentID: string }) => {
-  const [content, setContent] = useState('');
+const DocumentEditor = ({ documentID }: { projectID: string, documentID: string }) => {
+  const [content, setContent] = useState<any>(null);
   const [status, setStatus] = useState<'connected' | 'disconnected'>('disconnected');
-  
+  const [editor, setEditor] = useState<UnprivilegedEditor | null>(null);
   const { connectDocument, disconnectDocument } = useDocumentSocketStore();
 
   const modules = {
@@ -24,18 +26,29 @@ const DocumentEditor = ({ projectID, documentID }: { projectID: string, document
     ],
   };
 
-  const handleContentChange = (newContent: string) => {
-    
-    useDocumentSocketStore.getState().documentSocket?.emit('updateContent', documentID, newContent );
-    setContent(newContent)
+
+  const handleContentChange = (newContent: string, delta: Delta, source: string, quillEditor: UnprivilegedEditor) => {
+    if (!editor) {
+      setEditor(quillEditor)
+    }
+    useDocumentSocketStore.getState().documentSocket?.emit('updateContent', documentID, newContent);
+    setContent(newContent);
   };
 
-  useEffect(() => {
+  const handleContentUpdated = (newContent: string) => {
+    console.log("New Content", newContent);
+    setContent(newContent);
+  };
+
+  const handleChangePos = (selection: Range, source: Sources, editor: UnprivilegedEditor) => {
+    //console.log(selection?.index, selection?.length)
+    //Groundwork for indicator??????
+  }
+
+  useLayoutEffect(() => {
     const initializeSocket = async () => {
       const token = await getToken();
-      if (token) {
-        connectDocument(token.token);
-      }
+      connectDocument(token.token);
     };
 
     initializeSocket();
@@ -46,32 +59,34 @@ const DocumentEditor = ({ projectID, documentID }: { projectID: string, document
   }, [connectDocument, disconnectDocument]);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      if (useDocumentSocketStore.getState().documentSocket) {
-        useDocumentSocketStore.getState().documentSocket?.emit('joinRoom', (`${documentID}`));
-        setStatus('connected');
-        clearInterval(interval);
-      } else {
-        setStatus('disconnected');
-      }
-    }, 500);
+      useDocumentSocketStore.getState().documentSocket?.on('contentUpdated', handleContentUpdated);
   
-    return () => clearInterval(interval);
-  }, []);
+      // Emit the event to join the room
+      useDocumentSocketStore.getState().documentSocket?.emit('joinRoom', documentID);
+  
+      // Add a small delay to allow the server to process the room joining before requesting content
+      const contentLoadDelay = setTimeout(() => {
+        useDocumentSocketStore.getState().documentSocket?.emit('loadContent', documentID);
+        setStatus('connected');
+      }, 10000); // 500ms delay
+  
+      // Cleanup on unmount
+      return () => {
+        clearTimeout(contentLoadDelay); // Clear the timeout on cleanup
+        useDocumentSocketStore.getState().documentSocket?.off('contentUpdated', handleContentUpdated);
+      };
+  }, [useDocumentSocketStore.getState().documentSocket]);
+  
 
   useEffect(() => {
-    const handleContentUpdated = (newContent: string) => {
-      console.log("Pinged");
-      setContent(newContent);
-    };
-
     useDocumentSocketStore.getState().documentSocket?.on('contentUpdated', handleContentUpdated);
-  }, []);
-  
+    return () => {
+      useDocumentSocketStore.getState().documentSocket?.off('contentUpdated', handleContentUpdated);
+    };
+  });
 
   return (
     <div className="w-full bg-white p-5 rounded-2xl shadow">
-      {/* Document editor */}
       <ReactQuill
         value={content}
         onChange={handleContentChange}
@@ -79,9 +94,10 @@ const DocumentEditor = ({ projectID, documentID }: { projectID: string, document
         theme="snow"
         className="mb-4 w-full"
         modules={modules}
+        onChangeSelection={handleChangePos}
         style={{ height: '500px', color: '#1E1E1E' }}
       />
-      
+
       <button className="bg-[#69369B] text-white rounded-full px-8 py-2 mt-10">
         Save Document
       </button>

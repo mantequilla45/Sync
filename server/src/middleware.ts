@@ -31,10 +31,7 @@ export async function authenticateSocket(socket: Socket, next: (err?: any) => vo
 
   try {
     const decodedToken = await verifyIdToken(token);
-
     (socket as any).user = decodedToken;
-
-    console.log('User authenticated:', decodedToken.uid);
     next();
   } catch (error) {
     console.error('Authentication error:', error);

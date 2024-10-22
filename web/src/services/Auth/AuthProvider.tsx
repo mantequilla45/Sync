@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { useMemo, useLayoutEffect } from 'react';
+import { useMemo, useEffect } from 'react';
 import { AuthContext, AuthContextValue, User } from './AuthContext';
 import { getToken } from './getToken';
 import { useUserStatusSocketStore } from '@/stores/UserStatus';
@@ -14,8 +14,9 @@ export interface AuthProviderProps {
 export const AuthProvider: React.FunctionComponent<AuthProviderProps> = ({ user, children }) => {
   const { connectUserStatus, disconnectUserStatus } = useUserStatusSocketStore();
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const initializeSocket = async () => {
+      
       if (user) {
         const token = await getToken();
         connectUserStatus(token?.token);
