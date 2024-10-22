@@ -5,8 +5,8 @@ import dynamic from 'next/dynamic';
 import 'react-quill/dist/quill.snow.css';
 import { getToken } from '@/services/Auth/getToken';
 import { useDocumentSocketStore } from '@/stores/DocumentSocketStore';
-import { Delta } from 'quill'
-import { UnprivilegedEditor } from 'react-quill';
+import { Delta, Sources } from 'quill'
+import { UnprivilegedEditor, Range } from 'react-quill';
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
 const DocumentEditor = ({ documentID }: { projectID: string, documentID: string }) => {
@@ -28,12 +28,22 @@ const DocumentEditor = ({ documentID }: { projectID: string, documentID: string 
 
 
   const handleContentChange = (newContent: string, delta: Delta, source: string, quillEditor: UnprivilegedEditor) => {
-    if(!editor){
+    if (!editor) {
       setEditor(quillEditor)
     }
     useDocumentSocketStore.getState().documentSocket?.emit('updateContent', documentID, newContent);
     setContent(newContent);
   };
+
+  const handleContentUpdated = (newContent: string) => {
+    console.log("New Content", newContent);
+    setContent(newContent);
+  };
+
+  const handleChangePos = (selection: Range, source: Sources, editor: UnprivilegedEditor) => {
+    //console.log(selection?.index, selection?.length)
+    //Groundwork for indicator??????
+  }
 
   useLayoutEffect(() => {
     const initializeSocket = async () => {
@@ -44,19 +54,31 @@ const DocumentEditor = ({ documentID }: { projectID: string, documentID: string 
     initializeSocket();
 
     return () => {
-      disconnectDocument(); 
+      disconnectDocument();
     };
   }, [connectDocument, disconnectDocument]);
 
   useEffect(() => {
-    useDocumentSocketStore.getState().documentSocket?.emit('joinRoom', documentID);
-    setStatus('connected');
+      useDocumentSocketStore.getState().documentSocket?.on('contentUpdated', handleContentUpdated);
+  
+      // Emit the event to join the room
+      useDocumentSocketStore.getState().documentSocket?.emit('joinRoom', documentID);
+  
+      // Add a small delay to allow the server to process the room joining before requesting content
+      const contentLoadDelay = setTimeout(() => {
+        useDocumentSocketStore.getState().documentSocket?.emit('loadContent', documentID);
+        setStatus('connected');
+      }, 10000); // 500ms delay
+  
+      // Cleanup on unmount
+      return () => {
+        clearTimeout(contentLoadDelay); // Clear the timeout on cleanup
+        useDocumentSocketStore.getState().documentSocket?.off('contentUpdated', handleContentUpdated);
+      };
   }, [useDocumentSocketStore.getState().documentSocket]);
+  
 
   useEffect(() => {
-    const handleContentUpdated = (newContent: string) => {
-      setContent(newContent);
-    };
     useDocumentSocketStore.getState().documentSocket?.on('contentUpdated', handleContentUpdated);
     return () => {
       useDocumentSocketStore.getState().documentSocket?.off('contentUpdated', handleContentUpdated);
@@ -67,11 +89,12 @@ const DocumentEditor = ({ documentID }: { projectID: string, documentID: string 
     <div className="w-full bg-white p-5 rounded-2xl shadow">
       <ReactQuill
         value={content}
-        onChange={handleContentChange} 
+        onChange={handleContentChange}
         placeholder="Start writing here..."
         theme="snow"
         className="mb-4 w-full"
         modules={modules}
+        onChangeSelection={handleChangePos}
         style={{ height: '500px', color: '#1E1E1E' }}
       />
 
