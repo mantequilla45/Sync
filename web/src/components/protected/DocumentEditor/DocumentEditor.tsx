@@ -1,19 +1,35 @@
 "use client";
 
-import React, { useState, useEffect, useLayoutEffect } from 'react';
+import React, { useState, useEffect, useLayoutEffect, useRef, LegacyRef } from 'react';
 import dynamic from 'next/dynamic';
 import 'react-quill/dist/quill.snow.css';
 import { getToken } from '@/services/Auth/getToken';
 import { useDocumentSocketStore } from '@/stores/DocumentSocketStore';
 import { Delta, Sources } from 'quill'
-import { UnprivilegedEditor, Range } from 'react-quill';
-const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
+import ReactQuill, { UnprivilegedEditor, Range, ReactQuillProps } from 'react-quill';
 
-const DocumentEditor = ({ documentID }: { projectID: string, documentID: string }) => {
+interface IWrappedComponent extends ReactQuillProps {
+  forwardedRef: LegacyRef<ReactQuill>;
+}
+
+const WrappedQuill = dynamic(
+  async () => {
+    const { default: ReactQuillEditor } = await import("react-quill");
+
+    const QuillJS = ({ forwardedRef, ...props }: IWrappedComponent) => (
+      <ReactQuillEditor ref={forwardedRef} {...props} />
+    );
+    return QuillJS;
+  },
+  { ssr: false }
+);
+
+const DocumentEditor = ({ documentID, projectID }: { projectID: string, documentID: string }) => {
   const [content, setContent] = useState<any>(null);
   const [status, setStatus] = useState<'connected' | 'disconnected'>('disconnected');
   const [editor, setEditor] = useState<UnprivilegedEditor | null>(null);
   const { connectDocument, disconnectDocument } = useDocumentSocketStore();
+  const editorRef = useRef<ReactQuill | null>(null);
 
   const modules = {
     toolbar: [
@@ -25,7 +41,6 @@ const DocumentEditor = ({ documentID }: { projectID: string, documentID: string 
       ['clean'],
     ],
   };
-
 
   const handleContentChange = (newContent: string, delta: Delta, source: string, quillEditor: UnprivilegedEditor) => {
     if (!editor) {
@@ -45,6 +60,10 @@ const DocumentEditor = ({ documentID }: { projectID: string, documentID: string 
     //Groundwork for indicator??????
   }
 
+  const handleSave = () => {
+    useDocumentSocketStore.getState().documentSocket?.emit('saveDocument', documentID, projectID);
+  }
+
   useLayoutEffect(() => {
     const initializeSocket = async () => {
       const token = await getToken();
@@ -59,23 +78,9 @@ const DocumentEditor = ({ documentID }: { projectID: string, documentID: string 
   }, [connectDocument, disconnectDocument]);
 
   useEffect(() => {
-      useDocumentSocketStore.getState().documentSocket?.on('contentUpdated', handleContentUpdated);
-  
-      // Emit the event to join the room
-      useDocumentSocketStore.getState().documentSocket?.emit('joinRoom', documentID);
-  
-      // Add a small delay to allow the server to process the room joining before requesting content
-      const contentLoadDelay = setTimeout(() => {
-        useDocumentSocketStore.getState().documentSocket?.emit('loadContent', documentID);
-        setStatus('connected');
-      }, 10000); // 500ms delay
-  
-      // Cleanup on unmount
-      return () => {
-        clearTimeout(contentLoadDelay); // Clear the timeout on cleanup
-        useDocumentSocketStore.getState().documentSocket?.off('contentUpdated', handleContentUpdated);
-      };
-  }, [useDocumentSocketStore.getState().documentSocket]);
+    useDocumentSocketStore.getState().documentSocket?.emit('joinRoom', documentID);
+    setStatus('connected');
+}, [useDocumentSocketStore.getState().documentSocket]);
   
 
   useEffect(() => {
@@ -87,7 +92,8 @@ const DocumentEditor = ({ documentID }: { projectID: string, documentID: string 
 
   return (
     <div className="w-full bg-white p-5 rounded-2xl shadow">
-      <ReactQuill
+      <WrappedQuill
+        forwardedRef={editorRef}
         value={content}
         onChange={handleContentChange}
         placeholder="Start writing here..."
@@ -97,11 +103,11 @@ const DocumentEditor = ({ documentID }: { projectID: string, documentID: string 
         onChangeSelection={handleChangePos}
         style={{ height: '500px', color: '#1E1E1E' }}
       />
-
-      <button className="bg-[#69369B] text-white rounded-full px-8 py-2 mt-10">
+      <button 
+        className="bg-[#69369B] text-white rounded-full px-8 py-2 mt-10"
+        onClick={handleSave}>
         Save Document
       </button>
-
       <div className={`mt-4 text-2xl font-semibold ${status === 'connected' ? 'text-blue-500' : 'text-red-500'}`}>
         {status === 'connected' ? 'Connected to Document Socket' : 'Disconnected from Document Socket'}
       </div>
