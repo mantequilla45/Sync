@@ -1,5 +1,7 @@
 import { Namespace, Socket } from 'socket.io';
 import BaseSocketManager from './BaseSocketManager';
+import { saveDocument } from '../actions/DocumentActions/saveDocument';
+import { loadDocument } from '../actions/DocumentActions/loadDocument';
 
 class DocumentSocketManager extends BaseSocketManager {
 
@@ -23,31 +25,39 @@ class DocumentSocketManager extends BaseSocketManager {
           .replace(/ /g, '&nbsp;')
           .replace(/\t/g, '&nbsp;&nbsp;&nbsp;&nbsp;');
       };
-      const processedContent = processContent(content);
-      this.documents.set(room, processedContent);
+      this.documents.set(room, processContent(content));
       socket.to(room).emit('contentUpdated', this.documents.get(room));
     });
 
-    socket.on('joinRoom', (room: string) => {
-      if(!this.documents.has(room)){
-        this.documents.set(room, "");
+    socket.on('joinRoom', async (room: string) => {
+      if (!this.documents.has(room)) {
+          const documentContent = await loadDocument(room);
+          if (documentContent) {
+              this.documents.set(room, documentContent);
+              socket.to(room).emit('contentUpdated', documentContent);
+          } else {
+              console.error(`Failed to load document for room: ${room}`);
+              return;
+          }
       }
       socket.join(room);
+      setInterval(()=>{
+        socket.to(room).emit('contentUpdated', this.documents.get(room));
+      }, 10000)
       console.log(`Socket ${socket.id} joined room: ${room}`);
     });
-
-    socket.on('loadContent', (room: string) => {
-      console.log(room);
-      socket.to(room).emit('contentUpdated', this.documents.get(room));
-      console.log(this.documents.keys());
-      console.log(this.documents.get(room));
-    })
-
+  
+    socket.on('saveDocument', (room: string, projectID: string) => {
+      const document = this.documents.get(room);
+      if (document !== undefined) {
+        saveDocument(room, projectID, document);
+      }
+    });
+    
     socket.on('leaveRoom', (room: string) => {
-      console.log(`Socket ${socket.id} left room: ${room}`);
-      
       socket.leave(room);
     });
+    
 
     socket.on('disconnect', () => {
       console.log(`Socket ${socket.id} disconnected`);

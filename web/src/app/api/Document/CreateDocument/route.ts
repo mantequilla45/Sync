@@ -21,13 +21,8 @@ export async function POST(req: Request) {
     const projectRef = db.collection('projects').doc(projectId as string);
     const documentRef = db.collection('documents').doc();
 
-    const fileName = `documents/${documentRef.id}.json`;
-    
-    const emptyDelta = {
-      ops: []  // Empty Quill delta structure
-    };
+    const fileName = `documents/${documentRef.id}.html`;
 
-    // Transaction block
     await db.runTransaction(async (transaction) => {
       const projectSnapshot = await transaction.get(projectRef);
 
@@ -35,7 +30,7 @@ export async function POST(req: Request) {
         throw new Error('Project not found');
       }
 
-      // Create the new document object
+
       const newDocument = {
         UID: documentRef.id,
         title: documentTitle as string,
@@ -52,18 +47,18 @@ export async function POST(req: Request) {
         projectUID: projectRef
       };
 
-      // Save the empty delta file to Firebase Storage
+      // Save HTML content to Firebase Storage
       const file = bucket.file(fileName);
-      await file.save(JSON.stringify(emptyDelta), {
+      await file.save('', {
         metadata: {
-          contentType: 'application/json'
+          contentType: 'text/html'
         }
       });
 
       const filePath = `gs://${bucket.name}/${fileName}`;
       newDocument.filePath = filePath;
 
-      // Save the new document to Firestore and update the project document
+      // Save document metadata in Firestore
       transaction.set(documentRef, newDocument, { merge: true });
       transaction.update(projectRef, {
         documentUIDs: FieldValue.arrayUnion(documentRef)
@@ -72,7 +67,7 @@ export async function POST(req: Request) {
 
     return NextResponse.json({ status: 200, documentId: documentRef.id, filePath: fileName });
   } catch (error) {
-    console.error('Error creating document and JSON delta file:', error);
-    return NextResponse.json({ error: 'Failed to create document and JSON delta file' }, { status: 500 });
+    console.error('Error creating document and HTML file:', error);
+    return NextResponse.json({ error: 'Failed to create document and HTML file' }, { status: 500 });
   }
 }
