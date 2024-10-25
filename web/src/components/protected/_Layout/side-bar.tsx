@@ -66,9 +66,9 @@ const HamburgerMenu: React.FC = () => {
                 <IoHomeOutline className="text-2xl" />
                 <div className="block mx-4">Home</div>
             </a>
-            <a href="/home" className="p-2 flex rounded-lg hover:bg-opacity-10 hover:bg-white transition-all duration-300">
+            <a href="/taskmanager" className="p-2 flex rounded-lg hover:bg-opacity-10 hover:bg-white transition-all duration-300">
                 <IoHomeOutline className="text-2xl" />
-                <div  className="block mx-4">Home</div>
+                <div  className="block mx-4">Task Manager</div>
             </a>
             <div className="p-2 flex rounded-lg hover:bg-opacity-10 hover:bg-white transition-all duration-300">
                 <IoHomeOutline className="text-2xl" />
