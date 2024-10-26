@@ -7,16 +7,16 @@ import SectionHeader from '@/components/protected/TaskManager/section-header';
 import MeetingCard, { meetings, getDateLabel, groupMeetingsByDate } from '@/components/protected/TaskManager/meeting-cards';
 
 const initialTodoTasks = [
-    { title: "Scale Marketing", phase: "Phase 4 - Execution", dateRange: "24/10/24 - 2/11/24", daysLeft: "4d", color: "#A228FF" },
-    { title: "Design Prototype", phase: "Phase 1 - Design", dateRange: "20/10/24 - 24/10/24", daysLeft: "0d", color: "#FF5722" },
+    { title: "Scale Marketing", phase: "4", dateRange: "24/10/24 - 2/11/24", daysLeft: "4", color: "#A228FF" },
+    { title: "Design Prototype", phase: "1", dateRange: "20/10/24 - 24/10/24", daysLeft: "0", color: "#FF5722" },
 ];
 
 const initialInProgressTasks = [
-    { title: "Develop Product", phase: "Phase 3 - Development", dateRange: "20/10/24 - 25/10/24", daysLeft: "1d", color: "#F55D76" },
+    { title: "Develop Product", phase: "3", dateRange: "20/10/24 - 25/10/24", daysLeft: "1", color: "#F55D76" },
 ];
 
 const initialCompletedTasks = [
-    { title: "Market Research", phase: "Phase 2 - Planning", dateRange: "15/10/24 - 19/10/24", daysLeft: "0d", color: "#4CAF50" },
+    { title: "Market Research", phase: "2", dateRange: "15/10/24 - 19/10/24", daysLeft: "0", color: "#4CAF50" },
 ];
 
 export default function TaskManager() {
