@@ -130,54 +130,71 @@ const TaskModal: React.FC<TaskModalProps> = ({
       className={`fixed inset-0 bg-gray-800 bg-opacity-50 z-20 flex justify-center items-center transition-opacity duration-300 ${isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
     >
       <div
-        className={`bg-white p-6 text-[#1e1e1e] rounded-2xl w-1/3 transform transition-transform duration-300 ${isOpen ? 'scale-100' : 'scale-90'}`}
+        className={`bg-white p-6 text-[#1e1e1e] rounded-2xl w-1/4 h-1/2 flex flex-col justify-between transform transition-transform duration-300 ${isOpen ? 'scale-100' : 'scale-90'}`}
       >
-        <h2 className="text-xl text-[#000000] font-semibold mb-4">{title}</h2>
+        
+        <div className="flex items-center justify-between">
+          <h2 className="text-xl text-[#000000] font-semibold">{title}</h2>
+          
+          <div className="flex items-center mr-5">
+            <img
+              src="https://firebasestorage.googleapis.com/v0/b/hostingtest-aadc2.appspot.com/o/website-resources%2FSync%20Logo%2FSync%20Logo%20Purple%20Large.png?alt=media&token=dc1a14e5-6f1f-400e-ac86-2b82b624d079"
+              alt="Description of the image"
+              className="w-[25px] h-[25px]"
+            />
+            <h1 className="text-2xl font-bold text-[#5D1E8C] ml-[7px]">Sync</h1>
 
+          </div>
+        </div>
         {error && <p className="text-red-500 mb-4">{error}</p>} {/* Error message */}
 
-        <input
-          name="title"
-          placeholder="Task Title"
-          className="w-full mb-4 p-3 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-[#60328D]"
-          onChange={handleInputChange}
-          value={newTask.title}
-        />
-
-        <label className="block mb-2">Select Phase:</label>
-        <select
-          name="phase"
-          className="w-full mb-4 p-3 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-[#60328D]"
-          onChange={handleInputChange}
-          value={newTask.phase}
-        >
-          <option value="" disabled>Select Phase</option>
-          <option value="1">Phase 1</option>
-          <option value="2">Phase 2</option>
-          <option value="3">Phase 3</option>
-          <option value="4">Phase 4</option>
-        </select>
-
-        <label className="block mb-2">Date Range:</label>
-        <div className="relative">
+        
+        <div className="flex flex-col">
+          
+          <label className="block mb-2">Task Name:</label>
           <input
-            name="dateRange"
-            placeholder="Select Date Range"
-            className="w-full mb-4 p-3 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-[#444444] cursor-pointer"
-            onClick={() => setShowDatePicker(!showDatePicker)}
-            readOnly
-            value={newTask.dateRange}
+            name="title"
+            placeholder="Task Name"
+            className="w-full mb-4 p-3 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-[#60328D]"
+            onChange={handleInputChange}
+            value={newTask.title}
           />
-          {showDatePicker && (
-            <div className="absolute top-16 z-50" ref={datePickerRef}>
-              <DateRange
-                ranges={[selectedRange]}
-                onChange={handleRangeChange}
-                rangeColors={['#60328D']}
-              />
-            </div>
-          )}
+          <label className="block mb-2">Select Phase:</label>
+          <select
+            name="phase"
+            className="w-full mb-4 p-3 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-[#60328D]"
+            onChange={handleInputChange}
+            value={newTask.phase}
+          >
+            <option value="" disabled>Select Phase</option>
+            <option value="1">Phase 1</option>
+            <option value="2">Phase 2</option>
+            <option value="3">Phase 3</option>
+            <option value="4">Phase 4</option>
+          </select>
+
+          <label className="block mb-2">Date Range:</label>
+          <div className="relative">
+            <input
+              name="dateRange"
+              placeholder="Select Date Range"
+              className="w-full mb-4 p-3 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-[#444444] cursor-pointer"
+              onClick={() => setShowDatePicker(!showDatePicker)}
+              readOnly
+              value={newTask.dateRange}
+            />
+            {showDatePicker && (
+              <div className="absolute top-16 z-50" ref={datePickerRef}>
+                <DateRange
+                  ranges={[selectedRange]}
+                  onChange={handleRangeChange}
+                  rangeColors={['#60328D']}
+                />
+              </div>
+            )}
+          </div>
         </div>
+        
 
         <div className="flex justify-end gap-3">
           <button

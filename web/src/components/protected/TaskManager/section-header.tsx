@@ -49,7 +49,7 @@ const SectionHeader: React.FC<SectionHeaderProps> = ({
       <div className="flex bg-white rounded-xl h-[40px] mt-[-37px] z-10 items-center px-5 gap-5">
         <div className="flex flex-row w-full justify-between">
           <div className="flex items-center gap-3">
-            <p style={{ color: '#1e1e1e', fontWeight: 600, fontSize: 17 }}>{title}</p>
+            <p style={{ color: '#1e1e1e', fontWeight: 500, fontSize: 17 }}>{title}</p>
             <div className="border border-[#B8B8B8] rounded-full justify-center flex items-center py-0.5 px-4">
               <p style={{ color: '#B8B8B8', fontWeight: 400 }}>{count}</p>
             </div>
