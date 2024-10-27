@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation';
 import HamburgerMenu from './side-bar';
 import SearchInput from './search-bar';
 import { IoIosArrowForward, GrNotification, TbLogout2, FaMoon, FaUser, CgProfile, IoArrowBack, IoSettingsSharp } from '../../_icons';
+import { GoBellFill } from "react-icons/go";
 
 const Header: React.FC = () => {
   const pathname = usePathname();
@@ -89,11 +90,11 @@ const Header: React.FC = () => {
                     />
                   </div>
                   <button
-                    className="profile-button p-[11px] rounded-full bg-[#3D55B8] shadow-[0_4px_8px_rgba(0,0,0,0.3)] text-gray-800 flex items-center justify-center mr-5 
+                    className="profile-button p-2 rounded-full bg-[#3D55B8] shadow-[0_4px_8px_rgba(0,0,0,0.3)] text-gray-800 flex items-center justify-center mr-5 
                               hover:bg-[#4B67DD] hover:text-white 
                               active:bg-[#2C3E9A] active:scale-95 transition duration-200"
                   >
-                    <GrNotification className="text-lg text-white" />
+                    <GoBellFill className="text-lg text-white w-[25px] h-[25px]" />
                   </button>
 
                   <button

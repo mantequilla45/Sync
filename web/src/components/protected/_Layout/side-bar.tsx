@@ -2,11 +2,15 @@
 
 import React, { useState } from 'react';
 import { RxHamburgerMenu } from "react-icons/rx";
-import { IoHomeOutline } from "react-icons/io5";
 import { LuInfo } from "react-icons/lu";
 import { LuMail } from "react-icons/lu";
 import { FaUsers } from "react-icons/fa";
-import { GoChecklist } from "react-icons/go";
+import { HiMiniHome } from "react-icons/hi2";
+import { BiSolidNotepad } from "react-icons/bi";
+import { FaDiagramProject } from "react-icons/fa6";
+import { IoIosInformationCircle } from "react-icons/io";
+import { IoMail } from "react-icons/io5";
+
 
 
 const HamburgerMenu: React.FC = () => {
@@ -55,42 +59,26 @@ const HamburgerMenu: React.FC = () => {
           {/* Add your menu items here */}
           <div className="space-y-1">
             <a href="/home" className="p-2 flex rounded-lg hover:bg-opacity-10 hover:bg-white transition-all duration-300">
-                <IoHomeOutline className="text-2xl" />
+                <HiMiniHome className="text-2xl" />
                 <div className="block mx-4 ">Home</div>
             </a>
             <a href="/task-manager" className="p-2 flex rounded-lg hover:bg-opacity-10 hover:bg-white transition-all duration-300">
-                <GoChecklist className="text-2xl" />
+                <BiSolidNotepad className="text-2xl" />
                 <div className="block mx-4">Task Manager</div>
             </a>
-            <a href="/home" className="p-2 flex rounded-lg hover:bg-opacity-10 hover:bg-white transition-all duration-300">
-                <IoHomeOutline className="text-2xl" />
-                <div className="block mx-4">Home</div>
-            </a>
-            <a href="/home" className="p-2 flex rounded-lg hover:bg-opacity-10 hover:bg-white transition-all duration-300">
-                <IoHomeOutline className="text-2xl" />
-                <div className="block mx-4">Home</div>
-            </a>
-            <a href="/home" className="p-2 flex rounded-lg hover:bg-opacity-10 hover:bg-white transition-all duration-300">
-                <IoHomeOutline className="text-2xl" />
-                <div className="block mx-4">Home</div>
-            </a>
-            <a href="/home" className="p-2 flex rounded-lg hover:bg-opacity-10 hover:bg-white transition-all duration-300">
-                <IoHomeOutline className="text-2xl" />
-                <div  className="block mx-4">Home</div>
-            </a>
             <div className="p-2 flex rounded-lg hover:bg-opacity-10 hover:bg-white transition-all duration-300">
-                <IoHomeOutline className="text-2xl" />
+                <FaDiagramProject className="text-2xl" />
                 <a href="/home" className="block mx-4">Your Projects</a>
             </div>
           </div>
 
           <div className="space-y-1 text-sm">
             <a href="/about" className="p-2 flex rounded-lg hover:bg-opacity-10 hover:bg-white transition-all duration-300 ">
-              <LuInfo className="text-xl" />
+              <IoIosInformationCircle className="text-xl" />
               <div className="block mx-4">About</div>
             </a>
             <a href="/contact-us" className="p-2 flex rounded-lg hover:bg-opacity-10 hover:bg-white transition-all duration-300">
-              <LuMail className="text-xl" />
+              <IoMail className="text-xl" />
               <div className="block mx-4">Contact Us</div>
             </a>
             <a href="/about-us" className="p-2 flex rounded-lg hover:bg-opacity-10 hover:bg-white transition-all duration-300">
