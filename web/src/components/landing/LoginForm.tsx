@@ -114,7 +114,7 @@ const LoginForm: React.FC = () => {
                   />
                 </div>
 
-                {error && <p className="text-red-500">{error}</p>}
+                {error && <p className="text-white-500 px-5 text-sm">{error}</p>}
 
                 <div className="flex flex-col space-y-2 w-full items-center">
                   <button

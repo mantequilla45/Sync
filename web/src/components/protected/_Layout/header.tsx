@@ -54,10 +54,8 @@ const Header: React.FC = () => {
   return (
     <>
       <header>
-        <link
-          href="https://fonts.googleapis.com/css?family=Poppins:wght@300;400;500;600;700;800;900&display=optional"
-          rel="stylesheet"
-        />
+      <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600;700;800;900&display=swap" rel="stylesheet"
+          />
       </header>
       <div>
         <div
@@ -75,7 +73,7 @@ const Header: React.FC = () => {
                   <div className="flex items-center w-full ml-6">
                     <a href="/home" className="flex items-center">
                       <img
-                        src="https://cdn.builder.io/api/v1/image/assets/TEMP/e206a20408ef8878dcb5118bce850f8f290c84cbd09da22c62f468d88dfbdc15?placeholderIfAbsent=true&apiKey=0cd5b3eb85e74a83a268d41d07a9c27f"
+                        src="https://firebasestorage.googleapis.com/v0/b/hostingtest-aadc2.appspot.com/o/website-resources%2FSync%20Logo%2FSync%20Logo%20White%20Large.png?alt=media&token=7551d58d-337b-4106-b5da-9b23260c1d99"
                         alt="Description of the image"
                         className="w-[25px] h-[25px] "
                       />
