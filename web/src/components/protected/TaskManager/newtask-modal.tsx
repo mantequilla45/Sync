@@ -130,7 +130,7 @@ const TaskModal: React.FC<TaskModalProps> = ({
       className={`fixed inset-0 bg-gray-800 bg-opacity-50 z-20 flex justify-center items-center transition-opacity duration-300 ${isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
     >
       <div
-        className={`bg-white p-6 text-[#1e1e1e] rounded-2xl w-1/4 h-1/2 flex flex-col justify-between transform transition-transform duration-300 ${isOpen ? 'scale-100' : 'scale-90'}`}
+        className={`bg-white p-10 text-[#1e1e1e] rounded-2xl w-1/4 h-1/2 flex flex-col justify-between transform transition-transform duration-300 ${isOpen ? 'scale-100' : 'scale-90'}`}
       >
         
         <div className="flex items-center justify-between">
@@ -155,14 +155,14 @@ const TaskModal: React.FC<TaskModalProps> = ({
           <input
             name="title"
             placeholder="Task Name"
-            className="w-full mb-4 p-3 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-[#60328D]"
+            className="w-full mb-4 p-3 border border-gray-300 rounded-full shadow-sm focus:outline-none focus:ring-2 focus:ring-[#60328D]"
             onChange={handleInputChange}
             value={newTask.title}
           />
           <label className="block mb-2">Select Phase:</label>
           <select
             name="phase"
-            className="w-full mb-4 p-3 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-[#60328D]"
+            className="w-full mb-4 p-3 border border-gray-300 rounded-full shadow-sm focus:outline-none focus:ring-2 focus:ring-[#60328D]"
             onChange={handleInputChange}
             value={newTask.phase}
           >
@@ -178,7 +178,7 @@ const TaskModal: React.FC<TaskModalProps> = ({
             <input
               name="dateRange"
               placeholder="Select Date Range"
-              className="w-full mb-4 p-3 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-[#444444] cursor-pointer"
+              className="w-full p-3 border border-gray-300 rounded-full shadow-sm focus:outline-none focus:ring-2 focus:ring-[#444444] cursor-pointer"
               onClick={() => setShowDatePicker(!showDatePicker)}
               readOnly
               value={newTask.dateRange}
