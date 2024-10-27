@@ -29,35 +29,41 @@ class DocumentSocketManager extends BaseSocketManager {
       socket.to(room).emit('contentUpdated', this.documents.get(room));
     });
 
-    socket.on('joinRoom', async (room: string) => {
-      if (!this.documents.has(room)) {
-          const documentContent = await loadDocument(room);
-          if (documentContent) {
-              this.documents.set(room, documentContent);
-              socket.to(room).emit('contentUpdated', documentContent);
-          } else {
-              console.error(`Failed to load document for room: ${room}`);
-              return;
-          }
-      }
+    socket.on('joinRoom', async (room: string, callback) => {
       socket.join(room);
-      setInterval(()=>{
-        socket.to(room).emit('contentUpdated', this.documents.get(room));
-      }, 10000)
-      console.log(`Socket ${socket.id} joined room: ${room}`);
+      console.log(`${socket.id} has joined the room ${room}`);
+
+      if (!this.documents.has(room)) {
+        const documentContent = await loadDocument(room);
+        if (documentContent) {
+          this.documents.set(room, documentContent);
+        } else {
+          console.error(`Failed to load document for room: ${room}`);
+          return;
+        }
+      }
+      console.log(`${socket.id}   ${this.documents.get(room)}`);
+      callback(this.documents.get(room));
+      socket.to(room).emit('contentUpdated', this.documents.get(room));
     });
-  
+
+
+
     socket.on('saveDocument', (room: string, projectID: string) => {
       const document = this.documents.get(room);
       if (document !== undefined) {
         saveDocument(room, projectID, document);
       }
     });
-    
+
     socket.on('leaveRoom', (room: string) => {
       socket.leave(room);
+      const roomSize = this.io.adapter.rooms.get(room)?.size;
+      if (roomSize === 0) {
+        console.log("test");
+        this.documents.delete(room);
+      }
     });
-    
 
     socket.on('disconnect', () => {
       console.log(`Socket ${socket.id} disconnected`);

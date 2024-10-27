@@ -51,7 +51,6 @@ const DocumentEditor = ({ documentID, projectID }: { projectID: string, document
   };
 
   const handleContentUpdated = (newContent: string) => {
-    console.log("New Content", newContent);
     setContent(newContent);
   };
 
@@ -67,7 +66,7 @@ const DocumentEditor = ({ documentID, projectID }: { projectID: string, document
   useLayoutEffect(() => {
     const initializeSocket = async () => {
       const token = await getToken();
-      connectDocument(token.token);
+      connectDocument(token.token, documentID, handleContentUpdated);
     };
 
     initializeSocket();
@@ -75,20 +74,24 @@ const DocumentEditor = ({ documentID, projectID }: { projectID: string, document
     return () => {
       disconnectDocument();
     };
-  }, [connectDocument, disconnectDocument]);
+  }, []);
 
   useEffect(() => {
-    useDocumentSocketStore.getState().documentSocket?.emit('joinRoom', documentID);
-    setStatus('connected');
-}, [useDocumentSocketStore.getState().documentSocket]);
-  
-
-  useEffect(() => {
-    useDocumentSocketStore.getState().documentSocket?.on('contentUpdated', handleContentUpdated);
+    useDocumentSocketStore.getState().documentSocket?.on('contentUpdated', (newContent)=>{
+      console.log("This should recieve the message", newContent);
+      setContent(newContent);
+    });
     return () => {
-      useDocumentSocketStore.getState().documentSocket?.off('contentUpdated', handleContentUpdated);
+      useDocumentSocketStore.getState().documentSocket?.off('contentUpdated');
     };
   });
+
+  /*useEffect(() => {
+    if (editorRef.current) {
+      console.log("Editor instance is set:", useDocumentSocketStore.getState().documentSocket);
+      useDocumentSocketStore.getState().documentSocket?.emit('loadDocument', documentID);
+    }
+  }, [editorRef.current, useDocumentSocketStore]);*/
 
   return (
     <div className="w-full bg-white p-5 rounded-2xl shadow">
