@@ -43,8 +43,8 @@ const LoginForm: React.FC = () => {
   }
 
   return (
-    <div className="relative bg-[linear-gradient(to_top_right,_#9B2B77,_#CF4E7D,_#D78E61)] text-white shadow-lg rounded-2xl px-12 py-12 w-[35%] h-auto mx-auto flex flex-col items-center">
-      {/* Back to Login button positioned above the title */}
+<div className="relative bg-gradient-to-tr from-[#9B2B77]/60 via-[#CF4E7D]/60 to-[#D78E61]/60 text-white shadow-lg rounded-2xl px-12 py-12 w-[35%] h-auto mx-auto flex flex-col items-center">
+{/* Back to Login button positioned above the title */}
       <div
         className={`absolute top-4 left-4 transition-transform duration-300 ease-in-out ${
           isLogin ? "translate-x-full opacity-0" : "translate-x-0 opacity-100"

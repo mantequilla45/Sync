@@ -81,14 +81,17 @@ const Header: React.FC = () => {
                       <h1 className="text-2xl font-bold ml-[7px]">Sync</h1>
                     </a>
 
-                    <SearchInput
+                    
+                  </div>
+                  <div className="flex flex-row m-1">
+                  <SearchInput
                       value={inputValue}
                       onChange={handleInputChange}
                       onClear={handleClearInput}
                       placeholder="Search Sync"
-                      className="ml-4 max-w-xs"
+                      className="ml-4 max-w-xs mx-10"
+                    
                     />
-                  </div>
                   <button
                     className="profile-button p-2 rounded-full bg-[#3D55B8] shadow-[0_4px_8px_rgba(0,0,0,0.3)] text-gray-800 flex items-center justify-center mr-5 
                               hover:bg-[#4B67DD] hover:text-white 
@@ -104,7 +107,7 @@ const Header: React.FC = () => {
                     <CgProfile className="text-2xl" />
                   </button>
                 </div>
-
+              </div>
                 {/* Profile Card */}
                 {activeCard && (
                   <div ref={cardRef} className="relative w-full mx-4 mr-[180px]">

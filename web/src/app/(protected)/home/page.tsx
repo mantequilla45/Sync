@@ -10,8 +10,8 @@ export default function Home() {
       <div className="px-[90px] mb-2">
         <h1 className="text-sm text-white font-light">Home</h1>
       </div>
-      <div className="flex-grow bg-white rounded-2xl shadow-lg mx-16 px-14 py-10 mb-16">
-        <div>
+      <div className="flex-grow bg-white/60 rounded-2xl shadow-lg mx-16 px-14 py-10 mb-16">
+      <div>
           <h1 className="text-2xl text-[#2B2B2B] font-semibold">Welcome to Sync</h1>
         </div>
 
