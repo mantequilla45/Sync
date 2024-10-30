@@ -153,13 +153,32 @@ const ProfilePage = () => {
             {/* Notifications */}
             <div className="flex-1 bg-white rounded-xl shadow-md p-5">
               <h2 className="text-2xl text-[#69369B] font-semibold mb-4">Notification</h2>
-              <p className="text-gray-700">This is some content inside the second card.</p>
+
+              <div className="flex flex-row m-10">
+                
+                <div className="flex flex-col w-1/2">
+                    <h1 className="text-black font-semibold text-xl">
+                      Email Notification
+                    </h1>
+                    <p className="text-black text-lg">
+                      Get emails to find out whats going 
+                    </p>
+                </div>
+
+                <div className="flex flex-col w-1/2">
+                  <h1 className="text-black font-semibold text-xl">
+                    Push Notification
+                  </h1>
+                </div>
+              </div>
             </div>
 
             {/* Password and Security */}
             <div className="flex-1 bg-white rounded-xl shadow-md p-5">
               <h2 className="text-2xl text-[#69369B] font-semibold mb-4">Password and Security</h2>
               <p className="text-gray-700">This is some content inside the second card.</p>
+            
+            
             </div>
 
             {/* Account Deletion */}
