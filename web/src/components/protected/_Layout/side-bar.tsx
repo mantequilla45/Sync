@@ -6,6 +6,7 @@ import { IoHomeOutline } from "react-icons/io5";
 import { LuInfo } from "react-icons/lu";
 import { LuMail } from "react-icons/lu";
 import { FaUsers } from "react-icons/fa";
+import { GoChecklist } from "react-icons/go";
 
 
 const HamburgerMenu: React.FC = () => {
@@ -50,9 +51,9 @@ const HamburgerMenu: React.FC = () => {
                 <IoHomeOutline className="text-2xl" />
                 <div className="block mx-4 ">Home</div>
             </a>
-            <a href="/home" className="p-2 flex rounded-lg hover:bg-opacity-10 hover:bg-white transition-all duration-300">
-                <IoHomeOutline className="text-2xl" />
-                <div className="block mx-4">Home</div>
+            <a href="/task-manager" className="p-2 flex rounded-lg hover:bg-opacity-10 hover:bg-white transition-all duration-300">
+                <GoChecklist className="text-2xl" />
+                <div className="block mx-4">Task Manager</div>
             </a>
             <a href="/home" className="p-2 flex rounded-lg hover:bg-opacity-10 hover:bg-white transition-all duration-300">
                 <IoHomeOutline className="text-2xl" />

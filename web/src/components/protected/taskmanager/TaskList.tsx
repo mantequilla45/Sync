@@ -1,5 +1,5 @@
 'use client'
-import { TaskItem } from "./TaskItem";
+import TaskItem from "./TaskItem";
 
 interface TaskListProps {
   tasks: {
