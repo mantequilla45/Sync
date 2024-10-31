@@ -83,30 +83,35 @@ const Header: React.FC = () => {
 
                     
                   </div>
-                  <div className="flex flex-row m-1">
-                  <SearchInput
-                      value={inputValue}
-                      onChange={handleInputChange}
-                      onClear={handleClearInput}
-                      placeholder="Search Sync"
-                      className="ml-4 max-w-xs mx-10"
-                    
-                    />
-                  <button
-                    className="profile-button p-2 rounded-full bg-[#3D55B8] shadow-[0_4px_8px_rgba(0,0,0,0.3)] text-gray-800 flex items-center justify-center mr-5 
-                              hover:bg-[#4B67DD] hover:text-white 
-                              active:bg-[#2C3E9A] active:scale-95 transition duration-200"
-                  >
-                    <GoBellFill className="text-lg text-white w-[25px] h-[25px]" />
-                  </button>
+                  <div className="flex flex-row m-1 items-center justify-center">
+                    <SearchInput
+                        value={inputValue}
+                        onChange={handleInputChange}
+                        onClear={handleClearInput}
+                        placeholder="Search Sync"
+                        className="ml-4 max-w-xs mx-10 text-white"
+                      
+                      />
+                    <button
+                      className="profile-button p-2 rounded-full bg-[#3D55B8] shadow-[0_4px_8px_rgba(0,0,0,0.3)] text-gray-800 flex items-center justify-center mr-5 
+                                hover:bg-[#4B67DD] hover:text-white 
+                                active:bg-[#2C3E9A] active:scale-95 transition duration-200"
+                    >
+                      <GoBellFill className="text-lg text-white w-[25px] h-[25px]" />
+                    </button>
 
-                  <button
-                    className="profile-button p-2 rounded-full bg-white text-gray-800 shadow-[0_4px_8px_rgba(0,0,0,0.3)] flex items-center justify-center mr-16 hover:bg-gray-200 hover:text-gray-900 active:bg-gray-300 active:scale-95 transition duration-200"
-                    onClick={() => toggleCard('profile')}
-                  >
-                    <CgProfile className="text-2xl" />
-                  </button>
-                </div>
+                    <button
+                      className="profile-button w-[41px] h-[41px] rounded-full bg-white text-gray-800 shadow-[0_4px_8px_rgba(0,0,0,0.3)] flex items-center justify-center mr-16 hover:bg-gray-200 hover:text-gray-900 active:bg-gray-300 active:scale-95 transition duration-200 overflow-hidden"
+                      onClick={() => toggleCard('profile')}
+                    >
+
+                      <img
+                        src="https://firebasestorage.googleapis.com/v0/b/hostingtest-aadc2.appspot.com/o/profile-pictures%2FVFk3hnh3nSXTAKbASUWOxkJMexR2%2FVFk3hnh3nSXTAKbASUWOxkJMexR2.png?alt=media&token=1b559886-5925-450a-98bd-e7e93d69a301"
+                        alt="Profile"
+                        className="w-[41px] h-[41px] rounded-full object-cover"
+                      />
+                    </button>
+                  </div>
               </div>
                 {/* Profile Card */}
                 {activeCard && (

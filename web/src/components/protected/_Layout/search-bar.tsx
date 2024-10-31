@@ -33,12 +33,12 @@ const SearchInput: React.FC<SearchInputProps> = ({
     <div className={`relative flex items-center ${className}`}>
       {/* Search Icon */}
       <div
-        className={`text-gray-500 cursor-pointer transition-all duration-300 ease-in-out ${
+        className={`text-white cursor-pointer transition-all duration-300 ease-in-out ${
           isClicked ? 'opacity-0' : 'opacity-100'
         }`}
         onClick={() => setIsClicked(true)}
       >
-        <IoMdSearch size={24} />
+        <IoMdSearch size={24}/>
       </div>
 
       {/* Search Input */}
@@ -60,7 +60,7 @@ const SearchInput: React.FC<SearchInputProps> = ({
       {/* Conditionally Render Close Icon */}
       {isClicked && value && (
         <IoIosCloseCircle
-          className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 cursor-pointer"
+          className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 cursor-pointer "
           onClick={clearInput}
         />
       )}

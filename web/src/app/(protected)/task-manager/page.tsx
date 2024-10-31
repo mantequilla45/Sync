@@ -7,16 +7,16 @@ import SectionHeader from '@/components/protected/TaskManager/section-header';
 import MeetingCard, { meetings, getDateLabel, groupMeetingsByDate } from '@/components/protected/TaskManager/meeting-cards';
 
 const initialTodoTasks = [
-    { title: "Scale Marketing", phase: "4", dateRange: "24/10/24 - 2/11/24", daysLeft: "4", color: "#A228FF" },
-    { title: "Design Prototype", phase: "1", dateRange: "20/10/24 - 24/10/24", daysLeft: "0", color: "#FF5722" },
+    { id: 0, title: "Scale Marketing", phase: "4", dateRange: "24/10/24 - 2/11/24", daysLeft: 4, color: "#A228FF"},
+    { id: 1, title: "Design Prototype", phase: "1", dateRange: "20/10/24 - 24/10/24", daysLeft: 0, color: "#FF5722"},
 ];
 
 const initialInProgressTasks = [
-    { title: "Develop Product", phase: "3", dateRange: "20/10/24 - 25/10/24", daysLeft: "1", color: "#F55D76" },
+    { id: 2, title: "Develop Product", phase: "3", dateRange: "20/10/24 - 25/10/24", daysLeft: 1, color: "#F55D76"},
 ];
 
 const initialCompletedTasks = [
-    { title: "Market Research", phase: "2", dateRange: "15/10/24 - 19/10/24", daysLeft: "0", color: "#4CAF50" },
+    { id: 3, title: "Market Research", phase: "2", dateRange: "15/10/24 - 19/10/24", daysLeft: 0, color: "#4CAF50"},
 ];
 
 export default function TaskManager() {
@@ -35,73 +35,74 @@ export default function TaskManager() {
                 <h1 className="text-sm text-white font-light">Home / Task Manager</h1>
             </div>
             <div className="flex-grow rounded-2xl shadow-lg mx-16 px-14 py-10 mb-16" style={{ backgroundColor: 'rgba(255, 255, 255, 0.7)' }}>
-                <div className="flex flex-row gap-14">
-                    <div className="flex flex-col">
-                        <h1 className="text-2xl text-[#2B2B2B] font-semibold">Today's Task</h1>
-                        <div className="flex flex-row gap-10">
-                            <div className="flex flex-col gap-5 mt-5">
-                                <SectionHeader 
-                                    title="To Do" 
-                                    count={todoTasks.length} 
-                                    color="#FFC700" 
-                                    onAddTask={addTask} 
-                                    hoverColor="hover:bg-[#FFF9E3]" // Hover color for "To Do"
-                                    activeColor="active:bg-[#FFF5D3]" // Active color for "To Do"
-                                />
-                                {todoTasks.map((task, index) => (
-                                    <TaskCard key={index} {...task} />
-                                ))}
-                            </div>
-                            <div className="flex flex-col gap-5 mt-5">
-                                <SectionHeader 
-                                    title="Work In Progress" 
-                                    count={initialInProgressTasks.length} 
-                                    color="#F55D76" 
-                                    onAddTask={addTask} 
-                                    hoverColor="hover:bg-[#FFEFF2]" // Hover color for "In Progress"
-                                    activeColor="active:bg-[#FFDBE1]" // Active color for "In Progress"
-                                />
-                                {initialInProgressTasks.map((task, index) => (
-                                    <TaskCard key={index} {...task} />
-                                ))}
-                            </div>
-                            <div className="flex flex-col gap-5 mt-5">
-                                <SectionHeader 
-                                    title="Completed" 
-                                    count={initialCompletedTasks.length} 
-                                    color="#FB0E9C" 
-                                    onAddTask={addTask} 
-                                    hoverColor="hover:bg-[#FFF2FA]" // Hover color for "Completed"
-                                    activeColor="active:bg-[#FFDEF2]" // Active color for "Completed"
-                                />
-                                {initialCompletedTasks.map((task, index) => (
-                                    <TaskCard key={index} {...task} />
-                                ))}
-                            </div>
+            <div className="flex flex-row gap-14">
+                <div className="flex flex-col w-2/3"> {/* Occupies 75% of the screen */}
+                    <h1 className="text-2xl text-[#2B2B2B] font-semibold">Today's Task</h1>
+                    <div className="flex flex-row gap-10 ">
+                        <div className="flex flex-col gap-5 mt-5 w-full">
+                            <SectionHeader 
+                                title="To Do" 
+                                count={todoTasks.length} 
+                                color="#FFC700" 
+                                onAddTask={addTask} 
+                                hoverColor="hover:bg-[#FFF9E3]" // Hover color for "To Do"
+                                activeColor="active:bg-[#FFF5D3]" // Active color for "To Do"
+                            />
+                            {todoTasks.map((task, index) => (
+                                <TaskCard key={index} {...task} />
+                            ))}
                         </div>
-                    </div>
-
-                    <div className="flex flex-col gap-3 w-full">
-                        <div>
-                            <h1 className="text-2xl text-[#2B2B2B] font-semibold">Meetings</h1>
-                            <div className="h-[1px] bg-gradient-to-r from-[#0F94B9] to-[#7B00FF] via-[#BF00B2] mt-1" />
+                        <div className="flex flex-col gap-5 mt-5 w-full">
+                            <SectionHeader 
+                                title="Work In Progress" 
+                                count={initialInProgressTasks.length} 
+                                color="#F55D76" 
+                                onAddTask={addTask} 
+                                hoverColor="hover:bg-[#FFEFF2]" // Hover color for "In Progress"
+                                activeColor="active:bg-[#FFDBE1]" // Active color for "In Progress"
+                            />
+                            {initialInProgressTasks.map((task, index) => (
+                                <TaskCard key={index} {...task} />
+                            ))}
                         </div>
-                        <div className="flex flex-col gap-3 w-full">
-                            {Object.entries(groupedMeetings).map(([date, meetingsForDate]) => (
-                                <div key={date} className="flex flex-col mt-3">
-                                    <p className="text-lg text-[#2B2B2B] font-semibold">
-                                        {getDateLabel(date)}
-                                    </p>
-                                    <div className="grid grid-cols-2 gap-4 mt-2">
-                                        {meetingsForDate.map((meeting, index) => (
-                                            <MeetingCard key={index} {...meeting} />
-                                        ))}
-                                    </div>
-                                </div>
+                        <div className="flex flex-col gap-5 mt-5 w-full">
+                            <SectionHeader 
+                                title="Completed" 
+                                count={initialCompletedTasks.length} 
+                                color="#FB0E9C" 
+                                onAddTask={addTask} 
+                                hoverColor="hover:bg-[#FFF2FA]" // Hover color for "Completed"
+                                activeColor="active:bg-[#FFDEF2]" // Active color for "Completed"
+                            />
+                            {initialCompletedTasks.map((task, index) => (
+                                <TaskCard key={index} {...task} />
                             ))}
                         </div>
                     </div>
                 </div>
+
+                <div className="flex flex-col w-1/3"> {/* Occupies 25% of the screen */}
+                    <div>
+                        <h1 className="text-2xl text-[#2B2B2B] font-semibold">Meetings</h1>
+                        <div className="h-[1px] bg-gradient-to-r from-[#0F94B9] to-[#7B00FF] via-[#BF00B2] mt-1" />
+                    </div>
+                    <div className="flex flex-col gap-3 w-full">
+                        {Object.entries(groupedMeetings).map(([date, meetingsForDate]) => (
+                            <div key={date} className="flex flex-col mt-3">
+                                <p className="text-lg text-[#2B2B2B] font-semibold">
+                                    {getDateLabel(date)}
+                                </p>
+                                <div className="grid grid-cols-2 gap-4 mt-2">
+                                    {meetingsForDate.map((meeting, index) => (
+                                        <MeetingCard key={index} {...meeting} />
+                                    ))}
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </div>
+
             </div>
         </div>
     );
