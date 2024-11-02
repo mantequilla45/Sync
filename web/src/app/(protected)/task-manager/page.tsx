@@ -1,10 +1,14 @@
 "use client";
 // TaskManager.tsx
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from '@/components/protected/_Layout/header';
-import TaskCard from '@/components/protected/TaskManager/task-cards';
-import SectionHeader from '@/components/protected/TaskManager/section-header';
-import MeetingCard, { meetings, getDateLabel, groupMeetingsByDate } from '@/components/protected/TaskManager/meeting-cards';
+import TaskCard from '@/components/protected/taskmanagers/task-cards';
+import SectionHeader from '@/components/protected/taskmanagers/section-header';
+import MeetingCard, {meetings, getDateLabel, groupMeetingsByDate}  from '@/components/protected/taskmanagers/meeting-cards';
+import AddTaskButton from '@/components/protected/taskmanagers/addTask';
+import { db } from '@/lib/Firebase/FirebaseClient';
+import { collection, addDoc, getDocs, updateDoc, deleteDoc, doc, query, where, onSnapshot } from 'firebase/firestore';
+import { useAuth } from '@/services/Auth/AuthContext';
 
 const initialTodoTasks = [
     { id: 0, title: "Scale Marketing", phase: "4", dateRange: "24/10/24 - 2/11/24", daysLeft: 4, color: "#A228FF"},
@@ -19,14 +23,48 @@ const initialCompletedTasks = [
     { id: 3, title: "Market Research", phase: "2", dateRange: "15/10/24 - 19/10/24", daysLeft: 0, color: "#4CAF50"},
 ];
 
+interface Task {
+    userId: string;
+    title: string;
+    phase: string;
+    status: string;
+    dateRange: string;
+    daysLeft: string;
+    color: string;
+}
+
 export default function TaskManager() {
     const groupedMeetings = groupMeetingsByDate(meetings);
     
-    const [todoTasks, setTodoTasks] = useState(initialTodoTasks);
+    //const [todoTasks, setTodoTasks] = useState(initialTodoTasks);
+    const { user } = useAuth();
+    const [tasks, setTasks] = useState<Task[]>([]);
 
-    const addTask = (newTask: any) => {
-        setTodoTasks([...todoTasks, newTask]);
-    };
+
+    useEffect(() => {
+        if (user) {
+            const q = query(collection(db, "tasks"), where("userId", "==", user.uid));
+            const unsubscribe = onSnapshot(q, (querySnapshot) => {
+                const fetchedTasks: Task[] = querySnapshot.docs.map((doc) => ({
+                    id: doc.id,
+                    userId: doc.data().userId,
+                    title: doc.data().title || "",
+                    phase: doc.data().phase || "",
+                    status: doc.data().status || "",
+                    dateRange: doc.data().dateRange || "",
+                    daysLeft: doc.data().daysLeft || "0",
+                    color: doc.data().color || "#000000",
+                }));
+                setTasks(fetchedTasks);
+            });
+            return unsubscribe;
+        }
+    }, [user]);
+    
+    const addTask = async (newTaskData: Omit<Task, 'id' | 'userId'>) => {
+        if (!user) return;
+        await addDoc(collection(db, "tasks"), { ...newTaskData, userId: user.uid });
+    }; 
 
     return (
         <div className="flex flex-col min-h-screen bg-[linear-gradient(45deg,_#82245C,_#81245C,_#732783,_#561C90,_#561C90,_#37249E,_#3D55B8)] text-white">
@@ -34,52 +72,35 @@ export default function TaskManager() {
             <div className="px-[90px] mb-2">
                 <h1 className="text-sm text-white font-light">Home / Task Manager</h1>
             </div>
+
+            {/* Universal Add Task Button*/}
+            <div className="mx-16 my-4">
+                <AddTaskButton onAddTask={addTask} />
+            </div>
+
+            {/* Task Sections */}
             <div className="flex-grow rounded-2xl shadow-lg mx-16 px-14 py-10 mb-16" style={{ backgroundColor: 'rgba(255, 255, 255, 0.7)' }}>
-            <div className="flex flex-row gap-14">
-                <div className="flex flex-col w-2/3"> {/* Occupies 75% of the screen */}
-                    <h1 className="text-2xl text-[#2B2B2B] font-semibold">Today's Task</h1>
-                    <div className="flex flex-row gap-10 ">
-                        <div className="flex flex-col gap-5 mt-5 w-full">
-                            <SectionHeader 
-                                title="To Do" 
-                                count={todoTasks.length} 
-                                color="#FFC700" 
-                                onAddTask={addTask} 
-                                hoverColor="hover:bg-[#FFF9E3]" // Hover color for "To Do"
-                                activeColor="active:bg-[#FFF5D3]" // Active color for "To Do"
-                            />
-                            {todoTasks.map((task, index) => (
-                                <TaskCard key={index} {...task} />
-                            ))}
-                        </div>
-                        <div className="flex flex-col gap-5 mt-5 w-full">
-                            <SectionHeader 
-                                title="Work In Progress" 
-                                count={initialInProgressTasks.length} 
-                                color="#F55D76" 
-                                onAddTask={addTask} 
-                                hoverColor="hover:bg-[#FFEFF2]" // Hover color for "In Progress"
-                                activeColor="active:bg-[#FFDBE1]" // Active color for "In Progress"
-                            />
-                            {initialInProgressTasks.map((task, index) => (
-                                <TaskCard key={index} {...task} />
-                            ))}
-                        </div>
-                        <div className="flex flex-col gap-5 mt-5 w-full">
-                            <SectionHeader 
-                                title="Completed" 
-                                count={initialCompletedTasks.length} 
-                                color="#FB0E9C" 
-                                onAddTask={addTask} 
-                                hoverColor="hover:bg-[#FFF2FA]" // Hover color for "Completed"
-                                activeColor="active:bg-[#FFDEF2]" // Active color for "Completed"
-                            />
-                            {initialCompletedTasks.map((task, index) => (
-                                <TaskCard key={index} {...task} />
+                <div className="flex flex-row gap-14">
+                    <div className="flex flex-col">
+                        <h1 className="text-2xl text-[#2B2B2B] font-semibold">Today{"'"}s Task</h1>
+                        <div className="flex flex-row gap-10">
+                            {["To Do", "Work In Progress", "Completed"].map((status) => (
+                                <div key={status} className="flex flex-col gap-5 mt-5">
+                                    <SectionHeader 
+                                        title={status} 
+                                        count={tasks.filter((task) => task.status === status).length} 
+                                        color={status === "To Do" ? "#FFC700" : status === "Work In Progress" ? "#F55D76" : "#FB0E9C"}
+                                        onAddTask={addTask} 
+                                    />
+                                    {tasks
+                                        .filter((task) => task.status === status)
+                                        .map((task, index) => (
+                                            <TaskCard key={index} {...task} />
+                                        ))}
+                                </div>
                             ))}
                         </div>
                     </div>
-                </div>
 
                 <div className="flex flex-col w-1/3"> {/* Occupies 25% of the screen */}
                     <div>
