@@ -11,16 +11,16 @@ import { collection, addDoc, getDocs, updateDoc, deleteDoc, doc, query, where, o
 import { useAuth } from '@/services/Auth/AuthContext';
 
 const initialTodoTasks = [
-    { title: "Scale Marketing", phase: "4", dateRange: "24/10/24 - 2/11/24", daysLeft: "4", color: "#A228FF" },
-    { title: "Design Prototype", phase: "1", dateRange: "20/10/24 - 24/10/24", daysLeft: "0", color: "#FF5722" },
+    { id: 0, title: "Scale Marketing", phase: "4", dateRange: "24/10/24 - 2/11/24", daysLeft: 4, color: "#A228FF"},
+    { id: 1, title: "Design Prototype", phase: "1", dateRange: "20/10/24 - 24/10/24", daysLeft: 0, color: "#FF5722"},
 ];
 
 const initialInProgressTasks = [
-    { title: "Develop Product", phase: "3", dateRange: "20/10/24 - 25/10/24", daysLeft: "1", color: "#F55D76" },
+    { id: 2, title: "Develop Product", phase: "3", dateRange: "20/10/24 - 25/10/24", daysLeft: 1, color: "#F55D76"},
 ];
 
 const initialCompletedTasks = [
-    { title: "Market Research", phase: "2", dateRange: "15/10/24 - 19/10/24", daysLeft: "0", color: "#4CAF50" },
+    { id: 3, title: "Market Research", phase: "2", dateRange: "15/10/24 - 19/10/24", daysLeft: 0, color: "#4CAF50"},
 ];
 
 interface Task {
@@ -102,27 +102,28 @@ export default function TaskManager() {
                         </div>
                     </div>
 
+                <div className="flex flex-col w-1/3"> {/* Occupies 25% of the screen */}
+                    <div>
+                        <h1 className="text-2xl text-[#2B2B2B] font-semibold">Meetings</h1>
+                        <div className="h-[1px] bg-gradient-to-r from-[#0F94B9] to-[#7B00FF] via-[#BF00B2] mt-1" />
+                    </div>
                     <div className="flex flex-col gap-3 w-full">
-                        <div>
-                            <h1 className="text-2xl text-[#2B2B2B] font-semibold">Meetings</h1>
-                            <div className="h-[1px] bg-gradient-to-r from-[#0F94B9] to-[#7B00FF] via-[#BF00B2] mt-1" />
-                        </div>
-                        <div className="flex flex-col gap-3 w-full">
-                            {Object.entries(groupedMeetings).map(([date, meetingsForDate]) => (
-                                <div key={date} className="flex flex-col mt-3">
-                                    <p className="text-lg text-[#2B2B2B] font-semibold">
-                                        {getDateLabel(date)}
-                                    </p>
-                                    <div className="grid grid-cols-2 gap-4 mt-2">
-                                        {meetingsForDate.map((meeting, index) => (
-                                            <MeetingCard key={index} {...meeting} />
-                                        ))}
-                                    </div>
+                        {Object.entries(groupedMeetings).map(([date, meetingsForDate]) => (
+                            <div key={date} className="flex flex-col mt-3">
+                                <p className="text-lg text-[#2B2B2B] font-semibold">
+                                    {getDateLabel(date)}
+                                </p>
+                                <div className="grid grid-cols-2 gap-4 mt-2">
+                                    {meetingsForDate.map((meeting, index) => (
+                                        <MeetingCard key={index} {...meeting} />
+                                    ))}
                                 </div>
-                            ))}
-                        </div>
+                            </div>
+                        ))}
                     </div>
                 </div>
+            </div>
+
             </div>
         </div>
     );
