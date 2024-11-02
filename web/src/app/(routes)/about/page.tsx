@@ -20,9 +20,14 @@ const BlankPage = () => {
                 </h1>
                 </div>
                   <div>
-                    <div className="flex flex-row items-center">
+                    <div className="flex flex-row items-center gap-4">
+                    <img
+                        src="https://firebasestorage.googleapis.com/v0/b/hostingtest-aadc2.appspot.com/o/website-resources%2FSync%20Logo%2FSync%20Logo%20Purple%20Large.png?alt=media&token=dc1a14e5-6f1f-400e-ac86-2b82b624d079"
+                        alt="Description of the image"
+                        className="w-[70px] h-[70px] "
+                      />
                     <h2
-                      className="text-7xl my-5 text-[#69369B] font-[700]"
+                      className="text-7xl my-5 text-[#5D1E8C] font-[700]"
                       style={{ textShadow: "3px 3px 2px rgba(0, 0, 0, 0.2)" }}
                     >
                       Sync
@@ -58,7 +63,7 @@ const BlankPage = () => {
               <div>
                 <div className="flex flex-row items-center">
                   <h2
-                    className="text-7xl my-5 text-[#69369B] font-[700]"
+                    className="text-7xl my-5 text-[#5D1E8C] font-[700]"
                     style={{ textShadow: "3px 3px 2px rgba(0, 0, 0, 0.2)" }}
                   >
                     Key Features
@@ -88,7 +93,7 @@ const BlankPage = () => {
                   <div>
                     <div className="flex flex-row items-center">
                     <h2
-                      className="text-7xl text-[#69369B] font-[700]"
+                      className="text-7xl text-[#5D1E8C] font-[700]"
                       style={{ textShadow: "3px 3px 2px rgba(0, 0, 0, 0.2)" }}
                     >
                       Why Sync()?

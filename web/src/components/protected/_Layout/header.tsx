@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation';
 import HamburgerMenu from './side-bar';
 import SearchInput from './search-bar';
 import { IoIosArrowForward, GrNotification, TbLogout2, FaMoon, FaUser, CgProfile, IoArrowBack, IoSettingsSharp } from '../../_icons';
+import { GoBellFill } from "react-icons/go";
 
 const Header: React.FC = () => {
   const pathname = usePathname();
@@ -54,10 +55,8 @@ const Header: React.FC = () => {
   return (
     <>
       <header>
-        <link
-          href="https://fonts.googleapis.com/css?family=Poppins:wght@300;400;500;600;700;800;900&display=optional"
-          rel="stylesheet"
-        />
+      <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600;700;800;900&display=swap" rel="stylesheet"
+          />
       </header>
       <div>
         <div
@@ -75,27 +74,30 @@ const Header: React.FC = () => {
                   <div className="flex items-center w-full ml-6">
                     <a href="/home" className="flex items-center">
                       <img
-                        src="https://cdn.builder.io/api/v1/image/assets/TEMP/e206a20408ef8878dcb5118bce850f8f290c84cbd09da22c62f468d88dfbdc15?placeholderIfAbsent=true&apiKey=0cd5b3eb85e74a83a268d41d07a9c27f"
+                        src="https://firebasestorage.googleapis.com/v0/b/hostingtest-aadc2.appspot.com/o/website-resources%2FSync%20Logo%2FSync%20Logo%20White%20Large.png?alt=media&token=7551d58d-337b-4106-b5da-9b23260c1d99"
                         alt="Description of the image"
                         className="w-[25px] h-[25px] "
                       />
                       <h1 className="text-2xl font-bold ml-[7px]">Sync</h1>
                     </a>
 
-                    <SearchInput
+                    
+                  </div>
+                  <div className="flex flex-row m-1">
+                  <SearchInput
                       value={inputValue}
                       onChange={handleInputChange}
                       onClear={handleClearInput}
                       placeholder="Search Sync"
-                      className="ml-4 max-w-xs"
+                      className="ml-4 max-w-xs mx-10"
+                    
                     />
-                  </div>
                   <button
-                    className="profile-button p-[11px] rounded-full bg-[#3D55B8] shadow-[0_4px_8px_rgba(0,0,0,0.3)] text-gray-800 flex items-center justify-center mr-5 
+                    className="profile-button p-2 rounded-full bg-[#3D55B8] shadow-[0_4px_8px_rgba(0,0,0,0.3)] text-gray-800 flex items-center justify-center mr-5 
                               hover:bg-[#4B67DD] hover:text-white 
                               active:bg-[#2C3E9A] active:scale-95 transition duration-200"
                   >
-                    <GrNotification className="text-lg text-white" />
+                    <GoBellFill className="text-lg text-white w-[25px] h-[25px]" />
                   </button>
 
                   <button
@@ -105,7 +107,7 @@ const Header: React.FC = () => {
                     <CgProfile className="text-2xl" />
                   </button>
                 </div>
-
+              </div>
                 {/* Profile Card */}
                 {activeCard && (
                   <div ref={cardRef} className="relative w-full mx-4 mr-[180px]">

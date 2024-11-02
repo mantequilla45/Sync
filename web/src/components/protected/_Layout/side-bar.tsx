@@ -2,11 +2,15 @@
 
 import React, { useState } from 'react';
 import { RxHamburgerMenu } from "react-icons/rx";
-import { IoHomeOutline } from "react-icons/io5";
 import { LuInfo } from "react-icons/lu";
 import { LuMail } from "react-icons/lu";
 import { FaUsers } from "react-icons/fa";
-import { GoChecklist } from "react-icons/go";
+import { HiMiniHome } from "react-icons/hi2";
+import { BiSolidNotepad } from "react-icons/bi";
+import { FaDiagramProject } from "react-icons/fa6";
+import { IoIosInformationCircle } from "react-icons/io";
+import { IoMail } from "react-icons/io5";
+
 
 
 const HamburgerMenu: React.FC = () => {
@@ -34,56 +38,47 @@ const HamburgerMenu: React.FC = () => {
         style={{ zIndex: 999 }}
       >
         {/* Close Button inside the menu */}
-        <div className="flex items-center w-auto py-4 mx-3.5">
+        <div className="flex items-center w-auto py-4 mx-3.5 gap-2">
           <button 
             onClick={toggleMenu} 
             className="p-2 flex items-center justify-center rounded-full hover:bg-opacity-10 hover:bg-white transition-all duration-300"
           >
             <RxHamburgerMenu className="text-2xl" />
           </button>
-          <h1 onClick={toggleMenu} className="text-2xl font-bold mx-2 cursor-pointer">Sync</h1>
+          <a href="/home" className="flex items-center">
+                      <img
+                        src="https://firebasestorage.googleapis.com/v0/b/hostingtest-aadc2.appspot.com/o/website-resources%2FSync%20Logo%2FSync%20Logo%20White%20Large.png?alt=media&token=7551d58d-337b-4106-b5da-9b23260c1d99"
+                        alt="Description of the image"
+                        className="w-[25px] h-[25px] "
+                      />
+                      <h1 className="text-2xl font-bold ml-[7px]">Sync</h1>
+                    </a>
           <div className="w-[100%] bg-transparent h-[38px] flex items-center justify-center"></div>
         </div>
         <div className="p-4 flex flex-col justify-between h-[879px]">
           {/* Add your menu items here */}
           <div className="space-y-1">
             <a href="/home" className="p-2 flex rounded-lg hover:bg-opacity-10 hover:bg-white transition-all duration-300">
-                <IoHomeOutline className="text-2xl" />
+                <HiMiniHome className="text-2xl" />
                 <div className="block mx-4 ">Home</div>
             </a>
             <a href="/task-manager" className="p-2 flex rounded-lg hover:bg-opacity-10 hover:bg-white transition-all duration-300">
-                <GoChecklist className="text-2xl" />
+                <BiSolidNotepad className="text-2xl" />
                 <div className="block mx-4">Task Manager</div>
             </a>
-            <a href="/home" className="p-2 flex rounded-lg hover:bg-opacity-10 hover:bg-white transition-all duration-300">
-                <IoHomeOutline className="text-2xl" />
-                <div className="block mx-4">Home</div>
-            </a>
-            <a href="/home" className="p-2 flex rounded-lg hover:bg-opacity-10 hover:bg-white transition-all duration-300">
-                <IoHomeOutline className="text-2xl" />
-                <div className="block mx-4">Home</div>
-            </a>
-            <a href="/home" className="p-2 flex rounded-lg hover:bg-opacity-10 hover:bg-white transition-all duration-300">
-                <IoHomeOutline className="text-2xl" />
-                <div className="block mx-4">Home</div>
-            </a>
-            <a href="/taskmanager" className="p-2 flex rounded-lg hover:bg-opacity-10 hover:bg-white transition-all duration-300">
-                <IoHomeOutline className="text-2xl" />
-                <div  className="block mx-4">Task Manager</div>
-            </a>
             <div className="p-2 flex rounded-lg hover:bg-opacity-10 hover:bg-white transition-all duration-300">
-                <IoHomeOutline className="text-2xl" />
+                <FaDiagramProject className="text-2xl" />
                 <a href="/home" className="block mx-4">Your Projects</a>
             </div>
           </div>
 
           <div className="space-y-1 text-sm">
             <a href="/about" className="p-2 flex rounded-lg hover:bg-opacity-10 hover:bg-white transition-all duration-300 ">
-              <LuInfo className="text-xl" />
+              <IoIosInformationCircle className="text-xl" />
               <div className="block mx-4">About</div>
             </a>
             <a href="/contact-us" className="p-2 flex rounded-lg hover:bg-opacity-10 hover:bg-white transition-all duration-300">
-              <LuMail className="text-xl" />
+              <IoMail className="text-xl" />
               <div className="block mx-4">Contact Us</div>
             </a>
             <a href="/about-us" className="p-2 flex rounded-lg hover:bg-opacity-10 hover:bg-white transition-all duration-300">

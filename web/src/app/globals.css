@@ -34,3 +34,7 @@ body {
     text-wrap: balance;
   }
 }
+
+.no-scroll {
+  overflow: hidden;
+}

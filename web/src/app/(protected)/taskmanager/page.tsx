@@ -2,8 +2,8 @@
 import { useState, useEffect } from 'react';
 import { collection, addDoc, query, onSnapshot, updateDoc, deleteDoc, doc } from 'firebase/firestore';
 import { db } from '@/lib/Firebase/FirebaseClient';
-import TaskForm from '@/components/protected/taskmanager/TaskForm';
-import TaskList from '@/components/protected/taskmanager/TaskList';
+import TaskForm from '@/components/protected/taskmanagers/TaskForm';
+import TaskList from '@/components/protected/taskmanagers/TaskList';
 
 interface Task {
   id: string;
