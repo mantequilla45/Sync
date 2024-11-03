@@ -42,7 +42,7 @@
     tab-size: 4;
     -moz-tab-size: 4;
     text-align: left;
-    white-space: pre-wrap;
+    white-space: pre;
     word-wrap: break-word;
   }
   .ql-editor > * {
@@ -96,7 +96,7 @@
   }
   .ql-editor li::before {
     display: inline-block;
-    white-space: nowrap;
+    white-space: pre;
     width: 1.2em;
   }
   .ql-editor li:not(.ql-direction-rtl)::before {
@@ -627,7 +627,7 @@
     border-radius: 3px;
   }
   .ql-snow .ql-editor pre {
-    white-space: pre-wrap;
+    white-space: pre;
     margin-bottom: 5px;
     margin-top: 5px;
     padding: 5px 10px;
@@ -673,7 +673,7 @@
     min-width: 100%;
     padding: 4px 8px;
     position: absolute;
-    white-space: nowrap;
+    white-space: pre;
   }
   .ql-snow .ql-picker-options .ql-picker-item {
     cursor: pointer;
@@ -883,7 +883,7 @@
     box-shadow: 0px 0px 5px #ddd;
     color: #444;
     padding: 5px 12px;
-    white-space: nowrap;
+    white-space: pre;
   }
   .ql-snow .ql-tooltip::before {
     content: "Visit URL:";
