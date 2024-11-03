@@ -24,7 +24,7 @@ export const handleSave = (documentID: string, projectID: string) => {
     useDocumentSocketStore.getState().documentSocket?.emit('saveDocument', documentID, projectID);
 }
 
-export const handlePaste = (event: ClipboardEvent, editor: Quill, indexPos: Range) => {
+export const handleImagePaste = (event: ClipboardEvent, editor: Quill, indexPos: Range, documentID: string) => {
     const clipboardData = event.clipboardData;
     const items = Array.from(clipboardData?.items || []);
     const hasImage = items.some(item => item.type.includes("image"));
@@ -34,7 +34,7 @@ export const handlePaste = (event: ClipboardEvent, editor: Quill, indexPos: Rang
         items.forEach((item) => {
             if (item.type.includes("image")) {
                 const file = item.getAsFile();
-                file && uploadImageToServer(file).then((url: string) => {
+                file && uploadImageToServer(file, documentID).then((url: string) => {
                     console.log(url);
                     console.log(indexPos?.index as number);
                     editor.insertEmbed(indexPos?.index as number, "image", url, "user");
@@ -44,9 +44,32 @@ export const handlePaste = (event: ClipboardEvent, editor: Quill, indexPos: Rang
     }
 }
 
-export async function uploadImageToServer(file: File): Promise<string> {
+export const handleImageUpload = (editor: Quill, indexPos: Range, documentID: string) => {
+    const input = document.createElement('input');
+    input.setAttribute('type', 'file');
+    input.setAttribute('accept', 'image/*');
+    input.click();
+
+    input.onchange = async () => {
+        const file = input.files?.[0];
+        if (file) {
+            try {
+                const imageUrl = await uploadImageToServer(file, documentID);
+
+                if (indexPos?.index != null) {
+                    editor.insertEmbed(indexPos.index, 'image', imageUrl, 'user');
+                }
+            } catch (error) {
+                console.error('Error uploading image', error);
+            }
+        }
+    };
+};
+
+export async function uploadImageToServer(file: File, documentID: string): Promise<string> {
     const formData = new FormData();
     formData.append("file", file);
+    formData.append("documentID", documentID);
 
     const response = await fetch('/api/Document/UploadImage', {
         method: 'POST',

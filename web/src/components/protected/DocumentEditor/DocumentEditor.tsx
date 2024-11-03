@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useLayoutEffect, useRef, LegacyRef } from 'react';
-import { handleChangePos, handleContentChange, handleContentUpdated, handleSave, handlePaste } from './DocumentEditorFunctions/DocumentEditorBasicSocketIO';
+import { handleChangePos, handleContentChange, handleContentUpdated, handleSave, handleImagePaste, handleImageUpload } from './DocumentEditorFunctions/DocumentEditorBasicSocketIO';
 import dynamic from 'next/dynamic';
 import './quill.css';
 import { getToken } from '@/services/Auth/getToken';
@@ -9,7 +9,6 @@ import { useDocumentSocketStore } from '@/stores/DocumentSocketStore';
 import Quill, { Delta, Sources } from 'quill'
 import ReactQuill, { UnprivilegedEditor, Range, ReactQuillProps } from 'react-quill';
 import { DocumentModules } from './DocumentModules';
-import { handleImage } from './DocumentEditorFunctions/ImageHandler';
 
 interface IWrappedComponent extends ReactQuillProps {
   forwardedRef: LegacyRef<ReactQuill>;
@@ -33,6 +32,7 @@ const DocumentEditor = ({ documentID, projectID }: { projectID: string, document
  
   const editorRef = useRef<ReactQuill | null>(null);
 
+  //Socket Connection
   useLayoutEffect(() => {
     const initializeSocket = async () => {
       const token = await getToken();
@@ -44,13 +44,15 @@ const DocumentEditor = ({ documentID, projectID }: { projectID: string, document
     };
   }, []);
 
+  //Module Loader
   useEffect(() => {
     if (editorRef.current) {
         const quill = editorRef.current.getEditor();
-        quill.getModule('toolbar').addHandler('image', () => handleImage(quill, indexPos as Range));
+        quill.getModule('toolbar').addHandler('image', () => handleImageUpload(quill, indexPos as Range, documentID));
     }
   }, [editorRef.current, indexPos])
 
+  //Socket Listener
   useEffect(() => {
     useDocumentSocketStore.getState().documentSocket?.on('contentUpdated', (newContent) => {
       editorRef?.current?.getEditor().updateContents(newContent);
@@ -60,9 +62,10 @@ const DocumentEditor = ({ documentID, projectID }: { projectID: string, document
     };
   });
 
+  //Image Paste Event
   useEffect(() => {
     const handlePasteWithArgs = (event: ClipboardEvent) => {
-      handlePaste(event, editorRef.current?.getEditor() as Quill, indexPos as Range);
+      handleImagePaste(event, editorRef.current?.getEditor() as Quill, indexPos as Range, documentID);
     };  
     editorRef.current?.getEditor().root.addEventListener("paste", handlePasteWithArgs);
   
