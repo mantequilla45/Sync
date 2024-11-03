@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useState, useEffect, useLayoutEffect, useRef, LegacyRef } from 'react';
-import { handleChangePos, handleContentChange, handleContentUpdated, handleSave, handleImagePaste, handleImageUpload } from './DocumentEditorFunctions/DocumentEditorBasicSocketIO';
+import { handleChangePos, handleContentChange, handleContentUpdated, handleSave, handleImagePaste } from './DocumentEditorFunctions/DocumentEditorBasicSocketIO';
+import { CustomToolbar } from './CustomToolbar/CustomToolbar';
 import dynamic from 'next/dynamic';
 import './quill.css';
 import { getToken } from '@/services/Auth/getToken';
@@ -28,6 +29,7 @@ const WrappedQuill = dynamic(
 const DocumentEditor = ({ documentID, projectID }: { projectID: string, documentID: string }) => {
   const [content, setContent] = useState<any>(null);
   const [indexPos, setIndexPos] = useState<Range>();
+  const [isQuillReady, setIsQuillReady] = useState(false);
   const { connectDocument, disconnectDocument } = useDocumentSocketStore();
  
   const editorRef = useRef<ReactQuill | null>(null);
@@ -44,11 +46,10 @@ const DocumentEditor = ({ documentID, projectID }: { projectID: string, document
     };
   }, []);
 
-  //Module Loader
+  //Toolbar Go-signal
   useEffect(() => {
     if (editorRef.current) {
-        const quill = editorRef.current.getEditor();
-        quill.getModule('toolbar').addHandler('image', () => handleImageUpload(quill, indexPos as Range, documentID));
+        setIsQuillReady(true)
     }
   }, [editorRef.current, indexPos])
 
@@ -76,6 +77,7 @@ const DocumentEditor = ({ documentID, projectID }: { projectID: string, document
 
   return (
     <div className="w-full bg-white p-5 rounded-2xl shadow">
+      {isQuillReady && <CustomToolbar quill={editorRef.current?.getEditor() as Quill} documentID={documentID} />}
       <WrappedQuill
         forwardedRef={editorRef}
         value={content}
