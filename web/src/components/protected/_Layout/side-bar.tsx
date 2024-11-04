@@ -38,7 +38,7 @@ const HamburgerMenu: React.FC = () => {
         style={{ zIndex: 999 }}
       >
         {/* Close Button inside the menu */}
-        <div className="flex items-center w-auto py-4 mx-3.5 gap-2">
+        <div className="flex items-center w-auto py-2 h-[62px] mx-3.5 gap-2">
           <button 
             onClick={toggleMenu} 
             className="p-2 flex items-center justify-center rounded-full hover:bg-opacity-10 hover:bg-white transition-all duration-300"

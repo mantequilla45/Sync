@@ -60,12 +60,12 @@ const Header: React.FC = () => {
       </header>
       <div>
         <div
-          className={`top-0 left-0 right-0 w-full ${isLanding ? 'bg-transparent text-white' : 'bg-transparent text-white'} py-4`}
+          className={`top-0 left-0 right-0 w-full ${isLanding ? 'bg-transparent text-white' : 'bg-transparent text-white'}`}
           style={{ zIndex: 1000 }}
         >
           <div className={`flex items-center ${isLanding || isSignUpPage ? 'justify-center' : 'justify-between'} w-full`}>
             {!isLanding && !isSignUpPage && (
-              <div className="flex flex-col items-center justify-between w-full mx-3">
+              <div className="flex flex-col items-center justify-between w-full mx-3 py-2">
                 <div className="flex items-center w-full">
                   {/* Side bar icon */}
                   <HamburgerMenu />
@@ -97,18 +97,18 @@ const Header: React.FC = () => {
                                 hover:bg-[#4B67DD] hover:text-white 
                                 active:bg-[#2C3E9A] active:scale-95 transition duration-200"
                     >
-                      <GoBellFill className="text-lg text-white w-[25px] h-[25px]" />
+                      <GoBellFill className="text-lg text-white w-[20px] h-[20px]" />
                     </button>
 
                     <button
-                      className="profile-button w-[41px] h-[41px] rounded-full bg-white text-gray-800 shadow-[0_4px_8px_rgba(0,0,0,0.3)] flex items-center justify-center mr-16 hover:bg-gray-200 hover:text-gray-900 active:bg-gray-300 active:scale-95 transition duration-200 overflow-hidden"
+                      className="profile-button w-[36px] h-[36px] rounded-full bg-white text-gray-800 shadow-[0_4px_8px_rgba(0,0,0,0.3)] flex items-center justify-center mr-16 hover:bg-gray-200 hover:text-gray-900 active:bg-gray-300 active:scale-95 transition duration-200 overflow-hidden"
                       onClick={() => toggleCard('profile')}
                     >
 
                       <img
                         src="https://firebasestorage.googleapis.com/v0/b/hostingtest-aadc2.appspot.com/o/profile-pictures%2FVFk3hnh3nSXTAKbASUWOxkJMexR2%2FVFk3hnh3nSXTAKbASUWOxkJMexR2.png?alt=media&token=1b559886-5925-450a-98bd-e7e93d69a301"
                         alt="Profile"
-                        className="w-[41px] h-[41px] rounded-full object-cover"
+                        className="w-[36px] h-[36px] rounded-full object-cover"
                       />
                     </button>
                   </div>

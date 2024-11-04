@@ -12,6 +12,14 @@ const HomePage: React.FC = () => {
       <title>{"Sync"}</title>
       <Background />
       <div className="relative z-10 min-h-screen flex flex-col">
+        <a className="flex items-center justify-center w-full h-[65px]" href="/">
+          <img
+            src="https://firebasestorage.googleapis.com/v0/b/hostingtest-aadc2.appspot.com/o/website-resources%2FSync%20Logo%2FSync%20Logo%20White%20Large.png?alt=media&token=7551d58d-337b-4106-b5da-9b23260c1d99"
+            alt="Landing Logo"
+            className="w-[30px] h-[30px]"
+          />
+          <h1 className="text-3xl font-bold ml-[7px]">Sync</h1>
+        </a>
         <div className="flex-grow flex items-center justify-center w-full">
           <div className="flex flex-row gap-10 w-[70%]">
             <div className="w-[80%] pt-5 flex flex-col">
