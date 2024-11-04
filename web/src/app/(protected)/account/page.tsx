@@ -169,6 +169,9 @@ const ProfilePage = () => {
                   <h1 className="text-black font-semibold text-xl">
                     Push Notification
                   </h1>
+                  <p className="text-black text-lg">
+                      Get notifs to find out whats going 
+                    </p>
                 </div>
               </div>
             </div>
