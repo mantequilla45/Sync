@@ -32,11 +32,27 @@ const DocumentEditor = ({ documentID, projectID }: { projectID: string, document
   const [isQuillReady, setIsQuillReady] = useState(false);
 
   // TO BE ISOLATED
-  const [image, setImage] = useState<HTMLElement>();
+  const [image, setImage] = useState<HTMLImageElement>();
   const [width, setWidth] = useState<number>(0);
   const [height, setHeight] = useState<number>(0);
   //
   const { connectDocument, disconnectDocument } = useDocumentSocketStore();
+
+  const handleWidthChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newWidth = parseInt(e.target.value) || 0;
+    setWidth(newWidth);
+    if (image) {
+      image.width = newWidth;
+    }
+  };
+
+  const handleHeightChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newHeight = parseInt(e.target.value) || 0;
+    setHeight(newHeight);
+    if (image) {
+      image.height = newHeight;
+    }
+  };
 
   const editorRef = useRef<ReactQuill | null>(null);
 
@@ -84,8 +100,10 @@ const DocumentEditor = ({ documentID, projectID }: { projectID: string, document
     const handleImageClick = (event: MouseEvent) => {
       const target = event.target as HTMLElement;
       if (target.tagName === 'IMG') {
-        console.log(target);
-        setImage(target);
+        const imgElement = target as HTMLImageElement;
+        setImage(imgElement); // Store the clicked image element
+        setWidth(imgElement.width);
+        setHeight(imgElement.height);
       }
     };
 
@@ -118,14 +136,38 @@ const DocumentEditor = ({ documentID, projectID }: { projectID: string, document
         <div className="w-1/4 p-4 bg-gray-100 rounded-lg">
           {image ? (
             <div>
-              <h3>Image Details</h3>
-              <img src={(image as HTMLImageElement).src} alt="Clicked" style={{ maxWidth: '100px' }} />
-              <p className='text-[#1E1E1E]'>Source: {(image as HTMLImageElement).src}</p>
-              <p className='text-[#1E1E1E]'>Width: {(image as HTMLImageElement).width}px</p>
-              <p className='text-[#1E1E1E]'>Height: {(image as HTMLImageElement).height}px</p>
+              <h3 className="text-lg font-bold mb-2">Image Details</h3>
+              <img src={(image.src)} alt="Clicked" style={{ maxWidth: '100px' }} />
+
+              <form className="mt-4 space-y-2">
+                <label className="block text-sm text-[#1E1E1E]">
+                  Source:
+                  <input type="text" value={image.src} readOnly className="w-full mt-1 p-1 border rounded" />
+                </label>
+
+                <label className="block text-sm text-[#1E1E1E]">
+                  Width:
+                  <input
+                    type="number"
+                    value={width}
+                    onChange={handleWidthChange}
+                    className="w-full mt-1 p-1 border rounded"
+                  />
+                </label>
+
+                <label className="block text-sm text-[#1E1E1E]">
+                  Height:
+                  <input
+                    type="number"
+                    value={height}
+                    onChange={handleHeightChange}
+                    className="w-full mt-1 p-1 border rounded"
+                  />
+                </label>
+              </form>
             </div>
           ) : (
-            <p >Click on an image in the editor to see details.</p>
+            <p className="text-sm text-gray-600">Click on an image in the editor to see and resize it.</p>
           )}
         </div>
       </div>
