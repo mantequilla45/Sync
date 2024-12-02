@@ -101,7 +101,7 @@ const DocumentEditor = ({ documentID, projectID }: { projectID: string, document
       const target = event.target as HTMLElement;
       if (target.tagName === 'IMG') {
         const imgElement = target as HTMLImageElement;
-        setImage(imgElement); // Store the clicked image element
+        setImage(imgElement);
         setWidth(imgElement.width);
         setHeight(imgElement.height);
       }

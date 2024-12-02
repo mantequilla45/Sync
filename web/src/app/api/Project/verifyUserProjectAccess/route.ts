@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
 import { db } from "@/lib/Firebase/_index";
-import { DocumentReference } from "firebase-admin/firestore";
 
 export async function GET(req: Request) {
 

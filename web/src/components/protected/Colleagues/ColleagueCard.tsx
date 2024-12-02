@@ -7,19 +7,17 @@ import { DocumentData } from 'firebase-admin/firestore';
 
 
 
-interface DynamicCardsProps {
+interface ColleagueCardProps {
   doc: DocumentData;
 }
 
-export const DynamicCards: React.FC<DynamicCardsProps> = ({ doc }) => {
-  const router = useRouter();
-
-  // Access the project ID (last part of the document path) and full path
-  const segments = doc.projectUID._path.segments;
-  const projectID = segments[1]; 
-  const handleCardClick = () => {
+export const ColleagueCard: React.FC<ColleagueCardProps> = ({ doc }) => {
+  //const router = useRouter();
+  //const segments = doc.projectUID._path.segments;
+  //const projectID = segments[1]; 
+  /*const handleCardClick = () => {
    router.push(`/project/${projectID}/document/${doc.UID}`);
-  };
+  };*/
 
   return (
     <div className="flex flex-col items-center">
@@ -27,7 +25,7 @@ export const DynamicCards: React.FC<DynamicCardsProps> = ({ doc }) => {
       <button
         className="bg-gray-200 rounded-xl border border-gray-300 relative"
         style={{ width: '90%', paddingBottom: '67.5%' }}
-        onClick={handleCardClick}
+        // onClick={handleCardClick}
       >
         <div className="absolute inset-0 flex items-center justify-center text-black">
           {doc.title}

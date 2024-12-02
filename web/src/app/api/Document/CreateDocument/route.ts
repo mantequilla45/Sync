@@ -47,7 +47,6 @@ export async function POST(req: Request) {
         projectUID: projectRef
       };
 
-      // Save HTML content to Firebase Storage
       const file = bucket.file(fileName);
       await file.save('', {
         metadata: {
