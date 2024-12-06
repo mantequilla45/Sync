@@ -74,15 +74,15 @@ export default function TaskManager() {
             </div>
 
             {/* Universal Add Task Button*/}
-            <div className="mx-16 my-4">
-                <AddTaskButton onAddTask={addTask} />
-            </div>
 
             {/* Task Sections */}
             <div className="flex-grow rounded-2xl shadow-lg mx-16 px-14 py-10 mb-16" style={{ backgroundColor: 'rgba(255, 255, 255, 0.7)' }}>
                 <div className="flex flex-row gap-14">
                     <div className="flex flex-col">
-                        <h1 className="text-2xl text-[#2B2B2B] font-semibold">Today{"'"}s Task</h1>
+                        <div className="flex flex-row items-center">
+                        <AddTaskButton onAddTask={addTask} />   
+                            <h1 className="text-2xl text-[#2B2B2B] font-semibold">Today{"'"}s Task</h1>  
+                        </div>
                         <div className="flex flex-row gap-10">
                             {["To Do", "Work In Progress", "Completed"].map((status) => (
                                 <div key={status} className="flex flex-col gap-5 mt-5">
