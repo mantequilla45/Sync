@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import TaskModal from './newtask-modal';
+import { FaPlus } from "react-icons/fa6";
+
+
 
 interface AddTaskButtonProps {
   onAddTask: (task: any) => void;
@@ -13,12 +16,12 @@ const AddTaskButton: React.FC<AddTaskButtonProps> = ({ onAddTask }) => {
 
   return (
     <>
-      <button
-        onClick={openModal}
-        className="mt-6 px-6 py-3 bg-[#69369B] text-white text-lg font-regular rounded-full hover:bg-[#572A81] transition duration-300"
-      >
-        Add Task
-      </button>
+    <button
+      onClick={openModal}
+      className="mr-3 p-2 hover:scale-110 active:scale-95 transition-transform duration-300 rounded-full bg-[#ffffff]"
+    >
+      <FaPlus className="text-[20px] text-[#CFBCDD]" />
+    </button>
       <TaskModal isOpen={isModalOpen} closeModal={closeModal} addTask={onAddTask} />
     </>
   );

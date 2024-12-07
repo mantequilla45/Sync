@@ -1,6 +1,5 @@
 'use client';
 
-// components/SearchInput.tsx
 import { useState } from 'react';
 import { IoMdSearch, IoIosCloseCircle } from 'react-icons/io';
 
@@ -30,15 +29,15 @@ const SearchInput: React.FC<SearchInputProps> = ({
   };
 
   return (
-    <div className={`relative flex items-center ${className}`}>
+    <div className={`relative w-full ${className}`}>
       {/* Search Icon */}
       <div
-        className={`text-white cursor-pointer transition-all duration-300 ease-in-out ${
-          isClicked ? 'opacity-0' : 'opacity-100'
+        className={`absolute left-2.5 top-1/2 transform -translate-y-1/2 text-gray-500 cursor-pointer transition-transform transition-opacity duration-300 ease-in-out ${
+          isClicked ? 'translate-x-[-100%] opacity-0' : 'translate-x-0 opacity-100'
         }`}
-        onClick={() => setIsClicked(true)}
+        style={{ transition: 'transform 0.3s ease-in-out, opacity 0.3s ease-in-out' }}
       >
-        <IoMdSearch size={24}/>
+        <IoMdSearch className="w-[20px] h-[20px]"/>
       </div>
 
       {/* Search Input */}
@@ -47,20 +46,25 @@ const SearchInput: React.FC<SearchInputProps> = ({
         placeholder={placeholder}
         value={value}
         onChange={handleInputChange}
-        className={`border border-gray-300 rounded-xl px-4 py-2 shadow-md text-black text-sm transition-all duration-300 ease-in-out ${
-          isClicked ? 'w-full opacity-100 ml-3' : 'w-0 opacity-0 ml-0'
-        }`}
-        style={{
-          maxWidth: isClicked ? '200px' : '0px',
-          overflow: 'hidden',
-        }}
+        className={`border border-gray-300 rounded-full px-2 py-2 shadow-[0_4px_8px_rgba(0,0,0,0.3)] text-black text-sm pl-9 w-full transition-all duration-300 ${
+          isClicked ? 'pl-[14px]' : 'pl-9'
+        } focus:outline-none`}
+        onFocus={() => setIsClicked(true)}
         onBlur={() => setIsClicked(false)}
       />
 
+      {/* Style for placeholder */}
+      <style jsx>{`
+        input::placeholder {
+          font-weight: ${isClicked ? 'normal' : '300'}; /* Light font when not focused */
+        }
+      `}</style>
+
+            
       {/* Conditionally Render Close Icon */}
-      {isClicked && value && (
+      {value && (
         <IoIosCloseCircle
-          className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 cursor-pointer "
+          className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 cursor-pointer"
           onClick={clearInput}
         />
       )}
