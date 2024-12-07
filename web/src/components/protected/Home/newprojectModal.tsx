@@ -20,6 +20,11 @@ const Modal: React.FC<ModalProps> = ({ isVisible, onClose }) => {
     }
   }, [isVisible]);
 
+  const handleClose = () => {
+    setIsModalOpen(false); // Trigger closing transition
+    setTimeout(onClose, 300); // Wait for the transition to complete before unmounting
+  };
+
   return isVisible ? (
     <div
       className={`fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50
@@ -92,7 +97,7 @@ const Modal: React.FC<ModalProps> = ({ isVisible, onClose }) => {
         <div className="flex justify-end space-x-4 mt-6">
           <button
             className="bg-[#7E7E7E] text-white rounded-full px-8 py-2"
-            onClick={onClose}
+            onClick={handleClose} // Use handleClose to trigger the smooth close
           >
             Cancel
           </button>

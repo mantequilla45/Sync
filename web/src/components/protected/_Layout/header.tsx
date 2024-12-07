@@ -80,10 +80,6 @@ const Header: React.FC = () => {
                       />
                       <h1 className="text-2xl font-bold ml-[7px]">Sync</h1>
                     </a>
-
-                    
-                  </div>
-                  <div className="flex flex-row m-1 items-center justify-center">
                     <SearchInput
                         value={inputValue}
                         onChange={handleInputChange}
@@ -92,6 +88,10 @@ const Header: React.FC = () => {
                         className="ml-4 max-w-xs mx-10 text-white"
                       
                       />
+                    
+                  </div>
+                  <div className="flex flex-row m-1 items-center justify-center">
+                    
                     <button
                       className="profile-button p-2 rounded-full bg-[#3D55B8] shadow-[0_4px_8px_rgba(0,0,0,0.3)] text-gray-800 flex items-center justify-center mr-5 
                                 hover:bg-[#4B67DD] hover:text-white 

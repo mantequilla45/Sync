@@ -1,7 +1,7 @@
 import { Suspense } from 'react';
 import Header from '@/components/protected/_Layout/header';
 import DynamicCardsLayout from '@/components/protected/Home/DynamicCards/dynamic-cards';
-import ModalTrigger from '@/components/protected/Home/modalTrigger'; // Import the ModalTrigger
+import ModalTrigger from '@/components/protected/Home/adddropdown';
 
 export default function Home() {
   return (
@@ -10,15 +10,13 @@ export default function Home() {
       <div className="px-[90px] mb-2">
         <h1 className="text-sm text-white font-light">Home</h1>
       </div>
-      <div className="flex-grow bg-white/60 rounded-2xl shadow-lg mx-16 px-14 py-10 mb-16">
+      <div className="flex-grow bg-white rounded-2xl shadow-lg mx-16 px-14 py-10 mb-16">
       <div>
           <h1 className="text-2xl text-[#2B2B2B] font-semibold">Welcome to Sync</h1>
         </div>
 
         <div className="border-b border-gray-300 my-10 mx-6 flex justify-between items-center">
           <h2 className="text-xl text-[#2B2B2B] font-regular my-5">Your Projects</h2>
-          
-          {/* Modal trigger button (client-side) */}
           <ModalTrigger />
         </div>
 
