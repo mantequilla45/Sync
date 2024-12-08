@@ -86,7 +86,6 @@ const Header: React.FC = () => {
                         onClear={handleClearInput}
                         placeholder="Search Sync"
                         className="ml-4 max-w-xs mx-10 text-white"
-                      
                       />
                     
                   </div>

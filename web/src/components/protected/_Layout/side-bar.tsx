@@ -2,14 +2,13 @@
 
 import React, { useState } from 'react';
 import { RxHamburgerMenu } from "react-icons/rx";
-import { LuInfo } from "react-icons/lu";
-import { LuMail } from "react-icons/lu";
 import { FaUsers } from "react-icons/fa";
 import { HiMiniHome } from "react-icons/hi2";
 import { BiSolidNotepad } from "react-icons/bi";
 import { FaDiagramProject } from "react-icons/fa6";
 import { IoIosInformationCircle } from "react-icons/io";
 import { IoMail } from "react-icons/io5";
+import { FaUserFriends } from "react-icons/fa";
 
 
 
@@ -58,20 +57,23 @@ const HamburgerMenu: React.FC = () => {
         <div className="p-4 flex flex-col justify-between h-[879px]">
           {/* Add your menu items here */}
           <div className="space-y-1">
-            <a href="/home" className="p-2 flex rounded-lg hover:bg-opacity-10 hover:bg-white transition-all duration-300">
+            <a href="/home" className="py-2 px-2.5 flex rounded-lg hover:bg-opacity-10 hover:bg-white transition-all duration-300">
                 <HiMiniHome className="text-2xl" />
                 <div className="block mx-4 ">Home</div>
             </a>
-            <a href="/task-manager" className="p-2 flex rounded-lg hover:bg-opacity-10 hover:bg-white transition-all duration-300">
+            <a href="/task-manager" className="py-2 px-2.5 flex rounded-lg hover:bg-opacity-10 hover:bg-white transition-all duration-300">
                 <BiSolidNotepad className="text-2xl" />
                 <div className="block mx-4">Task Manager</div>
             </a>
-            <div className="p-2 flex rounded-lg hover:bg-opacity-10 hover:bg-white transition-all duration-300">
+            <div className="py-2 px-2.5 flex rounded-lg hover:bg-opacity-10 hover:bg-white transition-all duration-300">
                 <FaDiagramProject className="text-2xl" />
                 <a href="/home" className="block mx-4">Your Projects</a>
             </div>
+            <div className="py-2 px-2.5 flex rounded-lg hover:bg-opacity-10 hover:bg-white transition-all duration-300">
+                <FaUserFriends className="text-2xl ml-[2px]" />
+                <a href="/colleagues" className="block mx-4">Colleagues</a>
+            </div>
           </div>
-
           <div className="space-y-1 text-sm">
             <a href="/about" className="p-2 flex rounded-lg hover:bg-opacity-10 hover:bg-white transition-all duration-300 ">
               <IoIosInformationCircle className="text-xl" />

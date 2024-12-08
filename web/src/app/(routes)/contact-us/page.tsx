@@ -46,7 +46,7 @@ const ContactUs = () => {
                         </p>
                         <button 
                             onClick={openModal} 
-                            className="mt-6 px-6 py-3 bg-[#69369B] text-white text-lg font-regular rounded-full hover:bg-[#572A81] transition duration-300"
+                            className="mt-6 px-6 py-3 bg-[#69369B] text-white text-lg font-regular rounded-2xl hover:bg-[#572A81] transition duration-300"
                         >
                             Get Started
                         </button>
