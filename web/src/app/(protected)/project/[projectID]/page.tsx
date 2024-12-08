@@ -1,6 +1,6 @@
 import AddColleagueForm from "@/components/Project/AddColleagueForm";
 import { headers } from 'next/headers';
-import { getColleagues } from "@/components/protected/Colleagues/ColleagueFunctions";
+import { getColleagues } from "@/components/protected/Collaborators/ColleagueFunctions";
 
 
 interface ProjectPageProps {

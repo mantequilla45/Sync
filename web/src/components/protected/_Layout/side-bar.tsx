@@ -71,7 +71,7 @@ const HamburgerMenu: React.FC = () => {
             </div>
             <div className="py-2 px-2.5 flex rounded-lg hover:bg-opacity-10 hover:bg-white transition-all duration-300">
                 <FaUserFriends className="text-2xl ml-[2px]" />
-                <a href="/home" className="block mx-4">People</a>
+                <a href="/colleagues" className="block mx-4">Colleagues</a>
             </div>
           </div>
           <div className="space-y-1 text-sm">

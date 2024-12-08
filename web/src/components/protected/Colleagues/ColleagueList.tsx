@@ -6,14 +6,18 @@ interface Colleague {
 
 export async function ColleagueList({ colleagues }: Readonly<{ colleagues: Colleague[] }>) {
     return (
-        <div>
-            <h1>Colleague List</h1>
-            <ul>
+        <div className="space-y-6">
+            <h2 className="text-2xl font-semibold text-gray-800">Colleague List</h2>
+            <ul className="space-y-4">
                 {colleagues.map((colleague) => (
-                    <li key={colleague.uid}>
-                        <div>ID: {colleague.uid}</div>
-                        <div>Name: {colleague.displayName}</div>
-                        <div>Picture: <img src={colleague.displayPicture} alt={`${colleague.displayName}'s display`} /></div>
+                    <li key={colleague.uid} className="flex items-center p-4 bg-white rounded-lg shadow-lg hover:shadow-xl transition duration-200">
+                        <div className="w-16 h-16 rounded-full overflow-hidden mr-4">
+                            <img src={colleague.displayPicture} alt={`${colleague.displayName}'s display`} className="w-full h-full object-cover" />
+                        </div>
+                        <div>
+                            <div className="text-lg font-semibold text-gray-700">{colleague.displayName}</div>
+                            <div className="text-sm text-gray-500">ID: {colleague.uid}</div>
+                        </div>
                     </li>
                 ))}
             </ul>
