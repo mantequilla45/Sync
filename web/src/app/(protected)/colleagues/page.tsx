@@ -74,7 +74,7 @@ const ColleaguePage = async () => {
             <Header />
 
             {/* Breadcrumb Navigation */}
-            <div className="px-16 mb-4">
+            <div className="px-[90px] mb-2">
                 <h1 className="text-sm text-white font-light">
                     <a href="/home" className="text-white hover:text-gray-300">Home</a> / 
                     <span className="text-[#F6F61E] ml-1">Colleagues</span>
