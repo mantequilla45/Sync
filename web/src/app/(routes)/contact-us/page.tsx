@@ -30,7 +30,10 @@ const ContactUs = () => {
         <div className="flex flex-col min-h-screen bg-[linear-gradient(45deg,_#82245C,_#81245C,_#732783,_#561C90,_#561C90,_#37249E,_#3D55B8)] text-white">
             <Header /> 
             <div className="px-[90px] mb-2">
-                <h1 className="text-sm text-white font-light">Home / Contact Us</h1>
+                <h1 className="text-sm text-white font-light">
+                    <a href="/home" className="text-white hover:text-gray-300">Home</a> / 
+                    <span className="text-[#F6F61E] ml-1">Contact Us</span>
+                </h1>
             </div>
             <div className="flex-grow space-y-[100px] bg-white rounded-2xl shadow-lg mx-16 mb-16">
                 <div className="flex flex-row h-full px-[150px]">

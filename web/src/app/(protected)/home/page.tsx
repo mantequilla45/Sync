@@ -7,8 +7,10 @@ export default function Home() {
   return (
     <div className="flex flex-col min-h-screen bg-[linear-gradient(45deg,_#82245C,_#81245C,_#732783,_#561C90,_#561C90,_#37249E,_#3D55B8)] text-white">
       <Header />
-      <div className="px-[90px] mb-2">
-        <h1 className="text-sm text-white font-light">Home</h1>
+            <div className="px-[90px] mb-2">
+                <h1 className="text-sm text-white font-light">
+                <a href="/home" className="text-white hover:text-gray-300">Home</a>
+        </h1>
       </div>
       <div className="flex-grow bg-white rounded-2xl shadow-lg mx-16 px-14 py-10 mb-16">
       <div>

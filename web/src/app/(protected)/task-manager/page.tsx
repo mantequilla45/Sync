@@ -70,7 +70,10 @@ export default function TaskManager() {
         <div className="flex flex-col min-h-screen bg-[linear-gradient(45deg,_#82245C,_#81245C,_#732783,_#561C90,_#561C90,_#37249E,_#3D55B8)] text-white">
             <Header />
             <div className="px-[90px] mb-2">
-                <h1 className="text-sm text-white font-light">Home / Task Manager</h1>
+                <h1 className="text-sm text-white font-light">
+                    <a href="/home" className="text-white hover:text-gray-300">Home</a> / 
+                    <span className="text-[#F6F61E] ml-1">Task Manager</span>
+                </h1>
             </div>
 
             {/* Universal Add Task Button*/}
