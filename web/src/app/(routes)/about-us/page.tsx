@@ -38,7 +38,7 @@ const BlankPage = () => {
             </div>
             <div className="flex-1">
               <Image
-                src="https://firebasestorage.googleapis.com/v0/b/hostingtest-aadc2.appspot.com/o/website-resources%2Fwebsite-pictures%2Fabout-us1.jpg?alt=media&token=772ff21e-e505-4ea1-9223-02a1357f2abe"
+                src="/svgs/about-us1.svg"
                 alt="About Us"
                 width={5000}
                 height={3000}
@@ -49,7 +49,7 @@ const BlankPage = () => {
           <div className="flex flex-row space-x-2">
             <div className="flex-1">
                 <Image
-                  src="https://firebasestorage.googleapis.com/v0/b/hostingtest-aadc2.appspot.com/o/website-resources%2Fwebsite-pictures%2Fabout-us2.jpg?alt=media&token=f3674b11-4e1b-4438-9d8b-831b2fba5738"
+                  src="/svgs/about-us2.svg"
                   alt="About Us"
                   width={5000}
                   height={3000}

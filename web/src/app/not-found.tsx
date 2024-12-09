@@ -1,6 +1,7 @@
 import { Header } from '@/components/_index';
 import { IoReturnDownBackOutline } from "react-icons/io5";
 import { FaCircle } from "react-icons/fa";
+import Image from 'next/image';
 
 export default function NotFound() {
   return (
@@ -43,16 +44,15 @@ export default function NotFound() {
                 Contact Us
               </a>
             </div>
-
-            
           </div>
           <div className="flex items-center">
-            <img
+            <Image
               src="/svgs/NotFound.svg"
               alt="404 Not Found"
-              className="w-[650px] h-[650px]"
+              width={650}
+              height={650}
+              priority
             />
-
           </div>
       </div>
     </div>

@@ -65,14 +65,14 @@ const HamburgerMenu: React.FC = () => {
                 <BiSolidNotepad className="text-2xl" />
                 <div className="block mx-4">Task Manager</div>
             </a>
-            <div className="py-2 px-2.5 flex rounded-lg hover:bg-opacity-10 hover:bg-white transition-all duration-300">
-                <FaDiagramProject className="text-2xl" />
-                <a href="/home" className="block mx-4">Your Projects</a>
-            </div>
-            <div className="py-2 px-2.5 flex rounded-lg hover:bg-opacity-10 hover:bg-white transition-all duration-300">
-                <FaUserFriends className="text-2xl ml-[2px]" />
-                <a href="/colleagues" className="block mx-4">Colleagues</a>
-            </div>
+            <a href="/home" className="py-2 px-2.5 flex rounded-lg hover:bg-opacity-10 hover:bg-white transition-all duration-300">
+              <FaDiagramProject className="text-2xl" />
+                <div className="block mx-4">Your Projects</div>
+            </a>
+            <a href="/colleagues" className="py-2 px-2.5 flex rounded-lg hover:bg-opacity-10 hover:bg-white transition-all duration-300">
+              <FaUserFriends className="text-2xl" />
+                <div className="block mx-4">Colleagues</div>
+            </a>
           </div>
           <div className="space-y-1 text-sm">
             <a href="/about" className="p-2 flex rounded-lg hover:bg-opacity-10 hover:bg-white transition-all duration-300 ">
