@@ -27,7 +27,10 @@ const ProfilePage = () => {
     <div className="flex flex-col min-h-screen bg-[linear-gradient(45deg,_#82245C,_#81245C,_#732783,_#561C90,_#561C90,_#37249E,_#3D55B8)] text-white">
       <Header />
       <div className="px-[90px] mb-2">
-        <h1 className="text-sm text-white font-light">Home / Account</h1>
+        <h1 className="text-sm text-white font-light">
+            <a href="/home" className="text-white hover:text-gray-300">Home</a> / 
+            <span className="text-[#F6F61E] ml-1">Account</span>
+        </h1>
       </div>
       <div className="relative flex justify-center mx-16 mb-16">
         <div className="absolute inset-0 bg-[#FFFFFF] rounded-2xl opacity-[35%] w-[75%] mx-auto shadow-lg z-0" />
