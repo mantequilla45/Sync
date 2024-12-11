@@ -43,8 +43,8 @@ const ColleagueList: React.FC<ColleagueListProps> = ({ colleagues }) => {
                     <div
                         key={colleague.uid}
                         className={`flex flex-col items-center p-10 w-48 rounded-xl shadow-md transition-all ease-in-out transform
-                            ${selectedColleague === colleague.uid ? 'bg-[#DCDCDC] border-[#CBCBCB] scale-[.99]' : 'bg-white border-transparent'}
-                            ${selectedColleague === colleague.uid ? '' : 'hover:bg-[#EDEDED] hover:border-[#E1E1E1]'}
+                            ${selectedColleague === colleague.uid ? 'bg-[#DCDCDC] border-gray-300 scale-[.98]' : 'bg-[#FAFAFA] border-gray-100'}
+                            ${selectedColleague === colleague.uid ? '' : 'hover:bg-[#EDEDED] hover:border-[#E1E1E1] hover:scale-[.99]'}
                             cursor-pointer border border-[#EEEEEE]`}
                         onClick={() => handleCardClick(colleague.uid)} // Handle click to toggle the selection state
                     >
