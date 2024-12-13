@@ -24,6 +24,7 @@ const initialCompletedTasks = [
 ];
 
 interface Task {
+    id: string;
     userId: string;
     title: string;
     phase: string;
@@ -66,6 +67,23 @@ export default function TaskManager() {
         await addDoc(collection(db, "tasks"), { ...newTaskData, userId: user.uid });
     }; 
 
+    const updateTaskStatus = async (taskId: string, updatedStatus: string) => {
+        const taskRef = doc(db, "tasks", taskId);
+        await updateDoc(taskRef, { status: updatedStatus });
+        setTasks((prevTasks) =>
+            prevTasks.map((task) =>
+                task.id === taskId ? { ...task, status: updatedStatus } : task
+            )
+        );
+    };
+    
+    const deleteTask = async (taskId: string) => {
+        const taskRef = doc(db, "tasks", taskId);
+        await deleteDoc(taskRef);
+        setTasks((prevTasks) => prevTasks.filter((task) => task.id !== taskId));
+    };
+    
+
     return (
         <div className="flex flex-col min-h-screen bg-[linear-gradient(45deg,_#82245C,_#81245C,_#732783,_#561C90,_#561C90,_#37249E,_#3D55B8)] text-white">
             <Header />
@@ -98,7 +116,12 @@ export default function TaskManager() {
                                     {tasks
                                         .filter((task) => task.status === status)
                                         .map((task, index) => (
-                                            <TaskCard key={index} {...task} />
+                                            <TaskCard 
+                                                key={index} 
+                                                {...task} 
+                                                onUpdateTask={updateTaskStatus}    
+                                                onDeleteTask={deleteTask}
+                                            />
                                         ))}
                                 </div>
                             ))}
