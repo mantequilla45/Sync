@@ -56,7 +56,7 @@ const Header: React.FC = () => {
                 <div className="flex items-center w-full ml-6">
                   <a href="/home" className="flex items-center">
                     <img src="https://firebasestorage.googleapis.com/v0/b/hostingtest-aadc2.appspot.com/o/website-resources%2FSync%20Logo%2FSync%20Logo%20White%20Large.png?alt=media&token=7551d58d-337b-4106-b5da-9b23260c1d99" alt="Logo" className="w-[25px] h-[25px]" />
-                    <h1 className="text-2xl font-bold ml-[7px]">Sync</h1>
+                    <h1 className="text-2xl font-semibold ml-[7px]">Sync</h1>
                   </a>
                   <SearchInput value={inputValue} onChange={handleInputChange} onClear={handleClearInput} placeholder="Search Sync" className="ml-4 max-w-xs mx-10 text-white" />
                 </div>
