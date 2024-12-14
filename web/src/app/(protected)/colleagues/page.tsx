@@ -5,7 +5,6 @@ import { headers } from "next/headers";
 import Header from "@/components/protected/_Layout/header";
 import ColleagueDetails from "@/components/protected/Colleagues/ColleagueDetails";
 
-// Define the Colleague interface
 interface Colleague {
     uid: string;
     displayName: string;

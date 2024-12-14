@@ -14,6 +14,7 @@ const AddColleaguesForm: React.FC = () => {
         setIsLoading(true);
 
         try {
+            console.log(uid);
             const data = await addColleagues(uid);
             setUid('');
         } catch (err) {
@@ -25,10 +26,7 @@ const AddColleaguesForm: React.FC = () => {
     };
 
     return (
-        <div
-            onSubmit={handleSubmit}
-            className="mb-5 text-[#2b2b2b]"
-        >
+        <form onSubmit={handleSubmit} className="mb-5 text-[#2b2b2b]">
             <h2 className="text-2xl font-semibold">Colleagues</h2>
             <div className="py-4 flex w-1/3 flex-col">
                 <label htmlFor="colleagueUid" className="block mb-2">
@@ -56,8 +54,7 @@ const AddColleaguesForm: React.FC = () => {
                     </button>
                 </div>
             </div>
-
-        </div>
+        </form>
     );
 };
 

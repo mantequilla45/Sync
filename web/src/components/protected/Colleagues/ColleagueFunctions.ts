@@ -22,13 +22,13 @@ export const getColleagues = async (headersObject : Record<string, string>)  : P
 
 export const addColleagues = async (colleagueUID: string): Promise<any> => {
     try {
+        const formData = new FormData();
+        formData.append('colleagueUID', colleagueUID);
+
         const response = await fetch('http://localhost:3000/api/Colleagues/AddColleagues', {
             method: 'POST',
             credentials: 'include',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(colleagueUID), // Add body with JSON data
+            body: formData,
         });
 
         if (!response.ok) {
