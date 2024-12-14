@@ -50,7 +50,7 @@ const AddColleaguesForm: React.FC = () => {
                     <button
                         type="submit"
                         disabled={isLoading}
-                        className="pr-4 pl-3 py-2 bg-[#69369B] text-white border border-[#69369B] rounded-r-full shadow-md hover:bg-[#5F1F9C] active:bg-[#44196D] active:scale-[.97] transition duration-200"
+                        className="pr-4 pl-3 py-2 bg-[#69369B] text-white border border-[#69369B] rounded-r-2xl shadow-md hover:bg-[#5F1F9C] active:bg-[#44196D] active:scale-[.97] transition duration-200"
                     >
                         {isLoading ? 'Adding...' : 'Add'}
                     </button>
