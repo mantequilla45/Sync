@@ -1,52 +1,42 @@
 "use client";
 import React, { useState } from "react";
-import { FaPlus } from "react-icons/fa6";
 
 // Define the Colleague interface
 interface Colleague {
     uid: string;
     displayName: string;
     displayPicture: string;
+    userTag: string;
+    email: string;
+    projectName: string;
 }
 
 // Define the prop type for ColleagueList
 interface ColleagueListProps {
     colleagues: Colleague[];
+    onCardClick: (colleague: Colleague) => void; // Add the callback function for card clicks
 }
 
-const ColleagueList: React.FC<ColleagueListProps> = ({ colleagues }) => {
+const ColleagueList: React.FC<ColleagueListProps> = ({ colleagues, onCardClick }) => {
     // Track the selected colleague
     const [selectedColleague, setSelectedColleague] = useState<string | null>(null);
 
     // Handle card click to toggle the selected state
-    const handleCardClick = (uid: string) => {
-        if (selectedColleague === uid) {
-            setSelectedColleague(null); // Deselect if clicked again
-        } else {
-            setSelectedColleague(uid);
-        }
+    const handleCardClick = (colleague: Colleague) => {
+        setSelectedColleague(colleague.uid);
+        onCardClick(colleague); // Pass the colleague details to the parent component
     };
 
     return (
-        <div className="flex flex-col w-2/3">
-            <div className="flex flex-row justify-between">
-                <h2 className="text-2xl font-semibold text-gray-800">Colleague List</h2>
-                <button
-                    className="mr-3 p-2 hover:scale-110 active:scale-95 transition-transform duration-300 rounded-full bg-[#69369B]"
-                    >
-                    <FaPlus className="text-[20px] text-[#white]" />
-                </button>
-            </div>
-            {/* Cards View */}
-            <div className="flex flex-wrap gap-[30px] mt-7 text-[#2b2b2b]">
+        <div className="flex flex-col text-[#2b2b2b]">
+            <div className="flex flex-wrap gap-[30px] mt-7 text-[#2b2b2b] cursor-pointer">
                 {colleagues.map((colleague) => (
                     <div
                         key={colleague.uid}
-                        className={`flex flex-col items-center p-10 w-48 rounded-xl shadow-md transition-all ease-in-out transform
-                            ${selectedColleague === colleague.uid ? 'bg-[#DCDCDC] border-gray-300 scale-[.98]' : 'bg-[#FAFAFA] border-gray-100'}
-                            ${selectedColleague === colleague.uid ? '' : 'hover:bg-[#EDEDED] hover:border-[#E1E1E1] hover:scale-[.99]'}
-                            cursor-pointer border border-[#EEEEEE]`}
-                        onClick={() => handleCardClick(colleague.uid)} // Handle click to toggle the selection state
+                        className={`flex flex-col items-center p-10 w-46 rounded-xl shadow-md transition-all ease-in-out transform
+                            ${selectedColleague === colleague.uid ? 'bg-[#DCDCDC] border border-gray-300 scale-[.98]' : 'bg-[#FAFAFA] border border-gray-200'}
+                            ${selectedColleague === colleague.uid ? '' : 'hover:bg-[#EDEDED] hover:border-[#E1E1E1] hover:scale-[.99]'}`}
+                        onClick={() => handleCardClick(colleague)}
                     >
                         <img
                             src={colleague.displayPicture}

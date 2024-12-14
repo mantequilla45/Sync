@@ -25,38 +25,39 @@ const AddColleaguesForm: React.FC = () => {
     };
 
     return (
-        <form
+        <div
             onSubmit={handleSubmit}
-            className="max-w-lg mx-auto p-8 bg-white shadow-lg rounded-lg border border-gray-200"
+            className="mb-5 text-[#2b2b2b]"
         >
-            <h2 className="text-xl font-semibold mb-4 text-gray-700">Add a Colleague</h2>
-            <div className="mb-6">
-                <label htmlFor="colleagueUid" className="block text-sm font-medium text-gray-600">
-                    Colleague UID
+            <h2 className="text-2xl font-semibold">Colleagues</h2>
+            <div className="py-4 flex w-1/3 flex-col">
+                <label htmlFor="colleagueUid" className="block mb-2">
+                    Add a Colleague
                 </label>
-                <input
-                    id="colleagueUid"
-                    type="text"
-                    value={uid}
-                    onChange={(e) => setUid(e.target.value)}
-                    className="mt-2 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                    placeholder="Enter colleague UID"
-                    required
-                />
+                {error && (
+                    <p className="text-sm text-red-600 mb-4">{error}</p>
+                )}
+                <div className="flex flex-row items-center justify-center">
+                    <input
+                        id="colleagueUid"
+                        type="text"
+                        value={uid}
+                        onChange={(e) => setUid(e.target.value)}
+                        className="text-[#2b2b2b] block w-full font-light px-4 py-2 border border-gray-300 rounded-l-2xl focus:outline-none focus:border-[#2b2b2b]"
+                        placeholder="Enter colleague UID"
+                        required
+                    />
+                    <button
+                        type="submit"
+                        disabled={isLoading}
+                        className="pr-4 pl-3 py-2 bg-[#69369B] text-white border border-[#69369B] rounded-r-full shadow-md hover:bg-[#5F1F9C] active:bg-[#44196D] active:scale-[.97] transition duration-200"
+                    >
+                        {isLoading ? 'Adding...' : 'Add'}
+                    </button>
+                </div>
             </div>
-            {error && (
-                <p className="text-sm text-red-600 mb-4">{error}</p>
-            )}
-            <div className="flex justify-center">
-                <button
-                    type="submit"
-                    disabled={isLoading}
-                    className="w-full px-6 py-3 bg-indigo-600 text-white rounded-md shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition duration-200"
-                >
-                    {isLoading ? 'Adding...' : 'Add Colleague'}
-                </button>
-            </div>
-        </form>
+
+        </div>
     );
 };
 
