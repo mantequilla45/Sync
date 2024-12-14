@@ -44,7 +44,7 @@ export default function DropdownTrigger() {
   }, []);
 
   return (
-    <div className="relative inline-block text-left">
+    <div className="relative inline-block text-left z-10">
       {/* Dropdown trigger */}
       <button
         className="text-xl text-[#2B2B2B] flex flex-row items-center gap-3"
@@ -56,10 +56,9 @@ export default function DropdownTrigger() {
         </div>
       </button>
 
-      {/* Dropdown menu */}
       {isDropdownOpen && (
         <div
-          ref={dropdownRef} // Attach ref to the dropdown menu
+          ref={dropdownRef}
           className="absolute mt-2 w-48 bg-gray-200 border border-gray-300 rounded-lg shadow-lg text-[#2B2B2B]"
         >
           <ul className="py-1">
