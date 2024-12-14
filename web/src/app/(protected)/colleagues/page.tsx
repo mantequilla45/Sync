@@ -1,8 +1,9 @@
-"use client";
-import { useState, useEffect } from "react";
-import ColleagueList from "@/components/protected/Colleagues/ColleagueList";
+
 import AddColleaguesForm from "@/components/protected/Colleagues/AddColleagueForm";
-import Header from '@/components/protected/_Layout/header';
+import { getColleagues } from "@/components/protected/Colleagues/ColleagueFunctions";
+import { headers } from "next/headers";
+import Header from "@/components/protected/_Layout/header";
+import ColleagueDetails from "@/components/protected/Colleagues/ColleagueDetails";
 
 // Define the Colleague interface
 interface Colleague {
@@ -14,120 +15,27 @@ interface Colleague {
     projectName: string;
 }
 
-const ColleaguePage = () => {
-    const [colleagues, setColleagues] = useState<Colleague[]>([]);
-    const [selectedColleague, setSelectedColleague] = useState<Colleague | null>(null);
+const ColleaguePage = async () => {
+    const incomingHeaders = headers();
 
-    // Fetch colleagues (or set static data as you have)
-    useEffect(() => {
-        // Simulating an async API call for colleagues
-        const fetchedColleagues = [
-            {
-                uid: "1",
-                displayName: "John Doe",
-                displayPicture:
-                    "https://firebasestorage.googleapis.com/v0/b/hostingtest-aadc2.appspot.com/o/profile-pictures%2FVFk3hnh3nSXTAKbASUWOxkJMexR2%2FVFk3hnh3nSXTAKbASUWOxkJMexR2.png?alt=media&token=1b559886-5925-450a-98bd-e7e93d69a301",
-                userTag: "@johndoe",
-                email: "johndoe@example.com",
-                projectName: "Project X"
-            },
-            {
-                uid: "2",
-                displayName: "Jane Smith",
-                displayPicture:
-                    "https://firebasestorage.googleapis.com/v0/b/hostingtest-aadc2.appspot.com/o/profile-pictures%2FVFk3hnh3nSXTAKbASUWOxkJMexR2%2FVFk3hnh3nSXTAKbASUWOxkJMexR2.png?alt=media&token=1b559886-5925-450a-98bd-e7e93d69a301",
-                userTag: "@janesmith",
-                email: "janesmith@example.com",
-                projectName: "Project Y"
-            },
-            {
-                uid: "3",
-                displayName: "Alice Johnson",
-                displayPicture:
-                    "https://firebasestorage.googleapis.com/v0/b/hostingtest-aadc2.appspot.com/o/profile-pictures%2FVFk3hnh3nSXTAKbASUWOxkJMexR2%2FVFk3hnh3nSXTAKbASUWOxkJMexR2.png?alt=media&token=1b559886-5925-450a-98bd-e7e93d69a301",
-                userTag: "@alicejohnson",
-                email: "alicejohnson@example.com",
-                projectName: "Project Z"
-            },
-            {
-                uid: "4",
-                displayName: "Bob Brown",
-                displayPicture:
-                    "https://firebasestorage.googleapis.com/v0/b/hostingtest-aadc2.appspot.com/o/profile-pictures%2FVFk3hnh3nSXTAKbASUWOxkJMexR2%2FVFk3hnh3nSXTAKbASUWOxkJMexR2.png?alt=media&token=1b559886-5925-450a-98bd-e7e93d69a301",
-                userTag: "@bobbrown",
-                email: "bobbrown@example.com",
-                projectName: "Project A"
-            },
-            {
-                uid: "5",
-                displayName: "Charlie Davis",
-                displayPicture:
-                    "https://firebasestorage.googleapis.com/v0/b/hostingtest-aadc2.appspot.com/o/profile-pictures%2FVFk3hnh3nSXTAKbASUWOxkJMexR2%2FVFk3hnh3nSXTAKbASUWOxkJMexR2.png?alt=media&token=1b559886-5925-450a-98bd-e7e93d69a301",
-                userTag: "@charliedavis",
-                email: "charliedavis@example.com",
-                projectName: "Project B"
-            },
-            {
-                uid: "6",
-                displayName: "Eva Wilson",
-                displayPicture:
-                    "https://firebasestorage.googleapis.com/v0/b/hostingtest-aadc2.appspot.com/o/profile-pictures%2FVFk3hnh3nSXTAKbASUWOxkJMexR2%2FVFk3hnh3nSXTAKbASUWOxkJMexR2.png?alt=media&token=1b559886-5925-450a-98bd-e7e93d69a301",
-                userTag: "@evawilson",
-                email: "evawilson@example.com",
-                projectName: "Project C"
-            },
-            {
-                uid: "7",
-                displayName: "David Lee",
-                displayPicture:
-                    "https://firebasestorage.googleapis.com/v0/b/hostingtest-aadc2.appspot.com/o/profile-pictures%2FVFk3hnh3nSXTAKbASUWOxkJMexR2%2FVFk3hnh3nSXTAKbASUWOxkJMexR2.png?alt=media&token=1b559886-5925-450a-98bd-e7e93d69a301",
-                userTag: "@davidlee",
-                email: "davidlee@example.com",
-                projectName: "Project D"
-            },
-            {
-                uid: "8",
-                displayName: "Grace Moore",
-                displayPicture:
-                    "https://firebasestorage.googleapis.com/v0/b/hostingtest-aadc2.appspot.com/o/profile-pictures%2FVFk3hnh3nSXTAKbASUWOxkJMexR2%2FVFk3hnh3nSXTAKbASUWOxkJMexR2.png?alt=media&token=1b559886-5925-450a-98bd-e7e93d69a301",
-                userTag: "@gracemoore",
-                email: "gracemoore@example.com",
-                projectName: "Project E"
-            },
-            {
-                uid: "9",
-                displayName: "Hannah Clark",
-                displayPicture:
-                    "https://firebasestorage.googleapis.com/v0/b/hostingtest-aadc2.appspot.com/o/profile-pictures%2FVFk3hnh3nSXTAKbASUWOxkJMexR2%2FVFk3hnh3nSXTAKbASUWOxkJMexR2.png?alt=media&token=1b559886-5925-450a-98bd-e7e93d69a301",
-                userTag: "@hannahclark",
-                email: "hannahclark@example.com",
-                projectName: "Project F"
-            },
-            {
-                uid: "10",
-                displayName: "Jack White",
-                displayPicture:
-                    "https://firebasestorage.googleapis.com/v0/b/hostingtest-aadc2.appspot.com/o/profile-pictures%2FVFk3hnh3nSXTAKbASUWOxkJMexR2%2FVFk3hnh3nSXTAKbASUWOxkJMexR2.png?alt=media&token=1b559886-5925-450a-98bd-e7e93d69a301",
-                userTag: "@jackwhite",
-                email: "jackwhite@example.com",
-                projectName: "Project G"
-            },
-        ];
-        
-        
-        setColleagues(fetchedColleagues);
-    }, []); // Empty dependency array to run once when the component mounts
+    const headersObject: Record<string, string> = {};
+    incomingHeaders.forEach((value, key) => {
+        headersObject[key] = value;
+    });
 
-    const handleCardClick = (colleague: Colleague) => {
-        setSelectedColleague(colleague);
-    };
+    const colleagueData = await getColleagues(headersObject);
+
+    console.log(colleagueData)
+    const colleagues: Colleague[] = colleagueData?.colleagues || [];
+
+    console.log(colleagues);
 
     return (
         <div className="flex flex-col min-h-screen bg-[linear-gradient(45deg,_#82245C,_#81245C,_#732783,_#561C90,_#561C90,_#37249E,_#3D55B8)] text-white">
             <Header />
             <div className="px-[90px] mb-2">
                 <h1 className="text-sm text-white font-light">
-                    <a href="/home" className="text-white hover:text-gray-300">Home</a> / 
+                    <a href="/home" className="text-white hover:text-gray-300">Home</a> /
                     <span className="text-[#F6F61E] ml-1">Colleagues</span>
                 </h1>
             </div>
@@ -144,32 +52,7 @@ const ColleaguePage = () => {
                             />
                         </div>
                     ) : (
-                        <ColleagueList colleagues={colleagues} onCardClick={handleCardClick} />
-                    )}
-                </div>
-                <div className="w-1/4 p-10 bg-[#FAFAFA] h-[660px] shadow-md rounded-xl border border-gray-200">
-                    {selectedColleague ? (
-                        <div>
-                            <div className="flex mb-4">
-                                <img
-                                    src={selectedColleague.displayPicture}
-                                    alt="Profile Picture"
-                                    className="w-36 h-36 rounded-full object-cover border border-1 border-gray-300"
-                                />
-                            </div>
-                            <div className="text-[#2b2b2b]">
-                                <h2 className="text-xl font-semibold text-gray-800">{selectedColleague.displayName}</h2>
-                                <p className="font-light text-sm">{selectedColleague.userTag}</p>
-                                <p className="font-light text-sm">{selectedColleague.email}</p>
-                                <p className="mt-2">
-                                    Colleague in <span className="text-[#521E7A] font-semibold">{selectedColleague.projectName}</span>
-                                </p>
-                            </div>
-                        </div>
-                    ) : (
-                        <div className="flex justify-center items-center h-full">
-                            <p className="text-center font-light text-[#2b2b2b]">Select a colleague to view profile</p>
-                        </div>
+                        <ColleagueDetails colleagues={colleagues} />
                     )}
                 </div>
             </div>
