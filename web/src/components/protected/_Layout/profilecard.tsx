@@ -8,7 +8,7 @@ interface ProfileCardProps {
   logoutAndRedirect: () => Promise<void>;
 }
 
-const ProfileCard: React.FC<ProfileCardProps> = ({ activeCard, toggleCard }) => {
+const ProfileCard: React.FC<ProfileCardProps> = ({ activeCard, toggleCard, logoutAndRedirect }) => {
   return (
     <div className="relative w-full mx-4 mr-[180px]">
       <div className="flex justify-end w-full">
@@ -42,7 +42,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ activeCard, toggleCard }) => 
 
               <a
                 className="flex flex-row w-full px-2 cursor-pointer hover:bg-gray-100 transition-all duration-200 rounded-lg items-center py-2"
-                onClick={() => toggleCard('profile')}
+                onClick={logoutAndRedirect}
               >
                 <div>
                   <TbLogout2 className="w-[21px] h-[21px]" />
