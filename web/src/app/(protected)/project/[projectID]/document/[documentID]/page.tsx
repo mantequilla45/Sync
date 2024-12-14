@@ -10,7 +10,7 @@ const DocumentPage = ({ params }: { params: { projectID: string, documentID: str
       <div className="px-[90px] mb-2">
         <h1 className="text-sm text-white font-light">Home / {params.projectID} / {params.documentID}</h1>
       </div>
-      <div className="flex flex-col items-center mx-16 mb-16">
+      <div className="flex justify-center bg-gray-100 px-[300px] py-[30px]">
         <DocumentEditor projectID={params.projectID} documentID={params.documentID} />
       </div>
     </div>
