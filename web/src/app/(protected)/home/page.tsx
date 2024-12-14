@@ -1,4 +1,3 @@
-import { Suspense } from 'react';
 import Header from '@/components/protected/_Layout/header';
 import DynamicCardsLayout from '@/components/protected/Home/DynamicCards/dynamic-cards';
 import ModalTrigger from '@/components/protected/Home/adddropdown';
@@ -21,11 +20,7 @@ export default function Home() {
           <h2 className="text-xl text-[#2B2B2B] font-regular my-5">Your Projects</h2>
           <ModalTrigger />
         </div>
-
-        {/* Dynamic Cards */}
-        <Suspense fallback={<p>Loading projects...</p>}>
           <DynamicCardsLayout />
-        </Suspense>
       </div>
     </div>
   );
