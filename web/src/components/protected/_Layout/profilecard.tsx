@@ -1,6 +1,5 @@
-import React from 'react';
-import { FaUser, IoSettingsSharp, IoIosArrowForward, TbLogout2, IoArrowBack } from '../../_icons';
-import { FaMoon } from 'react-icons/fa';
+import React, { forwardRef } from 'react';
+import { FaUser, TbLogout2, IoArrowBack } from '../../_icons';
 
 interface ProfileCardProps {
   activeCard: string | null;
@@ -8,13 +7,13 @@ interface ProfileCardProps {
   logoutAndRedirect: () => Promise<void>;
 }
 
-const ProfileCard: React.FC<ProfileCardProps> = ({ activeCard, toggleCard, logoutAndRedirect }) => {
+const ProfileCard = forwardRef<HTMLDivElement, ProfileCardProps>(({ activeCard, toggleCard, logoutAndRedirect }, ref) => {
   return (
-    <div className="relative w-full mx-4 mr-[180px]">
+    <div ref={ref} className="relative w-full mx-4 mr-[180px]">
       <div className="flex justify-end w-full">
         <div
           className={`absolute rounded-xl w-[13%] flex-col space-y-1 py-2 px-2 bg-white mt-2 top-0 right-0 z-50 border border-gray-100 text-[#323232] transition-all duration-300 ease-in-out ${
-            activeCard === 'profile' ? 'h-[136px] opacity-100' : 'h-[0px] opacity-0'
+            activeCard === 'profile' ? 'h-[95px] opacity-100' : 'h-[0px] opacity-0'
           }`}
           style={{ boxShadow: '0 4px 8px rgba(0, 0, 0, 0.3)' }}
         >
@@ -27,17 +26,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ activeCard, toggleCard, logou
                 <div className="ml-[1px] w-auto">
                   <FaUser className="w-[20px] h-[20px] rounded-full" />
                 </div>
-                <h1 className="w-[80%] text-sm font-regular">Account</h1>
-              </a>
-
-              <a
-                href="/settings"
-                className="flex flex-row w-full px-2 hover:bg-gray-100 transition-all duration-200 rounded-lg items-center py-2"
-              >
-                <div>
-                  <IoSettingsSharp className="w-[21px] h-[21px]" />
-                </div>
-                <h1 className="text-sm font-regular ml-3">Settings</h1>
+                <h1 className="w-[80%] text-sm font-regular">Account Settings</h1>
               </a>
 
               <a
@@ -74,6 +63,8 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ activeCard, toggleCard, logou
       </div>
     </div>
   );
-};
+});
+
+ProfileCard.displayName = 'ProfileCard';
 
 export default ProfileCard;
