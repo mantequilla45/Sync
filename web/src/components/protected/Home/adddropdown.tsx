@@ -27,7 +27,6 @@ export default function DropdownTrigger() {
     setIsDocumentModalOpen(true);
   };
 
-  // Close dropdown if click is outside the dropdown
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {

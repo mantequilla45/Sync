@@ -1,29 +1,78 @@
 "use client"; // Ensure this is a client-side component
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { createProject } from '@/services/_index';
 
 interface ModalProps {
   isVisible: boolean;
   onClose: () => void;
 }
 
-const Modal: React.FC<ModalProps> = ({ isVisible, onClose }) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isFocused, setIsFocused] = useState(false);
+interface Collaborator {
+  uid: string;
+  displayName: string;
+}
 
-  // Handle modal visibility
-  React.useEffect(() => {
+const Modal: React.FC<ModalProps> = ({ isVisible, onClose }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false); // Manages modal's transition state
+  const [isFocused, setIsFocused] = useState(false); // Tracks focus state for inputs
+
+  // Form states
+  const [projectName, setProjectName] = useState(''); // Project name input
+  const [projectDescription, setProjectDescription] = useState(''); // Project description input
+  const [collaborator, setCollaborator] = useState(''); // Temporary collaborator input
+  const [collaborators, setCollaborators] = useState<string[]>([]);
+  const [possibleCollaborators, setPossibleCollaborators] = useState<Collaborator[]>([]); // Available collaborators
+  const [privacySetting, setPrivacySetting] = useState<'private' | 'public'>('private'); // Privacy settings
+  const [error, setError] = useState<string | null>(null);
+
+
+  useEffect(() => {
+    const fetchCollaborators = async () => {
+      try {
+        const response = await fetch('/api/Colleagues/GetColleagues');
+        if (!response.ok) {
+          throw new Error(`Error: ${response.statusText}`);
+        }
+        const data = await response.json();
+        console.log(data);
+        setPossibleCollaborators(data.colleagues); // Assuming data.colleagues is an array of { uid, displayName }
+      } catch (error) {
+        console.error('Failed to fetch collaborators:', error);
+      }
+    };
+
+    fetchCollaborators();
+  }, []);
+
+  useEffect(() => {
     if (isVisible) {
-      setTimeout(() => setIsModalOpen(true), 10); // Delay to trigger transition
+      setTimeout(() => setIsModalOpen(true), 10);
     } else {
       setIsModalOpen(false);
     }
   }, [isVisible]);
 
-  const handleClose = () => {
-    setIsModalOpen(false); // Trigger closing transition
-    setTimeout(onClose, 300); // Wait for the transition to complete before unmounting
+  const handleAddCollaborator = () => {
+    if (collaborator.trim() !== '' && !collaborators.includes(collaborator)) {
+      setCollaborators([...collaborators, collaborator]);
+      setCollaborator('');
+    }
   };
+
+  const handleClose = () => {
+    setIsModalOpen(false);
+    setTimeout(() => {
+      setProjectName('');
+      setProjectDescription('');
+      setCollaborator('');
+      setCollaborators([]);
+      setPrivacySetting('private');
+      setError(null);
+      onClose();
+    }, 300);
+  };
+
 
   return isVisible ? (
     <div
@@ -48,6 +97,8 @@ const Modal: React.FC<ModalProps> = ({ isVisible, onClose }) => {
             border border-[#DCD6D6] focus:border-gray-300 focus:outline-none focus:ring-0`}
             placeholder="Enter project name"
             style={{ color: '#242424' }}
+            value={projectName}
+            onChange={(e) => setProjectName(e.target.value)}
             onFocus={() => setIsFocused(true)}
             onBlur={() => setIsFocused(false)}
           />
@@ -62,32 +113,68 @@ const Modal: React.FC<ModalProps> = ({ isVisible, onClose }) => {
             rows={4}
             placeholder="Enter project description"
             style={{ color: '#242424' }}
+            value={projectDescription}
+            onChange={(e) => setProjectDescription(e.target.value)}
           ></textarea>
         </div>
 
-        {/* Add Collaborators */}
+        {/* Collaborators Section */}
         <div className="mb-4">
-          <label className="block text-gray-700">Add Collaborators</label>
-          <input
-            type="text"
-            className={`w-full mt-2 bg-[#EDEDED] text rounded-full p-2 pl-5 
+          <label className="block text-gray-700 mb-2">Select Collaborators</label>
+          <select
+            className={`w-full bg-[#EDEDED] text-black rounded-full p-2 pl-5 
             border border-[#DCD6D6] focus:border-gray-300 focus:outline-none focus:ring-0`}
-            placeholder="Enter email or username"
-            style={{ color: '#242424' }}
-          />
-          <button className="mt-4 bg-[#69369B] rounded-full text-white px-8 py-2">Invite</button>
+            value={collaborator}
+            onChange={(e) => setCollaborator(e.target.value)}
+          >
+            <option value="" disabled>
+              Select a collaborator
+            </option>
+            {possibleCollaborators.map((col) => (
+              <option key={col.uid} value={col.uid}>
+                {col.displayName}
+              </option>
+            ))}
+          </select>
+          <button
+            className="mt-4 bg-[#69369B] rounded-full text-white px-8 py-2"
+            onClick={handleAddCollaborator}
+            disabled={!collaborator}
+          >
+            Add Collaborator
+          </button>
+          <div className="mt-2">
+            {collaborators.map((col, index) => (
+              <p key={index} className="text-sm text-gray-600">{col}</p>
+            ))}
+          </div>
         </div>
+
 
         {/* Privacy Settings */}
         <div className="mb-4">
           <label className="block text-[#2B2B2B]">Privacy Settings</label>
           <div className="flex items-center space-x-4 mt-4">
             <label className="text-[#2B2B2B] flex items-center">
-              <input type="radio" name="privacy" value="private" className="mr-2 h-5 w-5" />
+              <input
+                type="radio"
+                name="privacy"
+                value="private"
+                checked={privacySetting === 'private'}
+                onChange={() => setPrivacySetting('private')}
+                className="mr-2 h-5 w-5"
+              />
               Private
             </label>
             <label className="text-[#2B2B2B] flex items-center">
-              <input type="radio" name="privacy" value="public" className="mr-2 h-5 w-5" />
+              <input
+                type="radio"
+                name="privacy"
+                value="public"
+                checked={privacySetting === 'public'}
+                onChange={() => setPrivacySetting('public')}
+                className="mr-2 h-5 w-5"
+              />
               Public
             </label>
           </div>
@@ -96,14 +183,26 @@ const Modal: React.FC<ModalProps> = ({ isVisible, onClose }) => {
         {/* Submit/Cancel Buttons */}
         <div className="flex justify-end space-x-4 mt-6">
           <button
-            className="bg-[#7E7E7E] text-white rounded-full px-8 py-2"
-            onClick={handleClose} // Use handleClose to trigger the smooth close
+            className="bg-[#69369B] rounded-full px-8 py-2"
+            onClick={async () => {
+              const formData = new FormData();
+              formData.append('name', projectName);
+              formData.append('description', projectDescription);
+              formData.append('privacy', privacySetting);
+              formData.append('collaborators', JSON.stringify(collaborators));
+
+              try {
+                await createProject(formData, setError);
+                handleClose(); // Close the modal on success
+              } catch (err) {
+                console.error(err);
+              }
+            }}
+            disabled={!projectName || !projectDescription} // Disable if required fields are empty
           >
-            Cancel
-          </button>
-          <button className="bg-[#69369B] rounded-full px-8 py-2">
             Create Project
           </button>
+
         </div>
       </div>
     </div>

@@ -8,6 +8,8 @@ interface DocumentModalProps {
 
 const DocumentModal: React.FC<DocumentModalProps> = ({ isVisible, onClose }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [nameField, setNameField] = useState('');
+  
 
   React.useEffect(() => {
     if (isVisible) {
@@ -18,8 +20,8 @@ const DocumentModal: React.FC<DocumentModalProps> = ({ isVisible, onClose }) => 
   }, [isVisible]);
 
   const handleClose = () => {
-    setIsModalOpen(false); // Trigger closing transition
-    setTimeout(onClose, 300); // Wait for the transition to complete before unmounting
+    setIsModalOpen(false); 
+    setTimeout(onClose, 300); 
   };
 
   return isVisible ? (
