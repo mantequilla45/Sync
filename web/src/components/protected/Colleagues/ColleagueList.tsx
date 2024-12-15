@@ -29,7 +29,7 @@ const ColleagueList: React.FC<ColleagueListProps> = ({ colleagues, onCardClick }
 
     return (
         <div className="flex flex-col text-[#2b2b2b]">
-            <div className="flex flex-wrap gap-[30px] mt-7 text-[#2b2b2b] cursor-pointer">
+            <div className="flex flex-wrap gap-[30px] text-[#2b2b2b] cursor-pointer">
                 {colleagues.map((colleague) => (
                     <div
                         key={colleague.uid}

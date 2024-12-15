@@ -39,7 +39,7 @@ const ColleaguePage = async () => {
                 </h1>
             </div>
             <div className="flex flex-row rounded-2xl shadow-lg mx-16 gap-[50px] mb-16 bg-white px-[150px] py-[70px]">
-                <div className="w-3/4">
+                <div className="w-full">
                     <AddColleaguesForm />
                     <h2 className="text-[#2b2b2b]">Your Colleagues</h2>
                     {colleagues.length === 0 ? (
