@@ -24,7 +24,7 @@ const ColleagueDetails = ({ colleagues }: ColleagueDetailsProps) => {
     };
 
     return (
-        <div className="flex">
+        <div className="flex mt-5">
             <div className="w-3/4">
                 <ColleagueList colleagues={colleagues} onCardClick={handleCardClick} />
             </div>

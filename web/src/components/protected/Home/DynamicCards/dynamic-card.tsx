@@ -4,8 +4,7 @@ import React from 'react';
 import { useRouter } from 'next/navigation';
 import { FaProjectDiagram } from "react-icons/fa";
 import { DocumentData } from 'firebase-admin/firestore';
-
-
+import Image from 'next/image';
 
 interface DynamicCardsProps {
   doc: DocumentData;
@@ -30,7 +29,13 @@ export const DynamicCards: React.FC<DynamicCardsProps> = ({ doc }) => {
         onClick={handleCardClick}
       >
         <div className="absolute inset-0 flex items-center justify-center text-black">
-          {doc.title}
+          <Image
+            src="/svgs/document-icon.svg"
+            alt="About Us"
+            width={100}
+            height={100}
+            priority
+          />
         </div>
       </button>
       {/* Icon and Project Title */}
