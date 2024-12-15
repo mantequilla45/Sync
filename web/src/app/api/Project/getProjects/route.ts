@@ -1,7 +1,7 @@
 import { db } from "@/lib/Firebase/_index";
 import { DocumentReference, DocumentData } from "firebase-admin/firestore";
 
-async function getProjectRolesWithProjects(projectRoleUIDs: DocumentReference<DocumentData>[]): Promise<any[]> {
+async function getProjectDetails(projectRoleUIDs: DocumentReference<DocumentData>[]): Promise<any[]> {
   try {
     return await Promise.all(
       projectRoleUIDs.map(async (roleRef) => {
@@ -21,18 +21,17 @@ async function getProjectRolesWithProjects(projectRoleUIDs: DocumentReference<Do
 
         const projectData = projectDoc.data();
 
+        // Return only the necessary fields
         return {
-          roleId: roleRef.id,
           projectId: projectRef.id,
-          projectFields: {
-            ...projectData,
-          },
+          title: projectData?.title || "Untitled Project",
+          description: projectData?.description || "No description available",
         };
       })
     );
   } catch (error) {
-    console.error("Error retrieving project roles with projects:", error);
-    throw new Error("Failed to retrieve project roles with projects");
+    console.error("Error retrieving project details:", error);
+    throw new Error("Failed to retrieve project details");
   }
 }
 
@@ -56,11 +55,11 @@ export async function GET(req: Request) {
       return new Response(JSON.stringify({ error: 'Project roles not found' }), { status: 404 });
     }
 
-    const projectRolesWithProjects = await getProjectRolesWithProjects(projectRoleUIDs);
+    const projectDetails = await getProjectDetails(projectRoleUIDs);
 
-    return new Response(JSON.stringify({ projectRoles: projectRolesWithProjects }), { status: 200 });
+    return new Response(JSON.stringify({ projects: projectDetails }), { status: 200 });
   } catch (error) {
-    console.error("Error fetching project roles with projects:", error);
-    return new Response(JSON.stringify({ error: 'Failed to fetch project roles with projects' }), { status: 500 });
+    console.error("Error fetching project details:", error);
+    return new Response(JSON.stringify({ error: 'Failed to fetch project details' }), { status: 500 });
   }
 }
