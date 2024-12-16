@@ -73,6 +73,7 @@ const DocumentModal: React.FC<DocumentModalProps> = ({ isVisible, onClose }) => 
       if (response.ok) {
         console.log('Document created successfully:', result);
         handleClose();
+        window.location.reload();
       } else {
         setError(result.error || 'Something went wrong');
       }
