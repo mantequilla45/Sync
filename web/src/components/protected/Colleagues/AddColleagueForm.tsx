@@ -17,6 +17,7 @@ const AddColleaguesForm: React.FC = () => {
             console.log(uid);
             const data = await addColleagues(uid);
             setUid('');
+            window.location.reload();
         } catch (err) {
             setError('Failed to add colleague. Please try again.');
             console.error(err);
