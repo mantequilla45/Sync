@@ -61,10 +61,11 @@ async function fetchColleagueBaseDetails(uid: string): Promise<Colleague | null>
         if (userCredSnapshot.exists) {
             const userCredData = userCredSnapshot.data();
             displayName = userCredData?.name;
+            displayPicture = userCredData?.displayPicture
         }
 
         displayName = displayName || user.displayName || `User (${user.email})`
-        displayPicture = user.photoURL || 'https://firebasestorage.googleapis.com/v0/b/hostingtest-aadc2.appspot.com/o/profile-pictures%2FVFk3hnh3nSXTAKbASUWOxkJMexR2%2FVFk3hnh3nSXTAKbASUWOxkJMexR2.png?alt=media&token=1b559886-5925-450a-98bd-e7e93d69a301'
+        displayPicture = displayPicture || user.photoURL || 'https://firebasestorage.googleapis.com/v0/b/hostingtest-aadc2.appspot.com/o/profile-pictures%2FVFk3hnh3nSXTAKbASUWOxkJMexR2%2FVFk3hnh3nSXTAKbASUWOxkJMexR2.png?alt=media&token=1b559886-5925-450a-98bd-e7e93d69a301'
 
         return {
             uid: user.uid,

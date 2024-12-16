@@ -4,14 +4,42 @@ import { usePathname } from "next/navigation";
 import HamburgerMenu from "./side-bar";
 import SearchInput from "./search-bar";
 import ProfileCard from "./profilecard";
-import NotificationWall from "./notificationWall";
+import NotificationWall from "./notificationwall";
 import { GoBellFill } from "react-icons/go";
+import { useAuth } from "@/services/Auth/AuthContext";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "@/lib/Firebase/FirebaseClient";
 
 const Header: React.FC = () => {
   const pathname = usePathname();
   const isLanding = pathname === "/";
   const isSignUpPage = pathname === "/signup";
   const [activeCard, setActiveCard] = useState<string | null>(null);
+  const { user } = useAuth();
+  const [displayPicture, setDisplayPicture] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchProfilePicture = async () => {
+      if (!user) return;
+
+      try {
+        const userDocRef = doc(db, "userCredentials", user.uid);
+        const userDocSnapshot = await getDoc(userDocRef);
+
+        if (userDocSnapshot.exists()) {
+          const data = userDocSnapshot.data();
+          setDisplayPicture(
+            data.displayPicture ||
+              "https://firebasestorage.googleapis.com/v0/b/hostingtest-aadc2.appspot.com/o/profile-pictures%2Fdefault.png"
+          ); // Default profile picture if none is set
+        }
+      } catch (error) {
+        console.error("Error fetching profile picture:", error);
+      }
+    };
+
+    fetchProfilePicture();
+  }, [user]);
 
   const toggleCard = (cardType: string) => {
     setActiveCard((prevState) => (prevState === cardType ? null : cardType));
@@ -87,7 +115,7 @@ const Header: React.FC = () => {
                 <div className="flex items-center w-full ml-6">
                   <a href="/home" className="flex items-center">
                     <img
-                      src="https://firebasestorage.googleapis.com/v0/b/hostingtest-aadc2.appspot.com/o/website-resources%2FSync%20Logo%2FSync%20Logo%20White%20Large.png?alt=media&token=7551d58d-337b-4106-b5da-9b23260c1d99"
+                      src={"https://firebasestorage.googleapis.com/v0/b/hostingtest-aadc2.appspot.com/o/website-resources%2FSync%20Logo%2FSync%20Logo%20White%20Large.png?alt=media&token=7551d58d-337b-4106-b5da-9b23260c1d99"}
                       alt="Logo"
                       className="w-[25px] h-[25px]"
                     />
@@ -121,7 +149,7 @@ const Header: React.FC = () => {
                     onClick={() => toggleCard("profile")}
                   >
                     <img
-                      src="https://firebasestorage.googleapis.com/v0/b/hostingtest-aadc2.appspot.com/o/profile-pictures%2FVFk3hnh3nSXTAKbASUWOxkJMexR2%2FVFk3hnh3nSXTAKbASUWOxkJMexR2.png?alt=media&token=1b559886-5925-450a-98bd-e7e93d69a301"
+                      src={displayPicture || ''}
                       alt="Profile"
                       className="w-[36px] h-[36px] rounded-full object-cover"
                     />

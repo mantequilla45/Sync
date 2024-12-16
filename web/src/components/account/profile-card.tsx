@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { MdAlternateEmail } from 'react-icons/md';
 import { AiFillEdit } from 'react-icons/ai';
-import { FaUserCircle, FaGenderless, FaCalendarAlt, FaCheck } from 'react-icons/fa';
+import { FaUserCircle, FaGenderless, FaCalendarAlt, FaCheck, FaCross } from 'react-icons/fa';
 import { useAuth } from '@/services/Auth/AuthContext';
 import { collection, doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
-import { db } from '@/lib/Firebase/FirebaseClient';
+import { db, storage } from '@/lib/Firebase/FirebaseClient';
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
+import { FaXmark } from 'react-icons/fa6';
 
 interface ProfileCardProps {
   name: string,
@@ -19,6 +21,18 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ isEditing, toggleEditing }) =
   const [email, setEmail] = useState('');
   const [gender, setGender] = useState(''); 
   const [dateOfBirth, setDateOfBirth] = useState(''); 
+  const [displayPicture, setDisplayPicture] = useState('');
+  const [file, setFile] = useState<File | null>(null);
+  const [newPicture, setNewPicture] = useState<File | null>(null); // For newly selected file
+  const [previewPicture, setPreviewPicture] = useState<string | null>(null); // For local preview
+  const [originalData, setOriginalData] = useState({
+    name: '',
+    gender: '',
+    dateOfBirth: '',
+    displayPicture: null as string | null,
+  });
+  const [currentData, setCurrentData] = useState({ ...originalData }); // Clone for editable data
+
 
   // Fetch user data from Firestore
   useEffect(() => {
@@ -43,6 +57,18 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ isEditing, toggleEditing }) =
           setName(userCredData.name || '');
           setGender(userCredData.gender || '');
           setDateOfBirth(userCredData.dateOfBirth || '');
+          setDisplayPicture(
+            userCredData.displayPicture || 'https://firebasestorage.googleapis.com/v0/b/hostingtest-aadc2.appspot.com/o/profile-pictures%2Fdefault.png'
+          );
+          setPreviewPicture(userCredData.displayPicture || null);
+          const fetchedData = {
+            name: userCredData.name,
+            gender: userCredData.gender,
+            dateOfBirth: userCredData.dateOfBirth,
+            displayPicture: userCredData.displayPicture
+          };
+          setOriginalData(fetchedData);
+          setCurrentData(fetchedData);
         }
       } catch (error) {
         console.error("Error fetching user data:", error);
@@ -52,21 +78,43 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ isEditing, toggleEditing }) =
     fetchUserData();
   }, [user]);
 
-  // Save updated profile data to Firestore
   const saveProfile = async () => {
-    if (!user) return; // No user logged in
+    if (!user) return;
     try {
       const userDocRef = doc(db, "userCredentials", user.uid);
-      await setDoc(userDocRef, {
-        name,
-        gender,
-        dateOfBirth,
-      }, { merge: true });
+      let uploadedImageUrl = displayPicture; // Default to current picture URL if no new image
 
-      toggleEditing(); // Exit editing mode after saving
-      
+      // If a new picture is selected, upload it to Firebase Storage
+      if (newPicture) {
+        const storageRef = ref(storage, `profile-pictures/${user.uid}`);
+        await uploadBytes(storageRef, newPicture); // Upload the image file
+        uploadedImageUrl = await getDownloadURL(storageRef); // Get the public URL of the uploaded image
+      }
+
+      await setDoc(userDocRef, currentData, { merge: true })
+      setOriginalData(currentData);
+      await setDoc(userDocRef, {
+        displayPicture: uploadedImageUrl
+      }, {merge: true});
+
+      setDisplayPicture(uploadedImageUrl); // Update the local state with the new image URL
+      toggleEditing(); // Exit editing mode
     } catch (error) {
-      console.error("Error updating profile:", error);
+      console.error("Error saving profile:", error);
+    }
+  };
+
+  const cancelChanges = () => {
+    setPreviewPicture(displayPicture); // Reset to the original image
+    setCurrentData(originalData)
+    toggleEditing(); // Exit editing mode
+  };
+
+  const handlePictureChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setNewPicture(file); // Store selected file
+      setPreviewPicture(URL.createObjectURL(file)); // Generate local preview
     }
   };
 
@@ -106,19 +154,18 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ isEditing, toggleEditing }) =
           <div className="flex flex-col items-center">
             <div className="w-[200px] h-[200px] bg-[#D9D9D9] border-[2px] border-[#926AB2] rounded-full relative">
               <div className="inset-0 overflow-hidden rounded-full">
-                <img
-                  src="https://firebasestorage.googleapis.com/v0/b/hostingtest-aadc2.appspot.com/o/profile-pictures%2FVFk3hnh3nSXTAKbASUWOxkJMexR2%2FVFk3hnh3nSXTAKbASUWOxkJMexR2.png?alt=media&token=1b559886-5925-450a-98bd-e7e93d69a301"
+              <img
+                  src={previewPicture || displayPicture || 'default-image-url'}
                   alt="Profile"
                   className="w-full h-full object-cover"
                 />
-                {/* Conditionally render the edit button for the profile picture */}
                 {isEditing && (
-                  <button
-                    className="absolute bottom-3 right-3 w-12 h-12 rounded-full bg-gradient-to-t from-[#A01887] via-[#C047DD] to-[#94C3E6] border-[1px] border-[#7F2CBF] flex justify-center items-center focus:outline-none z-10"
-                    onClick={toggleEditing}
-                  >
-                    <AiFillEdit className="text-black w-6 h-6" />
-                  </button>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    className="absolute inset-0 opacity-0 cursor-pointer"
+                    onChange={handlePictureChange} // Handle picture change
+                  />
                 )}
               </div>
             </div>
@@ -141,16 +188,22 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ isEditing, toggleEditing }) =
             >
               <FaCheck />
             </button>
+            <button
+              onClick={cancelChanges}
+              className={`text-white w-[41px] h-[41px] p-3 bg-[#7E7E7E] cursor-pointer rounded-full hover:bg-[#9e9e9e] ${isEditing ? 'block' : 'hidden'}`}
+            >
+              <FaXmark />
+            </button>
           </div>
         </div>
       </div>
       <div className="w-full flex flex-row mt-6 gap-[25px] px-7">
-        {renderInput(<FaUserCircle />, "Name", name, (e) => setName(e.target.value))}
+        {renderInput(<FaUserCircle />, "Name", currentData.name, (e) => setCurrentData({ ...currentData, name: e.target.value }))}
         {renderInput(<MdAlternateEmail />, "Email", email, () => {}, true)}
       </div>
       <div className="w-full flex flex-row mt-6 gap-[25px] px-7">
-        {renderInput(<FaGenderless />, "Gender", gender, (e) => setGender(e.target.value))}
-        {renderInput(<FaCalendarAlt />, "Date of Birth", dateOfBirth, (e) => setDateOfBirth(e.target.value))}
+        {renderInput(<FaGenderless />, "Gender", currentData.gender, (e) => setCurrentData({ ...currentData, gender: e.target.value }))}
+        {renderInput(<FaCalendarAlt />, "Date of Birth", currentData.dateOfBirth, (e) => setCurrentData({ ...currentData, dateOfBirth: e.target.value }))}
       </div>
     </div>
   );
