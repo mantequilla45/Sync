@@ -7,6 +7,7 @@ import { collection, doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
 import { db, storage } from '@/lib/Firebase/FirebaseClient';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { FaXmark } from 'react-icons/fa6';
+import Image from 'next/image';
 
 interface ProfileCardProps {
   name: string,
@@ -157,7 +158,9 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ isEditing, toggleEditing }) =
               <img
                   src={previewPicture || displayPicture || 'default-image-url'}
                   alt="Profile"
-                  className="w-full h-full object-cover"
+                  width={500} 
+                  height={500} // Specify the height (pixels)
+                  className="object-cover"
                 />
                 {isEditing && (
                   <input

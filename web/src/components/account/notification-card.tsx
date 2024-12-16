@@ -19,7 +19,7 @@ const NotificationCard = () => {
       <div className="flex flex-row px-5 mb-10">
         <div className="flex flex-col w-1/2">
           <h1 className="font-semibold text-xl">Email Notification</h1>
-          <p className="text-lg font-light">Get emails to find out what's going when you're not online. You can turn this off.</p>
+          <p className="text-lg font-light">Get emails to find out what&apos;s going when you&apos;re not online. You can turn this off.</p>
           
           <div className="mt-4 mx-4 space-y-5">
             <div className="flex flex-row gap-5">
@@ -77,7 +77,7 @@ const NotificationCard = () => {
 
         <div className="flex flex-col w-1/2">
           <h1 className="font-semibold text-xl">Push Notification</h1>
-          <p className="text-lg font-light">Get push notification in-app to find out what's going on when you're online</p>
+          <p className="text-lg font-light">Get push notification in-app to find out what&apos;s going on when you&apos;re online</p>
           <div className="mt-4 mx-4 space-y-5">
             <div className="flex flex-row gap-5">
               <div className=""> 

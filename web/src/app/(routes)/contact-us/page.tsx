@@ -56,7 +56,7 @@ const ContactUs = () => {
                     </div>
                     <div className="flex-[1.55] py-16"> 
                         <Image
-                            src="https://firebasestorage.googleapis.com/v0/b/hostingtest-aadc2.appspot.com/o/website-resources%2Fwebsite-pictures%2Fcontact-us1.png?alt=media&token=f7d17230-5561-447b-ab0d-27f02bace754"
+                            src="/resources/images/contactUs.svg"
                             alt="Contact Us"
                             width={3000}
                             height={3000}

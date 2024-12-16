@@ -9,7 +9,7 @@ import { FaDiagramProject } from "react-icons/fa6";
 import { IoIosInformationCircle } from "react-icons/io";
 import { IoMail } from "react-icons/io5";
 import { FaUserFriends } from "react-icons/fa";
-
+import Image from 'next/image';
 
 
 const HamburgerMenu: React.FC = () => {
@@ -45,10 +45,11 @@ const HamburgerMenu: React.FC = () => {
             <RxHamburgerMenu className="text-2xl" />
           </button>
           <a href="/home" className="flex items-center">
-                      <img
+                      <Image
                         src="https://firebasestorage.googleapis.com/v0/b/hostingtest-aadc2.appspot.com/o/website-resources%2FSync%20Logo%2FSync%20Logo%20White%20Large.png?alt=media&token=7551d58d-337b-4106-b5da-9b23260c1d99"
-                        alt="Description of the image"
-                        className="w-[25px] h-[25px] "
+                        alt="Logo"
+                        width = {25}
+                        height = {25}
                       />
                       <h1 className="text-2xl font-bold ml-[7px]">Sync</h1>
                     </a>

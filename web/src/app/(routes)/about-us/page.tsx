@@ -41,7 +41,7 @@ const BlankPage = () => {
             </div>
             <div className="flex-1">
               <Image
-                src="/svgs/about-us1.svg"
+                src="/resources/images/about-us1.svg"
                 alt="About Us"
                 width={5000}
                 height={3000}
@@ -52,7 +52,7 @@ const BlankPage = () => {
           <div className="flex flex-row space-x-2">
             <div className="flex-1">
                 <Image
-                  src="/svgs/about-us2.svg"
+                  src="/resources/images/about-us2.svg"
                   alt="About Us"
                   width={5000}
                   height={3000}
