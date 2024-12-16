@@ -182,6 +182,12 @@ const Modal: React.FC<ModalProps> = ({ isVisible, onClose }) => {
 
         {/* Submit/Cancel Buttons */}
         <div className="flex justify-end space-x-4 mt-6">
+         <button
+            className="bg-[#7E7E7E] text-white rounded-full px-8 py-2"
+            onClick={handleClose}
+          >
+            Cancel
+          </button>
           <button
             className="bg-[#69369B] rounded-full px-8 py-2"
             onClick={async () => {

@@ -3,11 +3,13 @@ import { MdAlternateEmail } from 'react-icons/md';
 import { AiFillEdit } from 'react-icons/ai';
 import { FaUserCircle, FaGenderless, FaCalendarAlt, FaCheck } from 'react-icons/fa';
 import { useAuth } from '@/services/Auth/AuthContext';
-import { doc, getDoc, updateDoc } from 'firebase/firestore';
+import { collection, doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
 import { db } from '@/lib/Firebase/FirebaseClient';
 import Image from 'next/image';
 
 interface ProfileCardProps {
+  name: string,
+  email: string,
   isEditing: boolean;
   toggleEditing: () => void;
 }
@@ -25,14 +27,23 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ isEditing, toggleEditing }) =
       if (!user) return; // No user logged in
       try {
         const userDocRef = doc(db, "users", user.uid); // Reference to the user's document
-        const userSnapshot = await getDoc(userDocRef);
+        const userCredDocRef = doc(db, 'userCredentials', user.uid)
+
+        const [userSnapshot, userCredSnapshot] = await Promise.all([
+          getDoc(userDocRef),
+          getDoc(userCredDocRef)
+        ])
 
         if (userSnapshot.exists()) {
           const userData = userSnapshot.data();
-          setName(userData.name || '');
           setEmail(userData.email || '');
-          setGender(userData.gender || '');
-          setDateOfBirth(userData.dateOfBirth || '');
+        }
+
+        if (userCredSnapshot.exists()) {
+          const userCredData = userCredSnapshot.data();
+          setName(userCredData.name || '');
+          setGender(userCredData.gender || '');
+          setDateOfBirth(userCredData.dateOfBirth || '');
         }
       } catch (error) {
         console.error("Error fetching user data:", error);
@@ -46,14 +57,15 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ isEditing, toggleEditing }) =
   const saveProfile = async () => {
     if (!user) return; // No user logged in
     try {
-      const userDocRef = doc(db, "users", user.uid);
-      await updateDoc(userDocRef, {
+      const userDocRef = doc(db, "userCredentials", user.uid);
+      await setDoc(userDocRef, {
         name,
-        email,
         gender,
         dateOfBirth,
-      });
+      }, { merge: true });
+
       toggleEditing(); // Exit editing mode after saving
+      
     } catch (error) {
       console.error("Error updating profile:", error);
     }
@@ -63,7 +75,8 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ isEditing, toggleEditing }) =
     icon: JSX.Element, 
     placeholder: string, 
     value: string, 
-    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
+    readOnly: boolean = false
   ) => (
     <div className="flex w-[50%] flex-col">
       <h2 className="text-xl text-[#69369B] font-semibold mb-3 ml-[10px]">{placeholder}</h2>
@@ -127,7 +140,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ isEditing, toggleEditing }) =
               className={`text-white w-[41px] h-[41px] p-2.5 bg-[#69369B] cursor-pointer rounded-full hover:bg-[#8846C9] ${isEditing ? 'hidden' : 'block'}`}
             />
             <button
-              onClick={toggleEditing}
+              onClick={saveProfile}
               className={`text-white w-[41px] h-[41px] p-3 bg-[#00cc9a] cursor-pointer rounded-full hover:bg-[#009e74] ${isEditing ? 'block' : 'hidden'}`}
             >
               <FaCheck />
@@ -137,7 +150,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ isEditing, toggleEditing }) =
       </div>
       <div className="w-full flex flex-row mt-6 gap-[25px] px-7">
         {renderInput(<FaUserCircle />, "Name", name, (e) => setName(e.target.value))}
-        {renderInput(<MdAlternateEmail />, "Email", email, (e) => setEmail(e.target.value))}
+        {renderInput(<MdAlternateEmail />, "Email", email, () => {}, true)}
       </div>
       <div className="w-full flex flex-row mt-6 gap-[25px] px-7">
         {renderInput(<FaGenderless />, "Gender", gender, (e) => setGender(e.target.value))}

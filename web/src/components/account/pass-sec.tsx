@@ -23,7 +23,7 @@ const PasswordSecurity = () => {
         </div>
         <div className="">
           <h3 className="font-semibold text-lg text-gray-800">Two-Factor Authentication (2FA)</h3>
-          <p className="text-sm text-gray-600">Add an extra layer of security by enabling 2FA. You&apos;ll need both your password and a secondary verification code to access your account.</p>
+          <p className="text-sm text-gray-600">Add an extra layer of security by enabling 2FA. You{"'"}ll need both your password and a secondary verification code to access your account.</p>
           <div className="flex justify-between items-center mt-2">
             <span className="text-lg">Enable 2FA</span>
             <button
@@ -38,7 +38,7 @@ const PasswordSecurity = () => {
           <h3 className="font-semibold text-lg text-gray-800">Security Tips</h3>
           <ul className="list-disc pl-5 text-sm text-gray-600">
             <li>Use a unique password for each account.</li>
-            <li>Don&apos;t share your password with anyone.</li>
+            <li>Don{"'"}t share your password with anyone.</li>
             <li>Enable multi-factor authentication wherever possible.</li>
             <li>Be cautious of phishing attempts and suspicious links.</li>
           </ul>
