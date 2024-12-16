@@ -30,7 +30,7 @@ export const DynamicCards: React.FC<DynamicCardsProps> = ({ doc }) => {
       >
         <div className="absolute inset-0 flex items-center justify-center text-black">
           <Image
-            src="/svgs/document-icon.svg"
+            src="/resources/icons/document-icon.svg"
             alt="About Us"
             width={100}
             height={100}

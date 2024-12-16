@@ -47,7 +47,7 @@ export default function NotFound() {
           </div>
           <div className="flex items-center">
             <Image
-              src="/svgs/NotFound.svg"
+              src="/resources/images/NotFound.svg"
               alt="404 Not Found"
               width={650}
               height={650}

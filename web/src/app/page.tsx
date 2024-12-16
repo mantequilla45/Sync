@@ -2,6 +2,7 @@ import { FaFacebook, FaInstagram, FaGithub } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import Background from '../components/landing/background';
 import LoginForm from '@/components/landing/LoginForm';
+import Image from "next/image";
 
 const HomePage: React.FC = () => {
   return (
@@ -10,10 +11,11 @@ const HomePage: React.FC = () => {
       <Background />
       <div className="relative z-10 min-h-screen flex flex-col">
         <a className="flex items-center justify-center w-full h-[65px]" href="/">
-          <img
+          <Image
             src="https://firebasestorage.googleapis.com/v0/b/hostingtest-aadc2.appspot.com/o/website-resources%2FSync%20Logo%2FSync%20Logo%20White%20Large.png?alt=media&token=7551d58d-337b-4106-b5da-9b23260c1d99"
             alt="Landing Logo"
-            className="w-[30px] h-[30px]"
+            width = {30}
+            height = {30}
           />
           <h1 className="text-3xl font-semibold ml-[7px]">Sync</h1>
         </a>
@@ -22,10 +24,11 @@ const HomePage: React.FC = () => {
             <LoginForm />
             <div className="w-full lg:w-[80%] pt-5 flex flex-col text-center lg:text-left">
               <div className="flex flex-col lg:flex-row items-center mb-6 gap-4">
-                <img
+                <Image
                   src="https://firebasestorage.googleapis.com/v0/b/hostingtest-aadc2.appspot.com/o/website-resources%2FSync%20Logo%2FSync%20Logo%20White%20Large.png?alt=media&token=7551d58d-337b-4106-b5da-9b23260c1d99"
-                  alt="Description of the image"
-                  className="w-[50px] h-[50px] "
+                  alt="Sync Logo"
+                  width = {30}
+                  height = {30}
                 />
                 <h1 className="text-4xl md:text-6xl font-semibold text-white font-poppins">Sync</h1>
               </div>

@@ -46,7 +46,7 @@ const BlankPage = () => {
             </div>
             <div className="w-[50%] flex items-center">
               <Image
-                src="/svgs/images/aboutsync.svg"
+                src="/resources/images/aboutsync.svg"
                 alt="About Sync"
                 width={5000}
                 height={3000}
@@ -57,7 +57,7 @@ const BlankPage = () => {
           <div className="flex flex-row gap-[100px]">
             <div className="w-[50%] flex items-center">
                 <Image
-                  src="/svgs/images/keyfeatures.svg"
+                  src="/resources/images/keyfeatures.svg"
                   alt="Key Features"
                   width={5000}
                   height={3000}
@@ -120,7 +120,7 @@ const BlankPage = () => {
             </div>
             <div className="w-[40%] flex items-center">
               <Image
-                src="/svgs/images/whySync.svg"
+                src="/resources/images/whySync.svg"
                 alt="About"
                 width={5000}
                 height={3000}

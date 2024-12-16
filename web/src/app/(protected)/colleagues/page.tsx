@@ -45,10 +45,11 @@ const ColleaguePage = async () => {
                     {colleagues.length === 0 ? (
                         <div className="flex h-full justify-center items-center">
                             <Image
-                                src="/gifs/loading.gif"
+                                src="/resources/icons/loading.gif"
                                 alt="Loading..."
                                 width={160}
                                 height={160}
+                                unoptimized
                             />
                         </div>
                     ) : (

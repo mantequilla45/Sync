@@ -2,6 +2,8 @@ import React, { useEffect, useState, useRef } from 'react';
 import { DateRange, RangeKeyDict } from 'react-date-range';
 import 'react-date-range/dist/styles.css'; // Main CSS file
 import 'react-date-range/dist/theme/default.css'; // Theme CSS file
+import Image from 'next/image';
+
 
 interface TaskModalProps {
   isOpen: boolean;
@@ -137,10 +139,11 @@ const TaskModal: React.FC<TaskModalProps> = ({
         <div className="flex items-center justify-between">
           <h2 className="text-xl text-[#000000] font-semibold">Add Task</h2>
           <div className="flex items-center mr-5">
-            <img
+            <Image
               src="https://firebasestorage.googleapis.com/v0/b/hostingtest-aadc2.appspot.com/o/website-resources%2FSync%20Logo%2FSync%20Logo%20Purple%20Large.png?alt=media&token=dc1a14e5-6f1f-400e-ac86-2b82b624d079"
               alt="Sync Logo"
-              className="w-[25px] h-[25px]"
+              width = {25}
+              height = {25}
             />
             <h1 className="text-2xl font-bold text-[#5D1E8C] ml-[7px]">Sync</h1>
           </div>
