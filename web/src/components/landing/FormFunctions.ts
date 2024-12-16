@@ -45,7 +45,7 @@ export const register = async (
       password
     );
     await loginWithCredentials(await userCredential.user.getIdToken(), setError);
-    await setUpAccountInFireStore(await userCredential.user.getIdToken(), setError);
+    await setUpAccountInFireStore(await userCredential.user.getIdToken(), email, setError);
   } catch (e) {
     setError("Failed to register. Please try again.");
     console.error("Error registering:", e);

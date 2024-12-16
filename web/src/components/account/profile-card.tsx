@@ -1,22 +1,69 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { MdAlternateEmail } from 'react-icons/md';
 import { AiFillEdit } from 'react-icons/ai';
 import { FaUserCircle, FaGenderless, FaCalendarAlt, FaCheck } from 'react-icons/fa';
+import { useAuth } from '@/services/Auth/AuthContext';
+import { doc, getDoc, updateDoc } from 'firebase/firestore';
+import { db } from '@/lib/Firebase/FirebaseClient';
 
 interface ProfileCardProps {
-  name: string;
-  email: string;
   isEditing: boolean;
   toggleEditing: () => void;
 }
 
-const ProfileCard: React.FC<ProfileCardProps> = ({ name: initialName, email: initialEmail, isEditing, toggleEditing }) => {
-  const [name, setName] = useState(initialName);
-  const [email, setEmail] = useState(initialEmail);
-  const [gender, setGender] = useState(""); // State for gender
-  const [dateOfBirth, setDateOfBirth] = useState(""); // State for date of birth
+const ProfileCard: React.FC<ProfileCardProps> = ({ isEditing, toggleEditing }) => {
+  const { user } = useAuth(); // Get the logged-in user
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [gender, setGender] = useState(''); 
+  const [dateOfBirth, setDateOfBirth] = useState(''); 
 
-  const renderInput = (icon: JSX.Element, placeholder: string, value: string, onChange: (e: React.ChangeEvent<HTMLInputElement>) => void) => (
+  // Fetch user data from Firestore
+  useEffect(() => {
+    const fetchUserData = async () => {
+      if (!user) return; // No user logged in
+      try {
+        const userDocRef = doc(db, "users", user.uid); // Reference to the user's document
+        const userSnapshot = await getDoc(userDocRef);
+
+        if (userSnapshot.exists()) {
+          const userData = userSnapshot.data();
+          setName(userData.name || '');
+          setEmail(userData.email || '');
+          setGender(userData.gender || '');
+          setDateOfBirth(userData.dateOfBirth || '');
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+
+    fetchUserData();
+  }, [user]);
+
+  // Save updated profile data to Firestore
+  const saveProfile = async () => {
+    if (!user) return; // No user logged in
+    try {
+      const userDocRef = doc(db, "users", user.uid);
+      await updateDoc(userDocRef, {
+        name,
+        email,
+        gender,
+        dateOfBirth,
+      });
+      toggleEditing(); // Exit editing mode after saving
+    } catch (error) {
+      console.error("Error updating profile:", error);
+    }
+  };
+
+  const renderInput = (
+    icon: JSX.Element, 
+    placeholder: string, 
+    value: string, 
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+  ) => (
     <div className="flex w-[50%] flex-col">
       <h2 className="text-xl text-[#69369B] font-semibold mb-3 ml-[10px]">{placeholder}</h2>
       <div className="flex items-center">
@@ -38,7 +85,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ name: initialName, email: ini
       </div>
     </div>
   );
-
+  
   return (
     <div className="flex-1 bg-white rounded-xl shadow-md p-[40px] pb-20 relative">
       <div className="flex flex-row justify-between">
@@ -62,7 +109,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ name: initialName, email: ini
                 )}
               </div>
             </div>
-            <h2 className="text-md text-[#888787] font-light mt-[15px]">#hakdog</h2>
+            <h2 className="text-md text-[#888787] font-light mt-[15px]"><strong>UID:</strong> {user?.uid}</h2>
           </div>
           <div className="flex flex-col ml-10 h-[200px] justify-center mt-[-40px]">
             <h2 className="text-3xl text-[#69369B] font-bold">Profile Photo</h2>

@@ -10,6 +10,7 @@ import { useAuth } from "../../services/Auth/AuthContext";
 const LoginForm: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState("");
   const [isLogin, setIsLogin] = useState(true);
   const [isTransitioning, setIsTransitioning] = useState(false);
@@ -20,7 +21,7 @@ const LoginForm: React.FC = () => {
       login(email, password, setError);
     } else {
       e.preventDefault();
-      register(email, password, password, setError);
+      register(email, password, confirmPassword, setError);
     }
   };
 
@@ -176,10 +177,13 @@ const LoginForm: React.FC = () => {
                   <div className="relative">
                     <MdLockOutline className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500 text-lg" />
                       <input
-                        id="signup-password"
+                        id="signup-confirm-password"
                         type="password"
                         className="w-full pl-12 px-5 py-3 rounded-3xl bg-gray-100 text-gray-800 border border-gray-300 focus:outline-none focus:ring-0 focus:border-[#5A3E91]"
                         placeholder="Confirm Password"
+                        value={confirmPassword}
+                        onChange={(e)=> setConfirmPassword(e.target.value)}
+                        required
                       />
                     </div>
                   </div>
