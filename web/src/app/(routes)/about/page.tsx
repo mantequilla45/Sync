@@ -8,11 +8,11 @@ const BlankPage = () => {
       <div className="flex flex-col min-h-screen bg-[linear-gradient(45deg,_#82245C,_#81245C,_#732783,_#561C90,_#561C90,_#37249E,_#3D55B8)] text-white">
         <Header /> 
         <div className="px-[90px] mb-2">
-                <h1 className="text-sm text-white font-light">
-                    <a href="/home" className="text-white hover:text-gray-300">Home</a> / 
-                    <span className="text-[#F6F61E] ml-1">Website About</span>
-                </h1>
-            </div>
+            <h1 className="text-sm text-white font-light">
+                <a href="/home" className="text-white hover:text-gray-300">Home</a> / 
+                <span className="text-[#F6F61E] ml-1">Website About</span>
+            </h1>
+        </div>
         <div className="flex-grow space-y-[50px] bg-white rounded-2xl shadow-lg mx-16 px-[250px] py-[100px] mb-16">
           <div className="flex flex-row gap-[100px]">
             <div className="w-[50%] my-10">
@@ -24,11 +24,13 @@ const BlankPage = () => {
                 </div>
                   <div>
                     <div className="flex flex-row items-center gap-4">
-                    <img
-                        src="https://firebasestorage.googleapis.com/v0/b/hostingtest-aadc2.appspot.com/o/website-resources%2FSync%20Logo%2FSync%20Logo%20Purple%20Large.png?alt=media&token=dc1a14e5-6f1f-400e-ac86-2b82b624d079"
-                        alt="Description of the image"
-                        className="w-[70px] h-[70px] "
-                      />
+                    <Image
+                      src="https://firebasestorage.googleapis.com/v0/b/hostingtest-aadc2.appspot.com/o/website-resources%2FSync%20Logo%2FSync%20Logo%20Purple%20Large.png?alt=media&token=dc1a14e5-6f1f-400e-ac86-2b82b624d079"
+                      alt="Sync Logo Purple Large"
+                      width={70}
+                      height={70}
+                    />
+
                     <h2
                       className="text-7xl my-5 text-[#5D1E8C] font-[700]"
                       style={{ textShadow: "3px 3px 2px rgba(0, 0, 0, 0.2)" }}
@@ -44,8 +46,8 @@ const BlankPage = () => {
             </div>
             <div className="w-[50%] flex items-center">
               <Image
-                src="https://firebasestorage.googleapis.com/v0/b/hostingtest-aadc2.appspot.com/o/website-resources%2Fwebsite-pictures%2Fabout1.png?alt=media&token=3e3e48dc-bfff-4b1a-a5e2-6686e40cd530"
-                alt="About"
+                src="/svgs/images/aboutsync.svg"
+                alt="About Sync"
                 width={5000}
                 height={3000}
                 priority
@@ -55,7 +57,7 @@ const BlankPage = () => {
           <div className="flex flex-row gap-[100px]">
             <div className="w-[50%] flex items-center">
                 <Image
-                  src="https://firebasestorage.googleapis.com/v0/b/hostingtest-aadc2.appspot.com/o/website-resources%2Fwebsite-pictures%2Fkey-features.png?alt=media&token=bf20249d-f50c-43ab-b40f-74703830b95f"
+                  src="/svgs/images/keyfeatures.svg"
                   alt="Key Features"
                   width={5000}
                   height={3000}
@@ -118,7 +120,7 @@ const BlankPage = () => {
             </div>
             <div className="w-[40%] flex items-center">
               <Image
-                src="https://firebasestorage.googleapis.com/v0/b/hostingtest-aadc2.appspot.com/o/website-resources%2Fwebsite-pictures%2Fwhy%20not.png?alt=media&token=9ab253b8-205e-4b40-a5a3-a6641ecf85ff"
+                src="/svgs/images/whySync.svg"
                 alt="About"
                 width={5000}
                 height={3000}

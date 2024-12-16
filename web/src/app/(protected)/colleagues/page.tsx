@@ -4,7 +4,7 @@ import { getColleagues } from "@/components/protected/Colleagues/ColleagueFuncti
 import { headers } from "next/headers";
 import Header from "@/components/protected/_Layout/header";
 import ColleagueDetails from "@/components/protected/Colleagues/ColleagueDetails";
-
+import Image from "next/image";
 interface Colleague {
     uid: string;
     displayName: string;
@@ -44,10 +44,11 @@ const ColleaguePage = async () => {
                     <h2 className="text-[#2b2b2b]">Your Colleagues</h2>
                     {colleagues.length === 0 ? (
                         <div className="flex h-full justify-center items-center">
-                            <img
+                            <Image
                                 src="/gifs/loading.gif"
                                 alt="Loading..."
-                                className="w-40 h-40 mt-[-250px]"
+                                width={160}
+                                height={160}
                             />
                         </div>
                     ) : (

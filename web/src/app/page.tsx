@@ -6,7 +6,6 @@ import LoginForm from '@/components/landing/LoginForm';
 const HomePage: React.FC = () => {
   return (
     <div className="relative min-h-screen">
-      <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
       <title>{"Sync"}</title>
       <Background />
       <div className="relative z-10 min-h-screen flex flex-col">
