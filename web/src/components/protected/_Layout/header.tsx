@@ -4,8 +4,11 @@ import { usePathname } from "next/navigation";
 import HamburgerMenu from "./side-bar";
 import SearchInput from "./search-bar";
 import ProfileCard from "./profilecard";
-import NotificationWall from "./notificationWall";
+import NotificationWall from "./notificationwall";
 import { GoBellFill } from "react-icons/go";
+import { useAuth } from "@/services/Auth/AuthContext";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "@/lib/Firebase/FirebaseClient";
 import Image from 'next/image';
 
 const Header: React.FC = () => {
@@ -13,6 +16,31 @@ const Header: React.FC = () => {
   const isLanding = pathname === "/";
   const isSignUpPage = pathname === "/signup";
   const [activeCard, setActiveCard] = useState<string | null>(null);
+  const { user } = useAuth();
+  const [displayPicture, setDisplayPicture] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchProfilePicture = async () => {
+      if (!user) return;
+
+      try {
+        const userDocRef = doc(db, "userCredentials", user.uid);
+        const userDocSnapshot = await getDoc(userDocRef);
+
+        if (userDocSnapshot.exists()) {
+          const data = userDocSnapshot.data();
+          setDisplayPicture(
+            data.displayPicture ||
+              "https://firebasestorage.googleapis.com/v0/b/hostingtest-aadc2.appspot.com/o/profile-pictures%2Fdefault.png"
+          ); // Default profile picture if none is set
+        }
+      } catch (error) {
+        console.error("Error fetching profile picture:", error);
+      }
+    };
+
+    fetchProfilePicture();
+  }, [user]);
 
   const toggleCard = (cardType: string) => {
     setActiveCard((prevState) => (prevState === cardType ? null : cardType));
@@ -121,8 +149,8 @@ const Header: React.FC = () => {
                     className="profile-button w-[36px] h-[36px] rounded-full bg-white text-gray-800 shadow-[0_4px_8px_rgba(0,0,0,0.3)] flex items-center justify-center mr-16 hover:bg-gray-200 hover:text-gray-900 active:bg-gray-300 active:scale-95 transition duration-200 overflow-hidden"
                     onClick={() => toggleCard("profile")}
                   >
-                    <Image
-                      src="https://firebasestorage.googleapis.com/v0/b/hostingtest-aadc2.appspot.com/o/profile-pictures%2FVFk3hnh3nSXTAKbASUWOxkJMexR2%2FVFk3hnh3nSXTAKbASUWOxkJMexR2.png?alt=media&token=1b559886-5925-450a-98bd-e7e93d69a301"
+                    <img
+                      src={displayPicture || ''}
                       alt="Profile"
                       width = {36}
                       height = {36}
