@@ -6,6 +6,7 @@ import SearchInput from "./search-bar";
 import ProfileCard from "./profilecard";
 import NotificationWall from "./notificationWall";
 import { GoBellFill } from "react-icons/go";
+import Image from 'next/image';
 
 const Header: React.FC = () => {
   const pathname = usePathname();
@@ -65,10 +66,9 @@ const Header: React.FC = () => {
 
   return (
     <header>
-      <link
-        href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600;700;800;900&display=swap"
-        rel="stylesheet"
-      />
+      {/* eslint-disable-next-line */}
+      <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600;700;800;900&display=swap" rel="stylesheet" /> 
+
       <div
         className={`top-0 left-0 right-0 w-full ${
           isLanding ? "bg-transparent text-white" : "bg-transparent text-white"
@@ -86,10 +86,11 @@ const Header: React.FC = () => {
                 <HamburgerMenu />
                 <div className="flex items-center w-full ml-6">
                   <a href="/home" className="flex items-center">
-                    <img
+                    <Image
                       src="https://firebasestorage.googleapis.com/v0/b/hostingtest-aadc2.appspot.com/o/website-resources%2FSync%20Logo%2FSync%20Logo%20White%20Large.png?alt=media&token=7551d58d-337b-4106-b5da-9b23260c1d99"
                       alt="Logo"
-                      className="w-[25px] h-[25px]"
+                      width = {25}
+                      height = {25}
                     />
                     <h1 className="text-2xl font-semibold ml-[7px]">Sync</h1>
                   </a>
@@ -120,10 +121,12 @@ const Header: React.FC = () => {
                     className="profile-button w-[36px] h-[36px] rounded-full bg-white text-gray-800 shadow-[0_4px_8px_rgba(0,0,0,0.3)] flex items-center justify-center mr-16 hover:bg-gray-200 hover:text-gray-900 active:bg-gray-300 active:scale-95 transition duration-200 overflow-hidden"
                     onClick={() => toggleCard("profile")}
                   >
-                    <img
+                    <Image
                       src="https://firebasestorage.googleapis.com/v0/b/hostingtest-aadc2.appspot.com/o/profile-pictures%2FVFk3hnh3nSXTAKbASUWOxkJMexR2%2FVFk3hnh3nSXTAKbASUWOxkJMexR2.png?alt=media&token=1b559886-5925-450a-98bd-e7e93d69a301"
                       alt="Profile"
-                      className="w-[36px] h-[36px] rounded-full object-cover"
+                      width = {36}
+                      height = {36}
+                      className="rounded-full object-cover"
                     />
                   </button>
                 </div>
@@ -138,10 +141,11 @@ const Header: React.FC = () => {
           )}
           {(isLanding || isSignUpPage) && (
             <>
-              <img
+              <Image
                 src="https://cdn.builder.io/api/v1/image/assets/TEMP/e206a20408ef8878dcb5118bce850f8f290c84cbd09da22c62f468d88dfbdc15?placeholderIfAbsent=true&apiKey=0cd5b3eb85e74a83a268d41d07a9c27f"
                 alt="Logo"
-                className="w-[25px] h-[25px]"
+                width = {25}
+                height = {25}
               />
               <h1 className="text-2xl font-bold ml-[7px]">{isSignUpPage ? "Sync" : "Sync"}</h1>
             </>

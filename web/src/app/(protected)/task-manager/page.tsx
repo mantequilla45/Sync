@@ -8,20 +8,8 @@ import AddTaskButton from '@/components/protected/taskmanagers/addTask';
 import { db } from '@/lib/Firebase/FirebaseClient';
 import { collection, addDoc, updateDoc, deleteDoc, doc, query, where, onSnapshot } from 'firebase/firestore';
 import { useAuth } from '@/services/Auth/AuthContext';
-import MeetingCards from '@/components/protected/taskmanagers/meeting-cards'; // Import the new MeetingCards component
+import MeetingCards from '@/components/protected/taskmanagers/meeting-cards'; 
 
-const initialTodoTasks = [
-    { id: 0, title: "Scale Marketing", phase: "4", dateRange: "24/10/24 - 2/11/24", daysLeft: 4, color: "#A228FF" },
-    { id: 1, title: "Design Prototype", phase: "1", dateRange: "20/10/24 - 24/10/24", daysLeft: 0, color: "#FF5722" },
-];
-
-const initialInProgressTasks = [
-    { id: 2, title: "Develop Product", phase: "3", dateRange: "20/10/24 - 25/10/24", daysLeft: 1, color: "#F55D76" },
-];
-
-const initialCompletedTasks = [
-    { id: 3, title: "Market Research", phase: "2", dateRange: "15/10/24 - 19/10/24", daysLeft: 0, color: "#4CAF50" },
-];
 
 interface Task {
     id: string;

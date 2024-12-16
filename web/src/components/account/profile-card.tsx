@@ -5,6 +5,7 @@ import { FaUserCircle, FaGenderless, FaCalendarAlt, FaCheck } from 'react-icons/
 import { useAuth } from '@/services/Auth/AuthContext';
 import { collection, doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
 import { db } from '@/lib/Firebase/FirebaseClient';
+import Image from 'next/image';
 
 interface ProfileCardProps {
   name: string,
@@ -106,11 +107,14 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ isEditing, toggleEditing }) =
           <div className="flex flex-col items-center">
             <div className="w-[200px] h-[200px] bg-[#D9D9D9] border-[2px] border-[#926AB2] rounded-full relative">
               <div className="inset-0 overflow-hidden rounded-full">
-                <img
+                <Image
                   src="https://firebasestorage.googleapis.com/v0/b/hostingtest-aadc2.appspot.com/o/profile-pictures%2FVFk3hnh3nSXTAKbASUWOxkJMexR2%2FVFk3hnh3nSXTAKbASUWOxkJMexR2.png?alt=media&token=1b559886-5925-450a-98bd-e7e93d69a301"
                   alt="Profile"
-                  className="w-full h-full object-cover"
+                  width={500} 
+                  height={500} // Specify the height (pixels)
+                  className="object-cover"
                 />
+
                 {/* Conditionally render the edit button for the profile picture */}
                 {isEditing && (
                   <button

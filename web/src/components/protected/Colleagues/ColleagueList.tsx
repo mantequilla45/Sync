@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from "react";
+import Image from "next/image";
 
 // Define the Colleague interface
 interface Colleague {
@@ -38,11 +39,13 @@ const ColleagueList: React.FC<ColleagueListProps> = ({ colleagues, onCardClick }
                             ${selectedColleague === colleague.uid ? '' : 'hover:bg-[#EDEDED] hover:border-[#E1E1E1] hover:scale-[.99]'}`}
                         onClick={() => handleCardClick(colleague)}
                     >
-                        <img
+                        <Image
                             src={colleague.displayPicture}
                             alt={`${colleague.displayName}'s profile`}
-                            className="w-24 h-24 rounded-full object-cover mb-2"
-                        />
+                            width={96}
+                            height={96}
+                            className="rounded-full object-cover mb-2"
+                            />
                         <h3 className="text-md font-regular">{colleague.displayName}</h3>
                     </div>
                 ))}

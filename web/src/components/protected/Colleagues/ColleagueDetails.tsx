@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import ColleagueList from "./ColleagueList";
+import Image from 'next/image';
 
 // Define the Colleague interface
 interface Colleague {
@@ -32,10 +33,12 @@ const ColleagueDetails = ({ colleagues }: ColleagueDetailsProps) => {
                 {selectedColleague ? (
                     <div>
                         <div className="flex mb-4">
-                            <img
-                                src={selectedColleague.displayPicture}
-                                alt="Profile Picture"
-                                className="w-36 h-36 rounded-full object-cover border border-gray-300"
+                            <Image
+                            src={selectedColleague.displayPicture} // dynamic source
+                            alt="Profile Picture"
+                            width={144} // Convert w-36 (36 * 4px = 144px)
+                            height={144} // Convert h-36 (36 * 4px = 144px)
+                            className="rounded-full object-cover border border-gray-300"
                             />
                         </div>
                         <div className="text-[#2b2b2b]">
