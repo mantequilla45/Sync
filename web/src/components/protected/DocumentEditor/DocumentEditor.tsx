@@ -48,7 +48,7 @@ const DocumentEditor = ({ documentID, projectID }: { projectID: string, document
     return () => {
       disconnectDocument();
     };
-  }, []);
+  }, [connectDocument, disconnectDocument, documentID]);
 
   // Toolbar Go-signal
   useEffect(() => {
@@ -65,53 +65,20 @@ const DocumentEditor = ({ documentID, projectID }: { projectID: string, document
     };
   });
 
-  // Image Paste Event
   useEffect(() => {
+    const editor = editorRef.current?.getEditor();
+  
     const handlePasteWithArgs = (event: ClipboardEvent) => {
-      handleImagePaste(event, editorRef.current?.getEditor() as Quill, indexPos as Range, documentID);
+      handleImagePaste(event, editor as Quill, indexPos as Range, documentID);
     };
-    editorRef.current?.getEditor().root.addEventListener('paste', handlePasteWithArgs);
-
+  
+    editor?.root.addEventListener('paste', handlePasteWithArgs);
+  
     return () => {
-      editorRef.current?.getEditor().root.removeEventListener('paste', handlePasteWithArgs);
+      editor?.root.removeEventListener('paste', handlePasteWithArgs);
     };
-  }, [editorRef, indexPos]);
-
-  // Handle Image Click for Resizing
-  useEffect(() => {
-    const handleImageClick = (event: MouseEvent) => {
-      const target = event.target as HTMLElement;
-      if (target.tagName === 'IMG') {
-        const imgElement = target as HTMLImageElement;
-        setImage(imgElement);
-        setWidth(imgElement.width);
-        setHeight(imgElement.height);
-      }
-    };
-
-    editorRef.current?.getEditor().root.addEventListener('click', handleImageClick);
-
-    return () => {
-      editorRef.current?.getEditor().root.removeEventListener('click', handleImageClick);
-    };
-  }, [indexPos]);
-
-  // Handle Image Size Change
-  const handleWidthChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newWidth = parseInt(e.target.value) || 0;
-    setWidth(newWidth);
-    if (image) {
-      image.width = newWidth;
-    }
-  };
-
-  const handleHeightChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newHeight = parseInt(e.target.value) || 0;
-    setHeight(newHeight);
-    if (image) {
-      image.height = newHeight;
-    }
-  };
+  }, [indexPos, documentID]);
+  
 
   return (
     <div className="flex justify-center items-center bg-gray-100 flex-col">
