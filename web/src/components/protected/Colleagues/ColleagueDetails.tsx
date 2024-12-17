@@ -26,10 +26,10 @@ const ColleagueDetails = ({ colleagues }: ColleagueDetailsProps) => {
 
     return (
         <div className="flex mt-5">
-            <div className="w-3/4">
+            <div className="w-2/3">
                 <ColleagueList colleagues={colleagues} onCardClick={handleCardClick} />
             </div>
-            <div className="w-1/4 p-10 bg-[#FAFAFA] h-[660px] shadow-md rounded-xl border border-gray-200">
+            <div className="w-1/3 p-10 bg-[#FAFAFA] shadow-md rounded-xl border border-gray-200">
                 {selectedColleague ? (
                     <div>
                         <div className="flex mb-4">
