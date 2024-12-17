@@ -155,7 +155,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ isEditing, toggleEditing }) =
           <div className="flex flex-col items-center">
             <div className="w-[200px] h-[200px] bg-[#D9D9D9] border-[2px] border-[#926AB2] rounded-full relative">
               <div className="inset-0 overflow-hidden rounded-full">
-              <img
+              <Image
                   src={previewPicture || displayPicture || 'default-image-url'}
                   alt="Profile"
                   width={500} 
