@@ -54,14 +54,13 @@ const ContactUs = () => {
                             Get Started
                         </button>
                     </div>
-                    <div className="flex-[1.55] py-16"> 
+                    <div className="py-0"> 
                         <Image
                             src="/resources/images/contactUs.svg"
                             alt="Contact Us"
-                            width={3000}
-                            height={3000}
+                            width={790}
+                            height={790}
                             priority
-                            className="w-full h-auto object-cover rounded-lg"
                         />
                     </div>
                 </div>

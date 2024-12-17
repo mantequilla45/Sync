@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import ColleagueList from "./ColleagueList";
-import Image from 'next/image';
+import Image from "next/image";
 
 // Define the Colleague interface
 interface Colleague {
@@ -26,19 +26,22 @@ const ColleagueDetails = ({ colleagues }: ColleagueDetailsProps) => {
 
     return (
         <div className="flex mt-5">
+            {/* Left Section */}
             <div className="w-2/3">
                 <ColleagueList colleagues={colleagues} onCardClick={handleCardClick} />
             </div>
-            <div className="w-1/3 p-10 bg-[#FAFAFA] shadow-md rounded-xl border border-gray-200">
+
+            {/* Right Section */}
+            <div className="w-1/3 p-10 bg-[#FAFAFA] shadow-md rounded-xl border border-gray-200 flex justify-center items-center">
                 {selectedColleague ? (
-                    <div>
-                        <div className="flex mb-4">
+                    <div className="w-full text-center">
+                        <div className="flex justify-center mb-4">
                             <Image
-                            src={selectedColleague.displayPicture} // dynamic source
-                            alt="Profile Picture"
-                            width={144} // Convert w-36 (36 * 4px = 144px)
-                            height={144} // Convert h-36 (36 * 4px = 144px)
-                            className="rounded-full object-cover border border-gray-300"
+                                src={selectedColleague.displayPicture} // Dynamic source
+                                alt="Profile Picture"
+                                width={144} // 144px (w-36 in Tailwind)
+                                height={144}
+                                className="rounded-full object-cover border border-gray-300"
                             />
                         </div>
                         <div className="text-[#2b2b2b]">
@@ -51,8 +54,8 @@ const ColleagueDetails = ({ colleagues }: ColleagueDetailsProps) => {
                         </div>
                     </div>
                 ) : (
-                    <div className="flex justify-center items-center h-full">
-                        <p className="text-center font-light">Select a colleague to view profile</p>
+                    <div className="text-center text-[#2b2b2b] font-light text-sm">
+                        <p>Select a colleague to view their profile</p>
                     </div>
                 )}
             </div>
