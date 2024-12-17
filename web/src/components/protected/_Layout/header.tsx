@@ -4,7 +4,7 @@ import { usePathname } from "next/navigation";
 import HamburgerMenu from "./side-bar";
 import SearchInput from "./search-bar";
 import ProfileCard from "./profilecard";
-import NotificationWall from "./notificationwall";
+import NotificationWall from "./notificationWall";
 import { GoBellFill } from "react-icons/go";
 import { useAuth } from "@/services/Auth/AuthContext";
 import { doc, getDoc } from "firebase/firestore";
@@ -149,7 +149,7 @@ const Header: React.FC = () => {
                     className="profile-button w-[36px] h-[36px] rounded-full bg-white text-gray-800 shadow-[0_4px_8px_rgba(0,0,0,0.3)] flex items-center justify-center mr-16 hover:bg-gray-200 hover:text-gray-900 active:bg-gray-300 active:scale-95 transition duration-200 overflow-hidden"
                     onClick={() => toggleCard("profile")}
                   >
-                    <img
+                    <Image
                       src={displayPicture || ''}
                       alt="Profile"
                       width = {36}
