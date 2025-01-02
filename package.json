@@ -8,7 +8,8 @@
         "rs": "cd server && rs"
     },
     "devDependencies": {
-        "concurrently": "^9.0.1"
+        "concurrently": "^9.0.1",
+        "rimraf": "^6.0.1"
     },
     "dependencies": {
         "react-date-range": "^2.0.1"

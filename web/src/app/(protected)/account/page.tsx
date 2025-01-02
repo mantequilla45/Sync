@@ -8,6 +8,7 @@ import ProfileCard from '../../../components/account/profile-card';
 import NotificationCard from '../../../components/account/notification-card';
 import PasswordSecurity from '../../../components/account/pass-sec';
 import AccountDeletion from '../../../components/account/account-deletion';
+import Image from 'next/image';
 
 const ProfilePage = () => {
   const [inputValue, setInputValue] = useState('');

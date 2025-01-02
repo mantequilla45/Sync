@@ -10,6 +10,7 @@ import { useAuth } from "@/services/Auth/AuthContext";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "@/lib/Firebase/FirebaseClient";
 import Image from 'next/image';
+import { FaUser } from "react-icons/fa";
 
 const Header: React.FC = () => {
   const pathname = usePathname();
@@ -32,7 +33,7 @@ const Header: React.FC = () => {
           setDisplayPicture(
             data.displayPicture ||
               "https://firebasestorage.googleapis.com/v0/b/hostingtest-aadc2.appspot.com/o/profile-pictures%2Fdefault.png"
-          ); // Default profile picture if none is set
+          ); 
         }
       } catch (error) {
         console.error("Error fetching profile picture:", error);
@@ -149,14 +150,20 @@ const Header: React.FC = () => {
                     className="profile-button w-[36px] h-[36px] rounded-full bg-white text-gray-800 shadow-[0_4px_8px_rgba(0,0,0,0.3)] flex items-center justify-center mr-16 hover:bg-gray-200 hover:text-gray-900 active:bg-gray-300 active:scale-95 transition duration-200 overflow-hidden"
                     onClick={() => toggleCard("profile")}
                   >
-                    <Image
-                      src={displayPicture || ''}
-                      alt="Profile"
-                      width = {36}
-                      height = {36}
-                      className="rounded-full object-cover"
-                    />
+                    {displayPicture ? (
+                      <Image
+                        src={displayPicture}
+                        alt="Profile"
+                        width={36}
+                        height={36}
+                        className="w-full h-full object-cover rounded-full"
+                        unoptimized
+                      />
+                    ) : (
+                      <FaUser className="text-gray-600 w-[20px] h-[20px] rounded-full" />
+                    )}
                   </button>
+
                 </div>
               </div>
               <ProfileCard

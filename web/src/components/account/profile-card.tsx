@@ -8,6 +8,7 @@ import { db, storage } from '@/lib/Firebase/FirebaseClient';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { FaXmark } from 'react-icons/fa6';
 import Image from 'next/image';
+import ProfileImage from './profile-image'
 
 interface ProfileCardProps {
   name: string,
@@ -153,25 +154,16 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ isEditing, toggleEditing }) =
       <div className="flex flex-row justify-between">
         <div className="flex flex-row items-center">
           <div className="flex flex-col items-center">
-            <div className="w-[200px] h-[200px] bg-[#D9D9D9] border-[2px] border-[#926AB2] rounded-full relative">
-              <div className="inset-0 overflow-hidden rounded-full">
-              <Image
-                  src={previewPicture || displayPicture || 'default-image-url'}
-                  alt="Profile"
-                  width={500} 
-                  height={500} // Specify the height (pixels)
-                  className="object-cover"
-                />
-                {isEditing && (
-                  <input
-                    type="file"
-                    accept="image/*"
-                    className="absolute inset-0 opacity-0 cursor-pointer"
-                    onChange={handlePictureChange} // Handle picture change
-                  />
-                )}
-              </div>
-            </div>
+              <ProfileImage
+                displayPicture={previewPicture || displayPicture}
+                isEditing={isEditing}
+                onPictureChange={(file) => {
+                  setNewPicture(file);
+                  setPreviewPicture(URL.createObjectURL(file));
+                }}
+                width={200}
+                height={200}
+              />
             <h2 className="text-md text-[#888787] font-light mt-[15px]"><strong>UID:</strong> {user?.uid}</h2>
           </div>
           <div className="flex flex-col ml-10 h-[200px] justify-center mt-[-40px]">
