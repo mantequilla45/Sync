@@ -4,7 +4,7 @@ import { usePathname } from "next/navigation";
 import HamburgerMenu from "./side-bar";
 import SearchInput from "./search-bar";
 import ProfileCard from "./profilecard";
-import NotificationWall from "./notificationWall";
+import NotificationWall from "@/components/protected/_Layout/notificationWall"
 import { GoBellFill } from "react-icons/go";
 import { useAuth } from "@/services/Auth/AuthContext";
 import { doc, getDoc } from "firebase/firestore";
