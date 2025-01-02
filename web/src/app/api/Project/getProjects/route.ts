@@ -1,7 +1,18 @@
+import { NextRequest, NextResponse } from 'next/server';
 import { db } from "@/lib/Firebase/_index";
 import { DocumentReference, DocumentData } from "firebase-admin/firestore";
 
-async function getProjectDetails(projectRoleUIDs: DocumentReference<DocumentData>[]): Promise<any[]> {
+// Mark route as dynamic since it uses headers and database
+export const dynamic = 'force-dynamic';
+
+// Interface for project details
+interface ProjectDetails {
+  projectId: string;
+  title: string;
+  description: string;
+}
+
+async function getProjectDetails(projectRoleUIDs: DocumentReference<DocumentData>[]): Promise<ProjectDetails[]> {
   try {
     return await Promise.all(
       projectRoleUIDs.map(async (roleRef) => {
@@ -21,7 +32,6 @@ async function getProjectDetails(projectRoleUIDs: DocumentReference<DocumentData
 
         const projectData = projectDoc.data();
 
-        // Return only the necessary fields
         return {
           projectId: projectRef.id,
           title: projectData?.title || "Untitled Project",
@@ -35,31 +45,48 @@ async function getProjectDetails(projectRoleUIDs: DocumentReference<DocumentData
   }
 }
 
-export async function GET(req: Request) {
+export async function GET(request: NextRequest) {
   try {
-    const userId = req.headers.get('x-user-id');
+    const userId = request.headers.get('x-user-id');
+    
     if (!userId) {
-      return new Response(JSON.stringify({ error: 'User ID is missing' }), { status: 400 });
+      return NextResponse.json(
+        { error: 'User ID is missing' },
+        { status: 400 }
+      );
     }
 
     const userDoc = await db.collection('users').doc(userId).get();
 
     if (!userDoc.exists) {
-      return new Response(JSON.stringify({ error: 'User not found' }), { status: 404 });
+      return NextResponse.json(
+        { error: 'User not found' },
+        { status: 404 }
+      );
     }
 
     const userData = userDoc.data();
     const projectRoleUIDs = userData?.projectRoleUIDs;
 
     if (!Array.isArray(projectRoleUIDs)) {
-      return new Response(JSON.stringify({ error: 'Project roles not found' }), { status: 404 });
+      return NextResponse.json(
+        { error: 'Project roles not found' },
+        { status: 404 }
+      );
     }
 
     const projectDetails = await getProjectDetails(projectRoleUIDs);
 
-    return new Response(JSON.stringify({ projects: projectDetails }), { status: 200 });
+    return NextResponse.json(
+      { projects: projectDetails },
+      { status: 200 }
+    );
+
   } catch (error) {
     console.error("Error fetching project details:", error);
-    return new Response(JSON.stringify({ error: 'Failed to fetch project details' }), { status: 500 });
+    return NextResponse.json(
+      { error: 'Failed to fetch project details' },
+      { status: 500 }
+    );
   }
 }

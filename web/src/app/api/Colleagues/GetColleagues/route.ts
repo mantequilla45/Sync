@@ -1,5 +1,9 @@
+import { NextRequest, NextResponse } from 'next/server';
 import { db, auth } from "@/lib/Firebase/_index";
 import { DocumentReference } from "firebase-admin/firestore";
+
+// Mark route as dynamic since it uses headers and database
+export const dynamic = 'force-dynamic';
 
 interface Colleague {
     uid: string;
@@ -8,11 +12,14 @@ interface Colleague {
     sharedProjectIds: string[];
 }
 
-export async function GET(req: Request) {
+export async function GET(request: NextRequest) {
     try {
-        const userId = req.headers.get('x-user-id');
+        const userId = request.headers.get('x-user-id');
         if (!userId) {
-            return new Response(JSON.stringify({ error: 'User ID is missing' }), { status: 400 });
+            return NextResponse.json(
+                { error: 'User ID is missing' },
+                { status: 400 }
+            );
         }
 
         const userRef = db.collection('users').doc(userId);
@@ -20,7 +27,10 @@ export async function GET(req: Request) {
         // Fetch colleague UIDs
         const colleagueUIDs = await fetchColleaguesUIDs(userRef);
         if (!colleagueUIDs || colleagueUIDs.length === 0) {
-            return new Response(JSON.stringify({ error: 'No colleagues found' }), { status: 404 });
+            return NextResponse.json(
+                { error: 'No colleagues found' },
+                { status: 404 }
+            );
         }
 
         // Fetch current user's project IDs
@@ -33,10 +43,16 @@ export async function GET(req: Request) {
             )
         );
 
-        return new Response(JSON.stringify({ colleagues: colleagues.filter(Boolean) }), { status: 200 });
+        return NextResponse.json(
+            { colleagues: colleagues.filter(Boolean) },
+            { status: 200 }
+        );
     } catch (error) {
         console.error("Error fetching colleagues:", error);
-        return new Response(JSON.stringify({ error: 'Failed to fetch colleagues' }), { status: 500 });
+        return NextResponse.json(
+            { error: 'Failed to fetch colleagues' },
+            { status: 500 }
+        );
     }
 }
 
@@ -71,8 +87,7 @@ async function fetchColleagueBaseDetails(uid: string): Promise<Omit<Colleague, '
         }
 
         displayName = user.displayName ?? `User (${user.email})`;
-        displayPicture =
-            user.photoURL ??
+        displayPicture = user.photoURL ?? 
             'https://firebasestorage.googleapis.com/v0/b/hostingtest-aadc2.appspot.com/o/profile-pictures%2FVFk3hnh3nSXTAKbASUWOxkJMexR2%2FVFk3hnh3nSXTAKbASUWOxkJMexR2.png?alt=media&token=1b559886-5925-450a-98bd-e7e93d69a301';
 
         return {
@@ -102,7 +117,8 @@ async function fetchProjectIdsFromRoles(uid: string): Promise<string[]> {
                 try {
                     const roleSnapshot = await roleRef.get();
                     if (roleSnapshot.exists) {
-                        return roleSnapshot.get('projectId') || null;
+                        const projectRef = roleSnapshot.get('projectId');
+                        return projectRef ? projectRef.id : null;
                     }
                     console.error(`Project role document does not exist: ${roleRef.path}`);
                     return null;
