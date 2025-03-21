@@ -1,60 +1,37 @@
 'use client';
 import Header from '@/components/protected/_Layout/header';
 import SearchInput from '../../../components/protected/_Layout/search-bar';
-import React, { useState, useEffect, useRef } from 'react';
-import { MdAccountCircle, MdAlternateEmail, MdEdit, MdOutlineSecurity, MdDelete } from 'react-icons/md';
+import React, { useState } from 'react';
+import { MdAccountCircle, MdOutlineSecurity, MdDelete } from 'react-icons/md';
 import { IoIosNotifications } from 'react-icons/io';
-import { FaUserLarge } from 'react-icons/fa6';
-import { FaEdit } from 'react-icons/fa';
+import ProfileCard from '../../../components/account/profile-card';
+import NotificationCard from '../../../components/account/notification-card';
+import PasswordSecurity from '../../../components/account/pass-sec';
+import AccountDeletion from '../../../components/account/account-deletion';
+import Image from 'next/image';
 
 const ProfilePage = () => {
-  const [isClick, setIsClicked] = useState(false); 
-  const [activeCard, setActiveCard] = useState<string | null>(null);
-  const cardRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      const target = event.target as Element | null;
-      if (cardRef.current && !cardRef.current.contains(target) && !target?.closest('.profile-button')) {
-        setActiveCard(null);
-      }
-    };
-
-    if (activeCard) {
-      document.addEventListener('mousedown', handleClickOutside);
-    }
-
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [activeCard]);
-
   const [inputValue, setInputValue] = useState('');
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const [isEditing, setIsEditing] = useState(false);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(e.target.value);
+  const toggleEditing = () => {
+    setIsEditing(!isEditing);
   };
 
-  const handleClearInput = () => {
+  const onClear = () => {
     setInputValue('');
-    setIsClicked(false);
-  };
-
-  const handleNameChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setName(e.target.value);
-  };
-
-  const handleEmailChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setEmail(e.target.value);
   };
 
   return (
     <div className="flex flex-col min-h-screen bg-[linear-gradient(45deg,_#82245C,_#81245C,_#732783,_#561C90,_#561C90,_#37249E,_#3D55B8)] text-white">
       <Header />
       <div className="px-[90px] mb-2">
-        <h1 className="text-sm text-white font-light">Home / Account</h1>
+        <h1 className="text-sm text-white font-light">
+            <a href="/home" className="text-white hover:text-gray-300">Home</a> / 
+            <span className="text-[#F6F61E] ml-1">Account</span>
+        </h1>
       </div>
       <div className="relative flex justify-center mx-16 mb-16">
         <div className="absolute inset-0 bg-[#FFFFFF] rounded-2xl opacity-[35%] w-[75%] mx-auto shadow-lg z-0" />
@@ -62,8 +39,8 @@ const ProfilePage = () => {
           <div className="flex-none rounded-xl py-2" style={{ width: '25%' }}>
             <SearchInput
               value={inputValue}
-              onChange={handleInputChange}
-              onClear={handleClearInput}
+              onChange={(e) => setInputValue(e.target.value)}
+              onClear={onClear} // Pass onClear function here
               placeholder="Search Info"
               className="max-w-full"
             />
@@ -186,6 +163,10 @@ const ProfilePage = () => {
               <h2 className="text-2xl text-[#69369B] font-semibold mb-4">Delete Account</h2>
               <p className="text-gray-700">This is some content inside the second card.</p>
             </div>
+            <ProfileCard name={name} email={email} isEditing={isEditing} toggleEditing={toggleEditing} />
+            <NotificationCard />
+            <PasswordSecurity />
+            <AccountDeletion />
           </div>
         </div>
       </div>

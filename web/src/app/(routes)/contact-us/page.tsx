@@ -30,7 +30,10 @@ const ContactUs = () => {
         <div className="flex flex-col min-h-screen bg-[linear-gradient(45deg,_#82245C,_#81245C,_#732783,_#561C90,_#561C90,_#37249E,_#3D55B8)] text-white">
             <Header /> 
             <div className="px-[90px] mb-2">
-                <h1 className="text-sm text-white font-light">Home / Contact Us</h1>
+                <h1 className="text-sm text-white font-light">
+                    <a href="/home" className="text-white hover:text-gray-300">Home</a> / 
+                    <span className="text-[#F6F61E] ml-1">Contact Us</span>
+                </h1>
             </div>
             <div className="flex-grow space-y-[100px] bg-white rounded-2xl shadow-lg mx-16 mb-16">
                 <div className="flex flex-row h-full px-[150px]">
@@ -46,19 +49,18 @@ const ContactUs = () => {
                         </p>
                         <button 
                             onClick={openModal} 
-                            className="mt-6 px-6 py-3 bg-[#69369B] text-white text-lg font-regular rounded-full hover:bg-[#572A81] transition duration-300"
+                            className="mt-6 px-6 py-3 bg-[#69369B] text-white text-lg font-regular rounded-2xl hover:bg-[#572A81] transition duration-300"
                         >
                             Get Started
                         </button>
                     </div>
-                    <div className="flex-[1.55] py-16"> 
+                    <div className="py-0"> 
                         <Image
-                            src="https://firebasestorage.googleapis.com/v0/b/hostingtest-aadc2.appspot.com/o/website-resources%2Fwebsite-pictures%2Fcontact-us1.png?alt=media&token=f7d17230-5561-447b-ab0d-27f02bace754"
+                            src="/resources/images/contactUs.svg"
                             alt="Contact Us"
-                            width={3000}
-                            height={3000}
+                            width={790}
+                            height={790}
                             priority
-                            className="w-full h-auto object-cover rounded-lg"
                         />
                     </div>
                 </div>

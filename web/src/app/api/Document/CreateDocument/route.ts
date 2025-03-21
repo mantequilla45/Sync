@@ -47,7 +47,6 @@ export async function POST(req: Request) {
         projectUID: projectRef
       };
 
-      // Save HTML content to Firebase Storage
       const file = bucket.file(fileName);
       await file.save('', {
         metadata: {
@@ -58,7 +57,6 @@ export async function POST(req: Request) {
       const filePath = `gs://${bucket.name}/${fileName}`;
       newDocument.filePath = filePath;
 
-      // Save document metadata in Firestore
       transaction.set(documentRef, newDocument, { merge: true });
       transaction.update(projectRef, {
         documentUIDs: FieldValue.arrayUnion(documentRef)

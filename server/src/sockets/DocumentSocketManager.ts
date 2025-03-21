@@ -19,17 +19,14 @@ class DocumentSocketManager extends BaseSocketManager {
       socketId: socket.id
     });
 
-    socket.on('updateContent', (room: string, content: string) => {
-      const processContent = (input: string): string => {
-        return input
-          .replace(/ /g, '&nbsp;')
-          .replace(/\t/g, '&nbsp;&nbsp;&nbsp;&nbsp;');
-      };
-      this.documents.set(room, processContent(content));
-      socket.to(room).emit('contentUpdated', this.documents.get(room));
+    socket.on('updateContent', (room: string, content: string, delta: any) => {
+      //console.log(content);
+      console.log(content);
+      this.documents.set(room, content)
+      socket.to(room).emit('contentUpdated', delta);
     });
 
-    socket.on('joinRoom', async (room: string, callback) => {
+    socket.on('joinRoom', async (room: string, callback: (content: string | null) => void) => {
       socket.join(room);
       console.log(`${socket.id} has joined the room ${room}`);
 
@@ -43,11 +40,8 @@ class DocumentSocketManager extends BaseSocketManager {
         }
       }
       console.log(`${socket.id}   ${this.documents.get(room)}`);
-      callback(this.documents.get(room));
-      socket.to(room).emit('contentUpdated', this.documents.get(room));
+      callback(this.documents.get(room) as string);
     });
-
-
 
     socket.on('saveDocument', (room: string, projectID: string) => {
       const document = this.documents.get(room);
@@ -64,6 +58,12 @@ class DocumentSocketManager extends BaseSocketManager {
         this.documents.delete(room);
       }
     });
+
+    socket.on('cursor-position', (room : string, range : any) => {
+      console.log(room);
+      console.log(range);
+      socket.to(room).emit('cursor-position', range);
+    })
 
     socket.on('disconnect', () => {
       console.log(`Socket ${socket.id} disconnected`);

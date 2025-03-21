@@ -8,7 +8,10 @@ const BlankPage = () => {
       <div className="flex flex-col min-h-screen bg-[linear-gradient(45deg,_#82245C,_#81245C,_#732783,_#561C90,_#561C90,_#37249E,_#3D55B8)] text-white">
         <Header /> 
         <div className="px-[90px] mb-2">
-          <h1 className="text-sm text-white font-light">Home / About Us</h1>
+            <h1 className="text-sm text-white font-light">
+                <a href="/home" className="text-white hover:text-gray-300">Home</a> / 
+                <span className="text-[#F6F61E] ml-1">About Us</span>
+            </h1>
         </div>
         <div className="flex-grow space-y-[100px] bg-white rounded-2xl shadow-lg mx-16 px-[200px] py-[100px] mb-16">
           <div className="flex flex-row space-x-2">
@@ -38,7 +41,7 @@ const BlankPage = () => {
             </div>
             <div className="flex-1">
               <Image
-                src="https://firebasestorage.googleapis.com/v0/b/hostingtest-aadc2.appspot.com/o/website-resources%2Fwebsite-pictures%2Fabout-us1.jpg?alt=media&token=772ff21e-e505-4ea1-9223-02a1357f2abe"
+                src="/resources/images/about-us1.svg"
                 alt="About Us"
                 width={5000}
                 height={3000}
@@ -49,7 +52,7 @@ const BlankPage = () => {
           <div className="flex flex-row space-x-2">
             <div className="flex-1">
                 <Image
-                  src="https://firebasestorage.googleapis.com/v0/b/hostingtest-aadc2.appspot.com/o/website-resources%2Fwebsite-pictures%2Fabout-us2.jpg?alt=media&token=f3674b11-4e1b-4438-9d8b-831b2fba5738"
+                  src="/resources/images/about-us2.svg"
                   alt="About Us"
                   width={5000}
                   height={3000}

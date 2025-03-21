@@ -1,21 +1,24 @@
 "use client";
 
 import React, { useState, useEffect, useLayoutEffect, useRef, LegacyRef } from 'react';
+import { handleChangePos, handleContentChange, handleContentUpdated, handleSave, handleImagePaste } from './DocumentEditorFunctions/DocumentEditorBasicSocketIO';
 import dynamic from 'next/dynamic';
-import 'react-quill/dist/quill.snow.css';
+import './quill.css';
 import { getToken } from '@/services/Auth/getToken';
 import { useDocumentSocketStore } from '@/stores/DocumentSocketStore';
-import { Delta, Sources } from 'quill'
+import Quill, { Delta, Sources } from 'quill';
 import ReactQuill, { UnprivilegedEditor, Range, ReactQuillProps } from 'react-quill';
+import { DocumentModules } from './DocumentModules';
 
+// Interface for Wrapped Component
 interface IWrappedComponent extends ReactQuillProps {
   forwardedRef: LegacyRef<ReactQuill>;
 }
 
+// Wrapped Quill Component (dynamic import)
 const WrappedQuill = dynamic(
   async () => {
-    const { default: ReactQuillEditor } = await import("react-quill");
-
+    const { default: ReactQuillEditor } = await import('react-quill');
     const QuillJS = ({ forwardedRef, ...props }: IWrappedComponent) => (
       <ReactQuillEditor ref={forwardedRef} {...props} />
     );
@@ -26,93 +29,91 @@ const WrappedQuill = dynamic(
 
 const DocumentEditor = ({ documentID, projectID }: { projectID: string, documentID: string }) => {
   const [content, setContent] = useState<any>(null);
-  const [status, setStatus] = useState<'connected' | 'disconnected'>('disconnected');
-  const [editor, setEditor] = useState<UnprivilegedEditor | null>(null);
+  const [indexPos, setIndexPos] = useState<Range>();
+  const [isQuillReady, setIsQuillReady] = useState(false);
+  const [image, setImage] = useState<HTMLImageElement>();
+  const [width, setWidth] = useState<number>(0);
+  const [height, setHeight] = useState<number>(0);
+
   const { connectDocument, disconnectDocument } = useDocumentSocketStore();
   const editorRef = useRef<ReactQuill | null>(null);
 
-  const modules = {
-    toolbar: [
-      [{ header: [1, 2, false] }],
-      ['bold', 'italic', 'underline'],
-      [{ color: [] }, { background: [] }],
-      ['link', 'image'],
-      [{ list: 'ordered' }, { list: 'bullet' }],
-      ['clean'],
-    ],
-  };
-
-  const handleContentChange = (newContent: string, delta: Delta, source: string, quillEditor: UnprivilegedEditor) => {
-    if (!editor) {
-      setEditor(quillEditor)
-    }
-    useDocumentSocketStore.getState().documentSocket?.emit('updateContent', documentID, newContent);
-    setContent(newContent);
-  };
-
-  const handleContentUpdated = (newContent: string) => {
-    setContent(newContent);
-  };
-
-  const handleChangePos = (selection: Range, source: Sources, editor: UnprivilegedEditor) => {
-    //console.log(selection?.index, selection?.length)
-    //Groundwork for indicator??????
-  }
-
-  const handleSave = () => {
-    useDocumentSocketStore.getState().documentSocket?.emit('saveDocument', documentID, projectID);
-  }
-
+  // Initialize Socket Connection
   useLayoutEffect(() => {
     const initializeSocket = async () => {
       const token = await getToken();
-      connectDocument(token.token, documentID, handleContentUpdated);
+      connectDocument(token.token, documentID, (content) => handleContentUpdated(content, setContent));
     };
-
     initializeSocket();
-
     return () => {
       disconnectDocument();
     };
+  }, [connectDocument, disconnectDocument, documentID]);
+
+  // Toolbar Go-signal
+  useEffect(() => {
+    setTimeout(() => setIsQuillReady(true), 100);
   }, []);
 
+  // Socket Listener for content updates
   useEffect(() => {
-    useDocumentSocketStore.getState().documentSocket?.on('contentUpdated', (newContent)=>{
-      console.log("This should recieve the message", newContent);
-      setContent(newContent);
+    useDocumentSocketStore.getState().documentSocket?.on('contentUpdated', (newContent) => {
+      editorRef?.current?.getEditor().updateContents(newContent);
     });
     return () => {
       useDocumentSocketStore.getState().documentSocket?.off('contentUpdated');
     };
   });
 
-  /*useEffect(() => {
-    if (editorRef.current) {
-      console.log("Editor instance is set:", useDocumentSocketStore.getState().documentSocket);
-      useDocumentSocketStore.getState().documentSocket?.emit('loadDocument', documentID);
-    }
-  }, [editorRef.current, useDocumentSocketStore]);*/
+  useEffect(() => {
+    const editor = editorRef.current?.getEditor();
+  
+    const handlePasteWithArgs = (event: ClipboardEvent) => {
+      handleImagePaste(event, editor as Quill, indexPos as Range, documentID);
+    };
+  
+    editor?.root.addEventListener('paste', handlePasteWithArgs);
+  
+    return () => {
+      editor?.root.removeEventListener('paste', handlePasteWithArgs);
+    };
+  }, [indexPos, documentID]);
+  
 
   return (
-    <div className="w-full bg-white p-5 rounded-2xl shadow">
-      <WrappedQuill
-        forwardedRef={editorRef}
-        value={content}
-        onChange={handleContentChange}
-        placeholder="Start writing here..."
-        theme="snow"
-        className="mb-4 w-full"
-        modules={modules}
-        onChangeSelection={handleChangePos}
-        style={{ height: '500px', color: '#1E1E1E' }}
-      />
-      <button 
-        className="bg-[#69369B] text-white rounded-full px-8 py-2 mt-10"
-        onClick={handleSave}>
-        Save Document
-      </button>
-      <div className={`mt-4 text-2xl font-semibold ${status === 'connected' ? 'text-blue-500' : 'text-red-500'}`}>
-        {status === 'connected' ? 'Connected to Document Socket' : 'Disconnected from Document Socket'}
+    <div className="flex justify-center items-center bg-gray-100 flex-col">
+      <div
+        className="relative rounded-xl overflow-hidden"
+        style={{
+          width: '1080px',
+          height: '1600px',
+          transformOrigin: 'top center',
+        }}
+      >
+        <WrappedQuill
+          forwardedRef={editorRef}
+          value={content}
+          onChange={(content: string, delta: Delta, source: string, editor: UnprivilegedEditor) => {
+            handleContentChange(content, delta, source, editor, setContent, documentID);
+          }}
+          preserveWhitespace
+          theme="snow"
+          className="text-[#1E1E1E] w-full h-full"
+          modules={DocumentModules}
+          onChangeSelection={(selection: Range, source: Sources, editor: UnprivilegedEditor) => {
+            handleChangePos(selection, source, editor, documentID, setIndexPos);
+          }}
+        />
+      </div>
+
+      {/* Save Button */}
+      <div className="mt-6 text-center">
+        <button
+          className="bg-[#69369B] text-white rounded-full px-8 py-2"
+          onClick={() => handleSave(documentID, projectID)}
+        >
+          Save Document
+        </button>
       </div>
     </div>
   );

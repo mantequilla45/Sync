@@ -1,5 +1,6 @@
 export const setUpAccountInFireStore = async (
   idToken: string,
+  email: string,
   setError: (error: string) => void
 ) => {
   try {
@@ -9,7 +10,7 @@ export const setUpAccountInFireStore = async (
         "Content-Type": "application/json",
         Authorization: `Bearer ${idToken}`, // Send idToken for authentication
       },
-      body: JSON.stringify({}),
+      body: JSON.stringify({ email }),
     });
 
     if (!response.ok) {

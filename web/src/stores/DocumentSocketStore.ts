@@ -3,7 +3,7 @@ import { io, Socket } from 'socket.io-client';
 
 interface DocumentSocketState {
   documentSocket: Socket | null;
-  connectDocument: (token: string, room: string, func : (a:any)=> void) => void;
+  connectDocument: (token: string, room: string, onContentUpdate: (content: string) => void) => () => void;
   disconnectDocument: () => void;
 }
 
@@ -11,13 +11,13 @@ interface DocumentSocketState {
 export const useDocumentSocketStore = create<DocumentSocketState>((set, get) => ({
   documentSocket: null,
 
-  connectDocument: (token: string, room: string, func:(a:any)=> void) => {
+  connectDocument: (token: string, room: string, func: (a: any) => void) => {
     const documentSocket = io('http://localhost:4000/document', { auth: { token } });
     set({ documentSocket });
     documentSocket.emit('joinRoom', room, func);
-    
+
     documentSocket.emit('loadDocument', room);
-    
+
     documentSocket.on('disconnect', () => {
       set({ documentSocket: null });
       console.log('Disconnected from document namespace');
